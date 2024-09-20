@@ -12,7 +12,7 @@ interface MatchInfoProps {
 
 export default function MatchInfo({ date, time, location }: MatchInfoProps) {
   return (
-    <>
+    <div className="space-y-2">
       <InfoItem
         icon={dateIcon}
         text={date}
@@ -25,6 +25,6 @@ export default function MatchInfo({ date, time, location }: MatchInfoProps) {
         icon={locationIcon}
         text={location}
       />
-    </>
+    </div>
   )
 }

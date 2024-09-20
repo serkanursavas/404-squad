@@ -5,3 +5,8 @@
 body {
   @apply font-sans;
 }
+
+html,
+document {
+  background: #e5e7eb;
+}

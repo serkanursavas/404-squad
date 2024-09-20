@@ -12,10 +12,10 @@ type BannerProps = {
 
 export default function Banner({ match }: BannerProps) {
   return (
-    <div className="relative p-2 overflow-hidden text-sm shadow-lg bg-primary">
-      <span className="absolute top-0 right-0 w-3/5 h-full bg-white rounded-tl-full bg-opacity-5 "></span>
-      <div className="relative z-10 space-y-2">
-        <h2 className="mb-4 text-lg text-center text-white">NEXT MATCH</h2>
+    <div className="relative px-4 py-8 overflow-hidden text-sm shadow-lg bg-primary">
+      <span className="absolute top-0 left-0 w-3/5 h-full bg-white rounded-tr-full bg-opacity-30 "></span>
+      <div className="relative z-10 space-y-6">
+        <h2 className="mb-4 text-3xl text-center text-white">NEXT MATCH</h2>
 
         <MatchInfo
           date={match.date}
@@ -24,7 +24,7 @@ export default function Banner({ match }: BannerProps) {
         />
 
         <div className="text-right">
-          <button className="px-3 py-1 text-sm bg-white rounded-sm">Match Details</button>
+          <button className="px-3 py-1 text-sm bg-white rounded-sm ">Match Details</button>
         </div>
       </div>
     </div>

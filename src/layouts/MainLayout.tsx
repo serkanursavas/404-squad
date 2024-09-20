@@ -11,7 +11,7 @@ export default function MainLayout() {
   }
 
   return (
-    <div>
+    <div className="bg-neutral">
       <Header
         toggleMobileMenu={toggleMobileMenu}
         isOpen={isOpen}

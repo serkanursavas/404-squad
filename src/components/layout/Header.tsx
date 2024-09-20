@@ -11,7 +11,7 @@ interface Props {
 
 export default function Header({ toggleMobileMenu, isOpen }: Props) {
   return (
-    <div className="flex items-center justify-between px-8 py-4 bg-white ">
+    <div className="flex items-center justify-between px-8 py-4">
       <img
         src={notiIcon}
         alt="Notifications"
