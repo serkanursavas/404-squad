@@ -11,7 +11,9 @@ export default {
         xl: '1280px'
       },
       colors: {
-        primary: '#04764E', // Ana renk
+        primary: {
+          DEFAULT: '#04764E' // Ana renk
+        },
         secondary: '#F2C94C', // İkincil renk (örn: vurgu, butonlar)
         accent: '#F25C05', // Canlı vurgu renkleri (örn: CTA butonları)
         neutral: {

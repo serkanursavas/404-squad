@@ -11,12 +11,12 @@ export default function MainLayout() {
   }
 
   return (
-    <div className="">
+    <div>
       <Header
         toggleMobileMenu={toggleMobileMenu}
         isOpen={isOpen}
       />
-      <main className="bg-yellow-200 ">
+      <main className="p-2">
         {isOpen ? <Navigation toggleMobileMenu={toggleMobileMenu} /> : <Outlet />}
       </main>
     </div>
