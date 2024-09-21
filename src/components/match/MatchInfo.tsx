@@ -3,6 +3,7 @@ import InfoItem from './InfoItem'
 import dateIcon from '../../assets/icons/calendar.svg'
 import clockIcon from '../../assets/icons/clock.svg'
 import locationIcon from '../../assets/icons/bookmarks.svg'
+import { getDayOfWeek } from '../../utils/dateUtils'
 
 interface MatchInfoProps {
   date: string
@@ -11,11 +12,13 @@ interface MatchInfoProps {
 }
 
 export default function MatchInfo({ date, time, location }: MatchInfoProps) {
+  const day = getDayOfWeek(date)
+
   return (
     <div className="space-y-2">
       <InfoItem
         icon={dateIcon}
-        text={date}
+        text={day}
       />
       <InfoItem
         icon={clockIcon}
