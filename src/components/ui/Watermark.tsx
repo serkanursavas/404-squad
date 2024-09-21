@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react'
 
 interface WatermarkProps {
   watermarkIcon: string
-  watermarksCount: number
-  customOpacity: boolean
+  watermarksCount?: number
+  customOpacity?: boolean
+  rotate?: boolean
 }
 
 const getRandomPosition = () => ({
@@ -15,7 +16,12 @@ const getRandomSize = () => Math.random() * 55 + 35
 
 const getRandomOpacity = () => Math.random()
 
-export default function Watermark({ watermarkIcon, watermarksCount, customOpacity }: WatermarkProps) {
+export default function Watermark({
+  watermarkIcon,
+  watermarksCount = 5,
+  customOpacity = false,
+  rotate = false
+}: WatermarkProps) {
   const [watermarks, setWatermarks] = useState<{ top: number; left: number; size: number; opacity: number }[]>([])
 
   useEffect(() => {
@@ -41,7 +47,7 @@ export default function Watermark({ watermarkIcon, watermarksCount, customOpacit
             width: `${watermark.size}px`,
             height: `${watermark.size}px`,
             opacity: watermark.opacity,
-            rotate: customOpacity ? `${Math.random() * 360}deg` : '0deg',
+            rotate: rotate ? `${Math.random() * 360}deg` : '0deg',
             zIndex: 0
           }}
         />

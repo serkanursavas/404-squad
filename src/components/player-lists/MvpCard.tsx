@@ -10,6 +10,7 @@ export default function MvpCard() {
         watermarkIcon={starIcon}
         watermarksCount={15}
         customOpacity={true}
+        rotate
       />
       <div className="relative z-10 space-y-2 ">
         <h2 className="text-xl ">Frenkie De Jong</h2>
