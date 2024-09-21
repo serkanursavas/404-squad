@@ -26,13 +26,27 @@ export default {
       },
       boxShadow: {
         'custom-light': '0 2px 10px rgba(0, 0, 0, 0.1)', // Hafif gölge
-        'custom-dark': '0 4px 14px rgba(0, 0, 0, 0.2)' // Daha belirgin gölge
+        'custom-dark': '0 4px 14px rgba(0, 0, 0, 0.2)', // Daha belirgin gölge
+        pixel: '4px 4px 0px 0px #000' // Piksel tarzı gölge
       },
       fontFamily: {
         sans: ['"Press Start 2P"', 'sans-serif'],
         retro: ['VT323', 'monospace'], // Retro terminal tarzı
         body: ['"Press Start 2P"', 'sans-serif'] // Ana yazı tipi
       }
+      // keyframes: {
+      //   pixelShadow: {
+      //     '0%, 100%': {
+      //       boxShadow: '2px 2px 0px 0px #333, 4px 4px 0px 0px #000'
+      //     },
+      //     '50%': {
+      //       boxShadow: '4px 4px 0px 0px #333, 4px 4px 0px 0px #000'
+      //     }
+      //   }
+      // },
+      // animation: {
+      //   pixelShadow: 'pixelShadow 1.5s infinite' // Pixel gölge animasyonu
+      // }
     }
   },
   plugins: []

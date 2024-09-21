@@ -16,9 +16,7 @@ export default function MainLayout() {
         toggleMobileMenu={toggleMobileMenu}
         isOpen={isOpen}
       />
-      <main className="p-2">
-        {isOpen ? <Navigation toggleMobileMenu={toggleMobileMenu} /> : <Outlet />}
-      </main>
+      <main className="p-2">{isOpen ? <Navigation toggleMobileMenu={toggleMobileMenu} /> : <Outlet />}</main>
     </div>
   )
 }
