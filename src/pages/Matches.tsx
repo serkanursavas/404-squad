@@ -2,6 +2,7 @@ import MatchesList from '../components/match/MatchesList'
 
 import blackLogo from '../assets/images/club-black.svg'
 import whiteLogo from '../assets/images/club-white.svg'
+import TypingEffect from '../components/ui/TypingEffect'
 
 const dummyMatchInfo = [
   {
@@ -65,6 +66,10 @@ const dummyMatchInfo = [
 export default function Matches() {
   return (
     <div className="space-y-6">
+      <TypingEffect
+        text={['Latest Matches']}
+        className="text-sm text-purple-400 "
+      />
       <MatchesList matchesData={dummyMatchInfo} />
     </div>
   )
