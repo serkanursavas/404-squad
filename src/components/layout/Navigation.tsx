@@ -22,7 +22,7 @@ export default function Navigation({ toggleMobileMenu }: Props) {
       <ul className="space-y-10">
         {navLinks.map(navLink => {
           return (
-            <li>
+            <li key={navLink.to}>
               <NavLink
                 to={navLink.to}
                 onClick={toggleMobileMenu}
