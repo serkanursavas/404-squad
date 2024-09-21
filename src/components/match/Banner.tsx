@@ -1,3 +1,4 @@
+import Button from '../ui/Button'
 import MatchInfo from './MatchInfo'
 
 interface MatchInfo {
@@ -24,7 +25,7 @@ export default function Banner({ match }: BannerProps) {
         />
 
         <div className="text-right">
-          <button className="px-3 py-1 text-sm bg-white rounded-sm ">Match Details</button>
+          <Button label="Match Details" />
         </div>
       </div>
     </div>

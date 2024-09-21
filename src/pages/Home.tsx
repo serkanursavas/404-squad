@@ -4,6 +4,7 @@ import TopLists from '../components/player-lists/TopLists'
 import ballIcon from '../assets/icons/ball.svg'
 import userIcon from '../assets/icons/user.svg'
 import ratingIcon from '../assets/icons/coin.svg'
+import Button from '../components/ui/Button'
 
 const dummyMatch = {
   date: 'Monday',
