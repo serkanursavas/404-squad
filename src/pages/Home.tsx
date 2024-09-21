@@ -4,6 +4,7 @@ import TopLists from '../components/player-lists/TopLists'
 import ballIcon from '../assets/icons/ball.svg'
 import userIcon from '../assets/icons/user.svg'
 import ratingIcon from '../assets/icons/coin.svg'
+import MvpCard from '../components/player-lists/MvpCard'
 
 const dummyMatch = {
   date: '2024-09-23',
@@ -38,6 +39,9 @@ export default function Home() {
   return (
     <div className="space-y-6">
       <Banner match={dummyMatch} />
+
+      <MvpCard />
+
       <TopLists
         title="Top Scorer"
         statisticLabel="Goal"
