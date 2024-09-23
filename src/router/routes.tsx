@@ -6,6 +6,7 @@ import NotFound from '../pages/NotFound'
 import MatchDetails from '../pages/MatchDetails'
 import Profile from '../pages/Profile'
 import MainLayout from '../layouts/MainLayout'
+import AllPlayers from '../pages/AllPlayers'
 
 const routes = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const routes = createBrowserRouter([
       {
         path: '/profile/:id',
         element: <Profile />
+      },
+      {
+        path:'/players',
+        element:<AllPlayers />
       }
     ]
   },
