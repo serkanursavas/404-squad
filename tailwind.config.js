@@ -27,7 +27,10 @@ export default {
       boxShadow: {
         'custom-light': '0 2px 10px rgba(0, 0, 0, 0.1)', // Hafif gölge
         'custom-dark': '0 4px 14px rgba(0, 0, 0, 0.2)', // Daha belirgin gölge
-        pixel: '4px 4px 0px 0px #000' // Piksel tarzı gölge
+        pixel: '4px 4px 0px 0px #000', // Piksel tarzı gölge
+        'pixel-light': '4px 4px 0px 0px #4B5563', // Piksel tarzı gölge
+        light: '2px 2px 14px 2px #4B5563', // Piksel tarzı gölge
+        x2light: '2px 2px 8px 1px #4B5563' // Piksel tarzı gölge
       },
       fontFamily: {
         sans: ['"Press Start 2P"', 'sans-serif'],
