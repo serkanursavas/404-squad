@@ -1,6 +1,7 @@
 import Button from "../components/ui/Button";
 import logo from "../assets/images/logos/logo.png";
 import Input from "../components/ui/Input";
+import { Link } from "react-router-dom";
 
 export default function Login() {
   return (
@@ -29,9 +30,9 @@ export default function Login() {
           </form>
           <div className="mt-5 text-[9px] xs:text-[10px] space-x-2 xs:space-x-6 ">
             <span>Don't you have an account?</span>
-            <a className="text-purple-400" href="#">
+            <Link className="text-purple-400" to="/signup">
               Sign up
-            </a>
+            </Link>
           </div>
         </div>
       </div>
