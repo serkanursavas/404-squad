@@ -15,7 +15,7 @@ export default {
         primary: {
           DEFAULT: "#04764E", // Ana renk
         },
-        secondary: "#F2C94C", // İkincil renk (örn: vurgu, butonlar)
+        secondary: "#C084FC", // İkincil renk (örn: vurgu, butonlar)
         accent: "#F25C05", // Canlı vurgu renkleri (örn: CTA butonları)
         neutral: {
           light: "#F7F8FA", // Arka plan rengi
