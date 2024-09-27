@@ -8,6 +8,7 @@ import Profile from "../pages/Profile";
 import MainLayout from "../layouts/MainLayout";
 import AllPlayers from "../pages/AllPlayers";
 import Login from "../pages/Login";
+import Signup from "../pages/Signup";
 
 const routes = createBrowserRouter([
   {
@@ -40,6 +41,10 @@ const routes = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/signup",
+    element: <Signup />,
   },
   {
     path: "*",
