@@ -10,6 +10,7 @@ import AllPlayers from "../pages/AllPlayers";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 import AllUsers from "../pages/admin/AllUsers";
+import UpdateUser from "../pages/admin/UpdateUser";
 
 const routes = createBrowserRouter([
   {
@@ -37,9 +38,19 @@ const routes = createBrowserRouter([
         path: "/players",
         element: <AllPlayers />,
       },
+    ],
+  },
+  {
+    path: "/admin",
+    element: <MainLayout />,
+    children: [
       {
         path: "/admin/users",
         element: <AllUsers />,
+      },
+      {
+        path: "/admin/update-user/:id",
+        element: <UpdateUser />,
       },
     ],
   },
