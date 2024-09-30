@@ -38,7 +38,7 @@ const routes = createBrowserRouter([
         element: <AllPlayers />,
       },
       {
-        path: "/admin",
+        path: "/admin/users",
         element: <AllUsers />,
       },
     ],
