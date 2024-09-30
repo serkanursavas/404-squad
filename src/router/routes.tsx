@@ -11,6 +11,7 @@ import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 import AllUsers from "../pages/admin/AllUsers";
 import UpdateUser from "../pages/admin/UpdateUser";
+import AdminHome from "../pages/admin/AdminHome";
 
 const routes = createBrowserRouter([
   {
@@ -44,6 +45,10 @@ const routes = createBrowserRouter([
     path: "/admin",
     element: <MainLayout />,
     children: [
+      {
+        path: "/admin",
+        element: <AdminHome />,
+      },
       {
         path: "/admin/users",
         element: <AllUsers />,

@@ -4,6 +4,7 @@ import homeIcon from "../../assets/icons/home.svg";
 import matchesIcon from "../../assets/icons/matches.svg";
 import profileIcon from "../../assets/icons/profile.svg";
 import playersIcon from "../../assets/icons/players.svg";
+import adminIcon from "../../assets/icons/android.svg";
 
 import Icons from "../ui/Icons";
 
@@ -16,6 +17,7 @@ const navLinks = [
   { to: "/matches", label: "Matches", icon: matchesIcon },
   { to: "/profile/1", label: "Profile", icon: profileIcon },
   { to: "/players", label: "Players", icon: playersIcon },
+  { to: "/admin", label: "Admin", icon: adminIcon },
 ];
 
 export default function Navigation({ toggleMobileMenu }: Props) {
