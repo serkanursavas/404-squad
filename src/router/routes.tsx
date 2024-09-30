@@ -9,6 +9,7 @@ import MainLayout from "../layouts/MainLayout";
 import AllPlayers from "../pages/AllPlayers";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
+import AllUsers from "../pages/admin/AllUsers";
 
 const routes = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const routes = createBrowserRouter([
       {
         path: "/players",
         element: <AllPlayers />,
+      },
+      {
+        path: "/admin",
+        element: <AllUsers />,
       },
     ],
   },
