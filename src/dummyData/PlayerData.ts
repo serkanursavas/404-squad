@@ -1,0 +1,58 @@
+import { PlayerInfo } from "../types/PlayersTypes";
+
+export const dummyPlayerInfo: PlayerInfo[] =[
+    {
+      id: 1,
+      name: "Serkan",
+      age: 28,
+      form: 7.7,
+      position: "Forvet",
+      dominantFoot: 'right',
+      photo: "https://via.placeholder.com/150",
+    },
+    {
+      id: 2,
+      name: "Metehan",
+      age: 24,
+      form: 6.6,
+      position: "Orta Saha",
+      dominantFoot: 'right',
+      photo: "https://via.placeholder.com/150",
+    },
+    {
+      id: 3,
+      name: "Caner",
+      age: 31,
+      form: 4.5,
+      position: "Defans",
+      dominantFoot: 'right',
+      photo: "https://via.placeholder.com/150",
+    },
+    {
+      id: 4,
+      name: "Isa Can",
+      age: 26,
+      form: 9,
+      position: "Kaleci",
+      dominantFoot: 'left',
+      photo: "https://via.placeholder.com/150",
+    },
+    {
+      id: 5,
+      name: "Hayri Sencer",
+      age: 29,
+      form: 8.5,
+      position: "Orta Saha",
+      dominantFoot: 'right',
+      photo: "https://via.placeholder.com/150",
+    },
+    {
+      id: 6,
+      name: "Muhammet Furkan",
+      age: 23,
+      form: 6.2,
+      position: "Forvet",
+      dominantFoot: 'left',
+      photo: "https://via.placeholder.com/150",
+    },
+  ];

@@ -4,5 +4,6 @@ export interface PlayerInfo {
     age: number
     form: number
     position:string
+    dominantFoot: 'right' | 'left' | 'both'
     photo: string
   }
