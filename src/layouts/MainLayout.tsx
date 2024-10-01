@@ -12,9 +12,9 @@ export default function MainLayout() {
   };
 
   return (
-    <div className="bg-neutral">
+    <div className="flex flex-col min-h-screen bg-neutral">
       <Header toggleMobileMenu={toggleMobileMenu} isOpen={isOpen} />
-      <main className="p-2">
+      <main className="flex-grow p-2">
         {isOpen ? (
           <Navigation toggleMobileMenu={toggleMobileMenu} />
         ) : (
