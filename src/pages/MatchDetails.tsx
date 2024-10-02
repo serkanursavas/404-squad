@@ -8,14 +8,16 @@ import blackLogo from '../assets/images/club-black.svg'
 import whiteLogo from '../assets/images/club-white.svg'
 import locationIcon from '../assets/icons/bookmarks.svg'
 import Icons from '../components/ui/Icons'
-import SquadList from '../components/match/SquadList'
-import Scoreboard from '../components/match/Scoreboard'
+import Scoreboard from '../components/match/match-detail/Scoreboard'
+import SquadList from '../components/match/match-detail/SquadList'
 
 const dummyMatches: Match[] = [
   {
     id: 1,
     date: '2024-09-24',
     location: 'Star',
+    isPlayed: false,
+    voteMode: true,
     team1: {
       name: 'Black Eagles',
       logo: blackLogo,
@@ -27,7 +29,7 @@ const dummyMatches: Match[] = [
         { id: 1, playerName: 'John Doe' }
       ],
       players: [
-        { id: 1, name: 'John Doe', form: 8 },
+        { id: 1, name: 'John Doe', form: 0 },
         { id: 2, name: 'Max Power', form: 7 },
         { id: 3, name: 'Chris Rock', form: 6 },
         { id: 4, name: 'Steve Jobs', form: 9 },
@@ -59,6 +61,8 @@ const dummyMatches: Match[] = [
     id: 2,
     date: '2024-07-11',
     location: 'Şirin',
+    isPlayed: true,
+    voteMode: true,
     team1: {
       name: 'Red Bulls',
       logo: whiteLogo,
@@ -97,6 +101,8 @@ const dummyMatches: Match[] = [
     id: 3,
     date: '2024-05-04',
     location: 'Türkan Saylan',
+    isPlayed: true,
+    voteMode: true,
     team1: {
       name: 'Green Tigers',
       logo: whiteLogo,
@@ -151,16 +157,21 @@ export default function MatchDetails() {
       <Scoreboard
         team1={match.team1}
         team2={match.team2}
+        isPlayed={match.isPlayed}
       />
 
       <div className="px-2 text-[12px] mt-12 space-y-8">
         <SquadList
           teamLogo={match.team1.logo}
           squad={match.team1.players}
+          isPlayed={match.isPlayed}
+          voteMode={match.voteMode}
         />
         <SquadList
           teamLogo={match.team2.logo}
           squad={match.team2.players}
+          isPlayed={match.isPlayed}
+          voteMode={match.voteMode}
         />
       </div>
     </div>
