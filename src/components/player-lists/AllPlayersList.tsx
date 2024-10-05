@@ -1,4 +1,4 @@
-import { PlayerInfo } from "../../types/PlayersTypes";
+import { PlayerInfo } from "../../types/PlayerTypes";
 import PlayerCard from "./PlayerCard";
 
 type PlayersListProps = {
