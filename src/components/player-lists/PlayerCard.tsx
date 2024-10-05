@@ -1,6 +1,6 @@
 import mvpPic from "../../assets/images/mvp.png";
 import starIcon from "../../assets/icons/starAlt.svg";
-import { PlayerInfo } from "../../types/PlayersTypes";
+import { PlayerInfo } from "../../types/PlayerTypes";
 
 type PlayersListProps = {
   player: PlayerInfo;

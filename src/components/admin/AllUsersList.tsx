@@ -8,7 +8,7 @@ type UsersListProps = {
 export default function AllUsersList({ usersData }: UsersListProps) {
   return (
     <div className=" text-center md:w-10/12 mx-auto mt-3">
-      <h1 className="text-2xl text-neutral-dark ">Manage Players</h1>
+      <h1 className="text-2xl text-neutral-dark ">Manage Users</h1>
       <table className="table-auto w-full border-separate mt-4">
         <thead className="text-primary text-base">
           <tr>
