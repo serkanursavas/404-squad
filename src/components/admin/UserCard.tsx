@@ -9,20 +9,20 @@ type UsersListProps = {
 export default function UserCard({ user }: UsersListProps) {
   return (
     <tr className="text-sm even:bg-neutral odd:bg-neutral-dark odd:text-white">
-      <td scope="col" className="border px-4 py-2">
+      <td scope="col" className="px-4 py-2 border">
         {user.id}
       </td>
-      <td scope="col" className="border px-4 py-2">
+      <td scope="col" className="px-4 py-2 border">
         {user.username}
       </td>
-      <td scope="col" className="border px-4 py-2">
+      <td scope="col" className="px-4 py-2 border">
         {user.role}
       </td>
-      <td scope="col" className="border px-4 py-2 flex justify-center gap-10">
+      <td scope="col" className="flex justify-center gap-10 px-4 py-2 border">
         <Link to={`/admin/update-user/${user.id}`}>
-          <Button label="Update" color="bg-primary text-white text-xs" />
+          <Button label="Update" className="text-xs text-white bg-primary" />
         </Link>
-        <Button label="Delete" color="bg-primary text-white text-xs" />
+        <Button label="Delete" className="text-xs text-white bg-primary" />
       </td>
     </tr>
   );

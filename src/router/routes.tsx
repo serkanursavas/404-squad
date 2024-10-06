@@ -13,6 +13,9 @@ import AllUsers from "../pages/admin/AllUsers";
 import UpdateUser from "../pages/admin/UpdateUser";
 import AdminHome from "../pages/admin/AdminHome";
 import ManagePlayers from "../pages/admin/AllPlayers";
+import ManageMatches from "../pages/admin/ManageMatches";
+import CreateMatches from "../pages/admin/CreateMatches";
+import UpdateMatches from "../pages/admin/UpdateMatches";
 
 const routes = createBrowserRouter([
   {
@@ -57,6 +60,18 @@ const routes = createBrowserRouter([
       {
         path: "update-user/:id",
         element: <UpdateUser />,
+      },
+      {
+        path: "matches",
+        element: <ManageMatches />,
+      },
+      {
+        path: "matches/create",
+        element: <CreateMatches />,
+      },
+      {
+        path: "matches/:id",
+        element: <UpdateMatches />,
       },
       {
         path: "players",

@@ -24,7 +24,7 @@ export default function Login() {
 
             <Button
               label="Login"
-              color="mx-1 bg-primary text-white"
+              className="mx-1 text-white bg-primary"
               shadowColor="rgba(255,255,255, 0.2)"
             />
           </form>
