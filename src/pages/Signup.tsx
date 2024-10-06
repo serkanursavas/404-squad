@@ -23,7 +23,7 @@ export default function Signup() {
 
             <Button
               label="Create"
-              color="mx-1 bg-secondary text-black"
+              className="mx-1 text-black bg-secondary"
               shadowColor="rgba(255,255,255, 0.2)"
             />
           </form>
