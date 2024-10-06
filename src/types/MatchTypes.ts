@@ -38,4 +38,6 @@ export interface Match {
   location: string
   team1: Team
   team2: Team
+  isPlayed: boolean
+  voteMode: boolean
 }

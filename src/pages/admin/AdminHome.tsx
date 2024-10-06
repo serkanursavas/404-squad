@@ -1,4 +1,3 @@
-import React from "react";
 import Button from "../../components/ui/Button";
 import { Link } from "react-router-dom";
 
@@ -13,8 +12,8 @@ export default function AdminHome() {
         <Link className="" to={"/admin/matches"}>
           <Button label="Manage Matches" className="" />
         </Link>
-        <Link className="" to={""}>
-          <Button label="Manage Players" className="" />
+        <Link className="" to={"/admin/players"}>
+          <Button label="Manage Players" color="" />
         </Link>
       </div>
     </div>
