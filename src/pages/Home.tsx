@@ -7,7 +7,7 @@ import ratingIcon from "../assets/icons/coin.svg";
 import MvpCard from "../components/player-lists/MvpCard";
 
 const dummyMatch = {
-  date: "2024-09-23",
+  date: "2024-10-13",
   time: "18:00",
   location: "Star Stadium",
 };
