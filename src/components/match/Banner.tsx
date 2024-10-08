@@ -1,19 +1,19 @@
-import useWeather from '../../hooks/useWeather'
-import Button from '../ui/Button'
-import MatchInfo from './MatchInfo'
+import useWeather from "../../hooks/useWeather";
+import Button from "../ui/Button";
+import MatchInfo from "./MatchInfo";
 
 interface MatchInfo {
-  date: string
-  time: string
-  location: string
+  date: string;
+  time: string;
+  location: string;
 }
 
 type BannerProps = {
-  match: MatchInfo
-}
+  match: MatchInfo;
+};
 
 export default function Banner({ match }: BannerProps) {
-  const { weather, loading, error } = useWeather(match.date)
+  const { weather, loading, error } = useWeather(match.date);
 
   return (
     <div className="relative px-4 py-8 overflow-hidden text-sm shadow-lg bg-primary">
@@ -27,6 +27,8 @@ export default function Banner({ match }: BannerProps) {
           location={match.location}
         />
 
+        {loading && <p>loading...</p>}
+
         {weather && (
           <div className="flex items-center text-white">
             <img
@@ -34,6 +36,7 @@ export default function Banner({ match }: BannerProps) {
               alt={weather.description}
               className="w-12 h-12"
             />
+
             <span>{weather.description}</span>
           </div>
         )}
@@ -43,5 +46,5 @@ export default function Banner({ match }: BannerProps) {
         </div>
       </div>
     </div>
-  )
+  );
 }

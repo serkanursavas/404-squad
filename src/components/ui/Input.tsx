@@ -1,23 +1,25 @@
-import { useState } from 'react'
-import { ErrorMessage, Field, FieldProps } from 'formik'
-import { FaEye, FaEyeSlash } from 'react-icons/fa'
+import { useState } from "react";
+import { ErrorMessage, Field, FieldProps } from "formik";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 interface InputProps {
-  label: string
-  name: string
-  type: string
-  error?: boolean | string
+  label: string;
+  name: string;
+  type: string;
+  error?: boolean | string;
 }
 
-export default function Input({ label, name, type = 'text', error }: InputProps) {
-  const [showPassword, setShowPassword] = useState(false)
+export default function Input({ label, name, type = "text", error }: InputProps) {
+  const [showPassword, setShowPassword] = useState(false);
 
   function handleShowPassword() {
-    setShowPassword(!showPassword)
+    setShowPassword(!showPassword);
   }
 
+  const today = new Date().toISOString().split("T")[0];
+
   return (
-    <div className="relative mb-4">
+    <div className="relative mb-2 space-y-2">
       <label
         className="text-xs text-neutral-dark"
         htmlFor={name}
@@ -29,14 +31,15 @@ export default function Input({ label, name, type = 'text', error }: InputProps)
           <input
             {...field}
             id={name}
-            className={`w-full py-2 border-b-2 focus:outline-none ${
-              error ? 'border-red-500' : 'border-gray-300'
+            className={`w-full p-2 border-b-2 focus:outline-none ${
+              error ? "border-red-500" : "border-gray-300"
             } focus:border-primary focus:border-b-[3px]`}
-            type={showPassword && type === 'password' ? 'text' : type}
+            type={showPassword && type === "password" ? "text" : type}
+            min={type === "date" ? today : undefined}
           />
         )}
       </Field>
-      {type === 'password' && (
+      {type === "password" && (
         <div
           className="absolute cursor-pointer top-9 right-3"
           onClick={handleShowPassword}
@@ -52,5 +55,5 @@ export default function Input({ label, name, type = 'text', error }: InputProps)
         />
       )}
     </div>
-  )
+  );
 }
