@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { MatchInfo } from "../../types/MatchTypes";
 import CardWrapper from "./CardWrapper";
 
