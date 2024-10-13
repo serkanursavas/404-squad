@@ -11,6 +11,8 @@ export interface MatchInfo {
     logo?: string
   }
   score2: number
+  isPlayed: boolean
+  goals: string[]
 }
 
 export interface Goal {
@@ -40,4 +42,5 @@ export interface Match {
   team2: Team
   isPlayed: boolean
   voteMode: boolean
+  isVoted: boolean
 }
