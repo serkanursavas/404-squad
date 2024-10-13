@@ -19,18 +19,22 @@ const dummyMatchInfo: MatchInfo = {
     name: 'White',
     logo: whiteLogo
   },
-  score2: 0
+  score2: 0,
+  isPlayed: false,
+  goals: []
 }
 
 export default function ManageMatches() {
   const [matchInfo, setMatchInfo] = useState<MatchInfo | null>(dummyMatchInfo)
+
+  const route = matchInfo?.isPlayed && matchInfo.goals.length === 0 ? `/admin/matches/${matchInfo.id}/add-goals` : `/admin/matches/${matchInfo?.id}`
 
   return (
     <div>
       {matchInfo ? (
         <MatchCard
           match={matchInfo}
-          route={`/admin/matches/${matchInfo.id}`}
+          route={route}
         />
       ) : (
         <div className="flex items-center justify-center mt-40">

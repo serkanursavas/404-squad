@@ -116,24 +116,28 @@ export default function MatchFormPage() {
                 label="Match Place"
                 name="location"
                 type="text"
+                min={1}
                 error={touched.location && errors.location ? errors.location : false}
               />
               <Input
                 label="Match Date"
                 name="matchDate"
                 type="date"
+                min={1}
                 error={touched.matchDate && errors.matchDate ? errors.matchDate : false}
               />
               <Input
                 label="Match Time"
                 name="matchTime"
                 type="time"
+                min={1}
                 error={touched.matchTime && errors.matchTime ? errors.matchTime : false}
               />
               <Input
                 label="Team Size"
                 name="teamSize"
                 type="number"
+                min={1}
                 error={touched.teamSize && errors.teamSize ? errors.teamSize : false}
               />
 

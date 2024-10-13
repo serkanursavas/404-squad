@@ -1,25 +1,27 @@
-import { useState } from "react";
-import { ErrorMessage, Field, FieldProps } from "formik";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useState } from 'react'
+import { ErrorMessage, Field, FieldProps } from 'formik'
+import { FaEye, FaEyeSlash } from 'react-icons/fa'
 
 interface InputProps {
-  label: string;
-  name: string;
-  type: string;
-  error?: boolean | string;
+  label: string
+  name: string
+  type: string
+  error?: boolean | string
+  min: number
+  className?: string
 }
 
-export default function Input({ label, name, type = "text", error }: InputProps) {
-  const [showPassword, setShowPassword] = useState(false);
+export default function Input({ label, name, type = 'text', error, min, className }: InputProps) {
+  const [showPassword, setShowPassword] = useState(false)
 
   function handleShowPassword() {
-    setShowPassword(!showPassword);
+    setShowPassword(!showPassword)
   }
 
-  const today = new Date().toISOString().split("T")[0];
+  const today = new Date().toISOString().split('T')[0]
 
   return (
-    <div className="relative mb-2 space-y-2">
+    <div className={`relative mb-2 space-y-2 ${className}`}>
       <label
         className="text-xs text-neutral-dark"
         htmlFor={name}
@@ -32,14 +34,14 @@ export default function Input({ label, name, type = "text", error }: InputProps)
             {...field}
             id={name}
             className={`w-full p-2 border-b-2 focus:outline-none ${
-              error ? "border-red-500" : "border-gray-300"
+              error ? 'border-red-500' : 'border-gray-300'
             } focus:border-primary focus:border-b-[3px]`}
-            type={showPassword && type === "password" ? "text" : type}
-            min={type === "date" ? today : undefined}
+            type={showPassword && type === 'password' ? 'text' : type}
+            min={type === 'date' ? today : min}
           />
         )}
       </Field>
-      {type === "password" && (
+      {type === 'password' && (
         <div
           className="absolute cursor-pointer top-9 right-3"
           onClick={handleShowPassword}
@@ -55,5 +57,5 @@ export default function Input({ label, name, type = "text", error }: InputProps)
         />
       )}
     </div>
-  );
+  )
 }
