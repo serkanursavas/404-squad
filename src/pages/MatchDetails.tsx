@@ -16,8 +16,9 @@ const dummyMatches: Match[] = [
     id: 1,
     date: '2024-09-24',
     location: 'Star',
-    isPlayed: false,
+    isPlayed: true,
     voteMode: true,
+    isVoted: false,
     team1: {
       name: 'Black Eagles',
       logo: blackLogo,
@@ -62,7 +63,8 @@ const dummyMatches: Match[] = [
     date: '2024-07-11',
     location: 'Şirin',
     isPlayed: true,
-    voteMode: true,
+    voteMode: false,
+    isVoted: true,
     team1: {
       name: 'Red Bulls',
       logo: whiteLogo,
@@ -102,7 +104,8 @@ const dummyMatches: Match[] = [
     date: '2024-05-04',
     location: 'Türkan Saylan',
     isPlayed: true,
-    voteMode: true,
+    voteMode: false,
+    isVoted: true,
     team1: {
       name: 'Green Tigers',
       logo: whiteLogo,
@@ -138,11 +141,7 @@ export default function MatchDetails() {
   const match = dummyMatches.find(match => match.id === Number(id))
 
   if (!match) {
-    return (
-      <div className="absolute top-0 left-0 flex items-center justify-center w-screen h-screen text-xl">
-        Match Not Found
-      </div>
-    )
+    return <div className="absolute top-0 left-0 flex items-center justify-center w-screen h-screen text-xl">Match Not Found</div>
   }
 
   return (
@@ -166,12 +165,14 @@ export default function MatchDetails() {
           squad={match.team1.players}
           isPlayed={match.isPlayed}
           voteMode={match.voteMode}
+          isVotingClosed={match.isVoted}
         />
         <SquadList
           teamLogo={match.team2.logo}
           squad={match.team2.players}
           isPlayed={match.isPlayed}
           voteMode={match.voteMode}
+          isVotingClosed={match.isVoted}
         />
       </div>
     </div>

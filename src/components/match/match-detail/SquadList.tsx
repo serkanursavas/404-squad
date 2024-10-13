@@ -6,14 +6,17 @@ import VoteForm from './VoteForm'
 interface SquadListProps {
   teamLogo: string
   squad: Player[]
-  isPlayed: boolean
-  voteMode: boolean
+  isPlayed: boolean // Maçın oynanıp oynanmadığı
+  voteMode: boolean // Oy verme modunun aktif olup olmadığı
+  isVotingClosed: boolean // Maçın oylamaya kalıcı olarak kapalı olup olmadığı
 }
 
-export default function SquadList({ teamLogo, squad, isPlayed, voteMode }: SquadListProps) {
+export default function SquadList({ teamLogo, squad, isPlayed, voteMode, isVotingClosed }: SquadListProps) {
   const currentUserId = 6
-  const [isVoted, setIsVoted] = useState(false)
+  const [hasVoted, setHasVoted] = useState(false) // backend api hazirlanacak rating sorgusu ile
   const inTeam: boolean = squad.some(player => player.id === currentUserId)
+
+  const canVote = isPlayed && inTeam && !hasVoted && !isVotingClosed && voteMode
 
   return (
     <div>
@@ -30,8 +33,11 @@ export default function SquadList({ teamLogo, squad, isPlayed, voteMode }: Squad
           }}
         ></div>
 
-        {!isPlayed && inTeam && !isVoted && voteMode ? (
-          <VoteForm squad={squad} />
+        {canVote ? (
+          <VoteForm
+            squad={squad}
+            handlePlayerVoted={() => setHasVoted(true)}
+          />
         ) : (
           <SquadListDisplay
             squad={squad}

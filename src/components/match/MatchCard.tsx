@@ -1,10 +1,10 @@
-import { MatchInfo } from "../../types/MatchTypes";
-import CardWrapper from "./CardWrapper";
+import { MatchInfo } from '../../types/MatchTypes'
+import CardWrapper from './CardWrapper'
 
 type MatchInfoProps = {
-  match: MatchInfo;
-  route?: string;
-};
+  match: MatchInfo
+  route: string
+}
 
 export default function MatchCard({ match, route }: MatchInfoProps) {
   return (
@@ -30,5 +30,5 @@ export default function MatchCard({ match, route }: MatchInfoProps) {
         </div>
       </div>
     </CardWrapper>
-  );
+  )
 }
