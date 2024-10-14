@@ -9,7 +9,7 @@ export const dummyPlayerInfo: PlayerInfo[] = [
     photo: 'https://via.placeholder.com/150',
     position: 'Forward',
     active: true,
-    rating: Math.floor(Math.random() * 10) + 1
+    rating: parseFloat((Math.random() * 10 + 1).toFixed(1))
   },
   {
     id: 2,
@@ -19,7 +19,7 @@ export const dummyPlayerInfo: PlayerInfo[] = [
     photo: 'https://via.placeholder.com/150',
     position: 'Midfielder',
     active: false,
-    rating: Math.floor(Math.random() * 10) + 1
+    rating: parseFloat((Math.random() * 10 + 1).toFixed(1))
   },
   {
     id: 3,
@@ -29,7 +29,7 @@ export const dummyPlayerInfo: PlayerInfo[] = [
     photo: 'https://via.placeholder.com/150',
     position: 'Defender',
     active: true,
-    rating: Math.floor(Math.random() * 10) + 1
+    rating: parseFloat((Math.random() * 10 + 1).toFixed(1))
   },
   {
     id: 4,
@@ -39,7 +39,7 @@ export const dummyPlayerInfo: PlayerInfo[] = [
     photo: 'https://via.placeholder.com/150',
     position: 'Goalkeeper',
     active: true,
-    rating: Math.floor(Math.random() * 10) + 1
+    rating: parseFloat((Math.random() * 10 + 1).toFixed(1))
   },
   {
     id: 5,
@@ -49,7 +49,7 @@ export const dummyPlayerInfo: PlayerInfo[] = [
     photo: 'https://via.placeholder.com/150',
     position: 'Midfielder',
     active: true,
-    rating: Math.floor(Math.random() * 10) + 1
+    rating: parseFloat((Math.random() * 10 + 1).toFixed(1))
   },
   {
     id: 6,
@@ -59,6 +59,6 @@ export const dummyPlayerInfo: PlayerInfo[] = [
     photo: 'https://via.placeholder.com/150',
     position: 'Forward',
     active: false,
-    rating: Math.floor(Math.random() * 10) + 1
+    rating: parseFloat((Math.random() * 10 + 1).toFixed(1))
   }
 ]
