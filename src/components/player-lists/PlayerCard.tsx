@@ -14,7 +14,7 @@ export default function PlayerCard({ player }: PlayersListProps) {
     <div
       onClick={() => navigate(`/profile/${player.id}`)}
       className={`flex w-full bg-primary text-white shadow-pixel 
-       ${player.active ? 'bg-primary hover:bg-primary-dark' : 'bg-neutral-dark opacity-50 border-2 border-dashed border-gray-500 cursor-not-allowed'}
+       ${player.active ? 'bg-primary hover:bg-primary-dark' : 'bg-neutral-dark opacity-50 border-2 border-dashed border-gray-500 grayscale'}
       `}
     >
       <div className={`w-5/12 p-6 pr-0 space-y-8 ${!player.active ? 'opacity-50 grayscale' : ''}`}>
@@ -26,7 +26,7 @@ export default function PlayerCard({ player }: PlayersListProps) {
         <div className="flex items-center text-2xl">
           <img
             src={starIcon}
-            className="mr-1 text-white w-7"
+            className="mr-1 text-white w-7 "
           />
           <div>{player.rating.toString().split('.')[0]}</div>
           <div className="text-base pt-1 tracking-[-0.3em]">.{player.rating.toString().split('.')[1]}</div>
