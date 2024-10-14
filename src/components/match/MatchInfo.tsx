@@ -15,7 +15,7 @@ export default function MatchInfo({ date, time, location }: MatchInfoProps) {
   const day = getFormattedDayAndMonth(date)
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-3">
       <InfoItem
         icon={dateIcon}
         text={day}
