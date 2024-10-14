@@ -7,7 +7,7 @@ interface InfoItemProps {
 
 export default function InfoItem({ icon, text }: InfoItemProps) {
   return (
-    <div className="flex items-center space-x-1 text-lg">
+    <div className="flex items-start space-x-1 text-lg">
       <Icons src={icon} />
       <span>{text}</span>
     </div>
