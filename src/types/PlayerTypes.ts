@@ -1,9 +1,10 @@
 export interface PlayerInfo {
-  id: number;
-  name: string;
-  age: number;
-  position: string;
-  rating: number;
-  foot: string;
-  photo: string;
+  id: number
+  name: string
+  surname: string
+  foot: string
+  photo: string
+  position: string
+  active: boolean
+  rating: number
 }
