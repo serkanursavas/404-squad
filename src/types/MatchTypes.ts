@@ -1,20 +1,3 @@
-export interface MatchInfo {
-  id: number
-  date: string
-  team1: {
-    name: string
-    logo?: string
-  }
-  score1: number
-  team2: {
-    name: string
-    logo?: string
-  }
-  score2: number
-  isPlayed: boolean
-  goals: string[]
-}
-
 export interface Player {
   id: number
   name: string
@@ -29,16 +12,12 @@ export interface Team {
   players: Player[]
 }
 
-export interface Match {
+export interface AllMatch {
   id: number
   dateTime: string
-  location: string
-  weather: string
   homeTeamScore: number
   awayTeamScore: number
-
-  isPlayed: boolean
-  isVoted: boolean
+  played: boolean
 }
 
 export interface Match {
