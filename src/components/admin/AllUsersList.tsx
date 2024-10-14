@@ -1,28 +1,22 @@
-import { UserInfo } from "../../types/UserTypes";
-import UserCard from "./UserCard";
+import { UserInfo } from '../../types/UserTypes'
+import UserCard from './UserCard'
 
 type UsersListProps = {
-  usersData: UserInfo[];
-};
+  usersData: UserInfo[]
+}
 
 export default function AllUsersList({ usersData }: UsersListProps) {
   return (
-    <div className="mx-auto mt-3 text-center md:w-10/12">
+    <div className="mx-auto mt-3 overflow-hidden text-center md:w-10/12">
       <h1 className="text-2xl text-neutral-dark ">Manage Users</h1>
       <table className="w-full mt-4 border-separate table-auto">
-        <thead className="text-base text-primary">
+        <thead className="text-sm text-primary">
           <tr>
             <th
               scope="col"
               className="px-4 py-2 border"
             >
-              Id
-            </th>
-            <th
-              scope="col"
-              className="px-4 py-2 border"
-            >
-              Name
+              Username
             </th>
             <th
               scope="col"
@@ -39,16 +33,16 @@ export default function AllUsersList({ usersData }: UsersListProps) {
           </tr>
         </thead>
         <tbody className="text-neutral-dark">
-          {usersData.map((user) => {
+          {usersData.map(user => {
             return (
               <UserCard
                 key={user.id}
                 user={user}
               />
-            );
+            )
           })}
         </tbody>
       </table>
     </div>
-  );
+  )
 }
