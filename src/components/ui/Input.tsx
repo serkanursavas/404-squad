@@ -7,11 +7,12 @@ interface InputProps {
   name: string
   type: string
   error?: boolean | string
-  min: number
+  min?: number
   className?: string
+  disabled?: boolean
 }
 
-export default function Input({ label, name, type = 'text', error, min, className }: InputProps) {
+export default function Input({ label, name, type = 'text', error, min, className, disabled }: InputProps) {
   const [showPassword, setShowPassword] = useState(false)
 
   function handleShowPassword() {
@@ -33,11 +34,14 @@ export default function Input({ label, name, type = 'text', error, min, classNam
           <input
             {...field}
             id={name}
-            className={`w-full p-2 border-b-2 focus:outline-none ${
+            className={`w-full p-2 border-b-2 focus:outline-none  focus:border-primary focus:border-b-[3px] ${
               error ? 'border-red-500' : 'border-gray-300'
-            } focus:border-primary focus:border-b-[3px]`}
+            } 
+            ${disabled && 'bg-white'}
+              `}
             type={showPassword && type === 'password' ? 'text' : type}
             min={type === 'date' ? today : min}
+            disabled={disabled}
           />
         )}
       </Field>

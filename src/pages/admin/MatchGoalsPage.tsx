@@ -1,8 +1,8 @@
 import { useState, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
-import Swal from 'sweetalert2'
 import AvailablePlayersList from '../../components/admin/goal/AvailablePlayerList'
 import GoalsList from '../../components/admin/goal/GoalsList'
+import { showConfirmationModal } from '../../utils/showConfirmationModal'
 
 const dummyPlayers = [
   { id: 1, playerName: 'John', teamColor: 'black' },
@@ -52,24 +52,22 @@ export default function MatchGoalsPage() {
       goals: goals.map(goals => ({ playerId: goals.playerId, teamColor: goals.teamColor }))
     }
 
-    Swal.fire({
-      title: 'Are you sure?',
-      text: 'Do you want to save the goals?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#04764E',
-      cancelButtonColor: '#D32F2F',
-      confirmButtonText: 'Yes',
-      customClass: {
-        title: 'text-sm',
-        popup: 'text-sm rounded-none'
-      }
-    }).then(result => {
-      if (result.isConfirmed) {
+    showConfirmationModal(
+      {
+        title: 'Are you sure?',
+        text: 'Do you want to save the goals?',
+        icon: 'warning',
+        confirmButtonText: 'Yes'
+      },
+      () => {
         console.log(postData)
-        Swal.fire('Saved!', 'Your goals have been saved.', 'success')
+      },
+      {
+        title: 'Saved!',
+        text: 'Goals have been saved.',
+        icon: 'success'
       }
-    })
+    )
   }
 
   function submitHandler(values: { playerId: string; goalCount: number }, { resetForm }: { resetForm: () => void }) {
