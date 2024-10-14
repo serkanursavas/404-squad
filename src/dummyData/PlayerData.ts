@@ -18,7 +18,7 @@ export const dummyPlayerInfo: PlayerInfo[] = [
     foot: 'right',
     photo: 'https://via.placeholder.com/150',
     position: 'Midfielder',
-    active: true,
+    active: false,
     rating: Math.floor(Math.random() * 10) + 1
   },
   {
@@ -58,7 +58,7 @@ export const dummyPlayerInfo: PlayerInfo[] = [
     foot: 'left',
     photo: 'https://via.placeholder.com/150',
     position: 'Forward',
-    active: true,
+    active: false,
     rating: Math.floor(Math.random() * 10) + 1
   }
 ]
