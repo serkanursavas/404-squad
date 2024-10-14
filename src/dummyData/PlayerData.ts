@@ -1,58 +1,64 @@
-import { PlayerInfo } from "../types/PlayerTypes";
+import { PlayerInfo } from '../types/PlayerTypes'
 
 export const dummyPlayerInfo: PlayerInfo[] = [
   {
     id: 1,
-    name: "Serkan",
-    age: 28,
-    rating: 7.7,
-    position: "Forward",
-    foot: "right",
-    photo: "https://via.placeholder.com/150",
+    name: 'Serkan',
+    surname: 'Ursavas',
+    foot: 'right',
+    photo: 'https://via.placeholder.com/150',
+    position: 'Forward',
+    active: true,
+    rating: Math.floor(Math.random() * 10) + 1
   },
   {
     id: 2,
-    name: "Metehan",
-    age: 24,
-    rating: 6.6,
-    position: "Midfielder",
-    foot: "right",
-    photo: "https://via.placeholder.com/150",
+    name: 'Metehan',
+    surname: 'Canpolat',
+    foot: 'right',
+    photo: 'https://via.placeholder.com/150',
+    position: 'Midfielder',
+    active: true,
+    rating: Math.floor(Math.random() * 10) + 1
   },
   {
     id: 3,
-    name: "Caner",
-    age: 31,
-    rating: 4.5,
-    position: "Defender",
-    foot: "right",
-    photo: "https://via.placeholder.com/150",
+    name: 'Caner',
+    surname: 'Tanriverdi',
+    foot: 'right',
+    photo: 'https://via.placeholder.com/150',
+    position: 'Defender',
+    active: true,
+    rating: Math.floor(Math.random() * 10) + 1
   },
   {
     id: 4,
-    name: "Isa Can",
-    age: 26,
-    rating: 9,
-    position: "Goalkeeper",
-    foot: "left",
-    photo: "https://via.placeholder.com/150",
+    name: 'Isa Can',
+    surname: 'Cabuk',
+    foot: 'left',
+    photo: 'https://via.placeholder.com/150',
+    position: 'Goalkeeper',
+    active: true,
+    rating: Math.floor(Math.random() * 10) + 1
   },
   {
     id: 5,
-    name: "Hayri Sencer",
-    age: 29,
-    rating: 8.5,
-    position: "Midfielder",
-    foot: "right",
-    photo: "https://via.placeholder.com/150",
+    name: 'Hayri Sencer',
+    surname: 'Ceran',
+    foot: 'right',
+    photo: 'https://via.placeholder.com/150',
+    position: 'Midfielder',
+    active: true,
+    rating: Math.floor(Math.random() * 10) + 1
   },
   {
     id: 6,
-    name: "Muhammet Furkan",
-    age: 23,
-    rating: 6.2,
-    position: "Forward",
-    foot: "left",
-    photo: "https://via.placeholder.com/150",
-  },
-];
+    name: 'Muhammet Furkan',
+    surname: 'Doe',
+    foot: 'left',
+    photo: 'https://via.placeholder.com/150',
+    position: 'Forward',
+    active: true,
+    rating: Math.floor(Math.random() * 10) + 1
+  }
+]

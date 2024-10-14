@@ -1,14 +1,20 @@
-import mvpPic from "../../assets/images/mvp.png";
-import starIcon from "../../assets/icons/starAlt.svg";
-import { PlayerInfo } from "../../types/PlayerTypes";
+import mvpPic from '../../assets/images/mvp.png'
+import starIcon from '../../assets/icons/starAlt.svg'
+import { PlayerInfo } from '../../types/PlayerTypes'
+import { useNavigate } from 'react-router-dom'
 
 type PlayersListProps = {
-  player: PlayerInfo;
-};
+  player: PlayerInfo
+}
 
 export default function PlayerCard({ player }: PlayersListProps) {
+  const navigate = useNavigate()
+
   return (
-    <div className="flex w-full text-white bg-primary shadow-pixel">
+    <div
+      onClick={() => navigate(`/profile/${player.id}`)}
+      className="flex w-full text-white bg-primary shadow-pixel"
+    >
       <div className="w-5/12 p-6 pr-0 space-y-8 ">
         <div className="space-y-2 ">
           <p>{player.name}</p>
@@ -20,8 +26,8 @@ export default function PlayerCard({ player }: PlayersListProps) {
             src={starIcon}
             className="mr-1 text-white w-7"
           />
-          <div>{player.rating.toString().split(".")[0]}</div>
-          <div className="text-base pt-1 tracking-[-0.3em]">.{player.rating.toString().split(".")[1]}</div>
+          <div>{player.rating.toString().split('.')[0]}</div>
+          <div className="text-base pt-1 tracking-[-0.3em]">.{player.rating.toString().split('.')[1]}</div>
         </div>
       </div>
       <div className="relative flex justify-end w-7/12 ">
@@ -32,5 +38,5 @@ export default function PlayerCard({ player }: PlayersListProps) {
       </div>
       <br />
     </div>
-  );
+  )
 }
