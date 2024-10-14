@@ -29,11 +29,7 @@ export default function Banner({ match }: BannerProps) {
 
   const { date, time } = splitDateTime(match.dateTime)
 
-  let weather, loading, error
-
-  if (!match.played) {
-    ;({ weather, loading, error } = useWeather(date))
-  }
+  const { weather, loading, error } = useWeather(date)
 
   return (
     <div className={`relative px-4 py-8 overflow-hidden text-sm ${match.played ? 'bg-neutral-dark' : 'bg-primary'} shadow-pixel `}>
@@ -67,7 +63,7 @@ export default function Banner({ match }: BannerProps) {
           />
         )}
 
-        {loading && <p>loading...</p>}
+        {loading && !match.played && <p>loading...</p>}
 
         {!match.played && weather && (
           <div className="flex items-center text-white">
