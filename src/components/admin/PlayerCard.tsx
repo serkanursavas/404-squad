@@ -54,7 +54,7 @@ export default function PlayerCard({ player }: PlayersListProps) {
         <Button
           type="button"
           label="Delete"
-          className="text-xs text-white bg-error"
+          className="text-xs text-white bg-primary-error"
           onClick={handleDelete}
         />
       </td>
