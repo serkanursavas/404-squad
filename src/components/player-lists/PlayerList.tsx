@@ -1,7 +1,9 @@
 import PlayerListItem from './PlayerListItem'
 
+import userIcon from '../../assets/icons/user.svg'
+
 interface PlayerInfo {
-  icon: string
+  playerId: number
   playerName: string
   statistic: string
 }
@@ -17,7 +19,8 @@ export default function PlayerList({ players }: PlayerListProp) {
         return (
           <PlayerListItem
             key={player.playerName}
-            icon={player.icon}
+            playerId={player.playerId}
+            icon={userIcon}
             playerName={player.playerName}
             statistic={player.statistic}
           />
