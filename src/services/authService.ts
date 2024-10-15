@@ -1,3 +1,4 @@
+import { CustomError } from '../hooks/useAuth'
 import { decodeToken } from '../utils/jwtDecode'
 import axiosInstance from './axiosInstance'
 
@@ -11,30 +12,41 @@ export interface User {
 }
 
 const login = async (username: string, password: string): Promise<{ user: User; token: string }> => {
-  const response = await axiosInstance.post<LoginResponse>('/login', {
-    username,
-    password
-  })
+  try {
+    const response = await axiosInstance.post<LoginResponse>('/users/login', {
+      username,
+      password
+    })
 
-  const { token } = response.data
+    const { token } = response.data
 
-  localStorage.setItem('token', token)
+    // Token'ı localStorage'a kaydet
+    localStorage.setItem('token', token)
 
-  const decodedToken = decodeToken(token)
-  if (!decodedToken) {
-    throw new Error('invalid token')
-  }
+    // Token'ı decode et
+    const decodedToken = decodeToken(token)
+    if (!decodedToken) {
+      throw new Error('Invalid token')
+    }
 
-  return {
-    user: {
-      username: decodedToken?.username || '',
-      role: decodedToken?.role || ''
-    },
-    token
+    return {
+      user: {
+        username: decodedToken?.username || '',
+        role: decodedToken?.role || ''
+      },
+      token
+    }
+  } catch (error: any) {
+    const customError = new Error(error.response?.data?.message || error.message || 'An unknown error occurred') as CustomError
+    customError.status = error.response?.status || 500
+    customError.details = error.response?.data?.details || 'No additional details available'
+
+    throw customError
   }
 }
 
 const logout = (): void => {
+  // Token'ı localStorage'dan sil
   localStorage.removeItem('token')
 }
 
