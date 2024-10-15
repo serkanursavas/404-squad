@@ -1,5 +1,5 @@
+import { JwtPayload, jwtDecode } from 'jwt-decode'
 import { CustomError } from '../hooks/useAuth'
-import { decodeToken } from '../utils/jwtDecode'
 import axiosInstance from './axiosInstance'
 
 interface LoginResponse {
@@ -24,15 +24,16 @@ const login = async (username: string, password: string): Promise<{ user: User; 
     localStorage.setItem('token', token)
 
     // Token'ı decode et
-    const decodedToken = decodeToken(token)
+    const decodedToken = jwtDecode<JwtPayload & { role: string }>(token)
+
     if (!decodedToken) {
       throw new Error('Invalid token')
     }
 
     return {
       user: {
-        username: decodedToken?.username || '',
-        role: decodedToken?.role || ''
+        username: decodedToken.sub || '',
+        role: decodedToken.role
       },
       token
     }
