@@ -1,23 +1,22 @@
-import MatchCard from "./MatchCard";
-
-import { MatchInfo } from "../../types/MatchTypes";
+import { AllMatch } from '../../types/MatchTypes'
+import MatchCard from './MatchCard'
 
 type MatchesListProps = {
-  matchesData: MatchInfo[];
-};
+  matchesData: AllMatch[]
+}
 
 export default function MatchesList({ matchesData }: MatchesListProps) {
   return (
     <>
-      {matchesData.map((match) => {
+      {matchesData?.map(match => {
         return (
           <MatchCard
             key={match.id}
             match={match}
             route={`/matches/${match.id}`}
           />
-        );
+        )
       })}
     </>
-  );
+  )
 }

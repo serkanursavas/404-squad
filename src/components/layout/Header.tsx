@@ -16,11 +16,11 @@ export default function Header({ toggleMobileMenu, isOpen }: Props) {
       <img
         src={notiIcon}
         alt="Notifications"
-        className="w-6"
+        className={`w-6 ${isOpen ? 'invisible' : ''} `}
       />
       <Link
         to="/"
-        className="cursor-pointer"
+        className={`${isOpen ? 'invisible' : ''} cursor-pointer`}
       >
         <img
           src={logo}

@@ -1,28 +1,27 @@
-import { Player } from '../../../types/MatchTypes'
+import { Roster } from '../../../types/MatchTypes'
 import { useState } from 'react'
 import SquadListDisplay from './SquadListDisplay'
 import VoteForm from './VoteForm'
 
 interface SquadListProps {
   teamLogo: string
-  squad: Player[]
-  isPlayed: boolean // Maçın oynanıp oynanmadığı
-  voteMode: boolean // Oy verme modunun aktif olup olmadığı
+  squad: Roster[]
+  played: boolean // Maçın oynanıp oynanmadığı
   isVotingClosed: boolean // Maçın oylamaya kalıcı olarak kapalı olup olmadığı
 }
 
-export default function SquadList({ teamLogo, squad, isPlayed, voteMode, isVotingClosed }: SquadListProps) {
-  const currentUserId = 6
-  const [hasVoted, setHasVoted] = useState(false) // backend api hazirlanacak rating sorgusu ile
+export default function SquadList({ teamLogo, squad, played, isVotingClosed }: SquadListProps) {
+  const currentUserId = 3
+  const [hasVoted, setHasVoted] = useState(false) // backend api hazirlanacak rating sorgusu ile contexapi
   const inTeam: boolean = squad.some(player => player.id === currentUserId)
 
-  const canVote = isPlayed && inTeam && !hasVoted && !isVotingClosed && voteMode
+  const canVote = played && inTeam && !hasVoted && !isVotingClosed
 
   return (
     <div>
       <div className="flex justify-between mb-3 text-neutral-dark border-b border-black text-[10px]">
         <span>Player</span>
-        <span>Form</span>
+        {isVotingClosed && <span>Rating</span>}
       </div>
 
       <div className="relative">
@@ -41,7 +40,7 @@ export default function SquadList({ teamLogo, squad, isPlayed, voteMode, isVotin
         ) : (
           <SquadListDisplay
             squad={squad}
-            isPlayed={isPlayed}
+            isVoted={isVotingClosed}
           />
         )}
       </div>

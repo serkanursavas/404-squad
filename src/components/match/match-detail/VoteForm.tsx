@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { Player } from '../../../types/MatchTypes'
+import { Roster } from '../../../types/MatchTypes'
 import Button from '../../ui/Button'
 import { Formik, Form, ErrorMessage } from 'formik'
 
@@ -9,21 +9,21 @@ import { showConfirmationModal } from '../../../utils/showConfirmationModal'
 import { VoteFormSchema } from '../../../validators/voteFormValidation'
 
 interface VoteFormProps {
-  squad: Player[]
+  squad: Roster[]
   handlePlayerVoted: () => void
 }
 
 export default function VoteForm({ squad, handlePlayerVoted }: VoteFormProps) {
   const navigate = useNavigate()
-  const currentPlayerId = 7
+  const currentPlayerId = 3
 
   const [isBouncing, setIsBouncing] = useState(true)
 
   return (
     <Formik
       initialValues={{
-        ratings: squad.map(player => ({
-          playerId: player.id,
+        ratings: squad.map(roster => ({
+          playerId: roster.playerId,
           rating: '' // Default is empty, meaning not selected
         }))
       }}
@@ -50,20 +50,20 @@ export default function VoteForm({ squad, handlePlayerVoted }: VoteFormProps) {
     >
       {({ values, setFieldValue }) => (
         <Form className="relative space-y-3">
-          {squad?.map((player, index) => (
+          {squad?.map((roster, index) => (
             <div
-              key={player.id}
+              key={roster.playerId}
               className={`flex justify-between items-center space-y-1 border-b border-gray-300 p-2 py-3`}
             >
               <span
-                className={`${currentPlayerId === player.id && 'text-accent'}`}
-                onClick={() => navigate(`/profile/${player.id}`)}
+                className={`${currentPlayerId === roster.playerId && 'text-accent'}`}
+                onClick={() => navigate(`/profile/${roster.playerId}`)}
               >
-                {player.name.split(' ').pop()}
+                {roster.playerName.split(' ')[0][0]}.{roster.playerName.split(' ').pop()}
               </span>
 
               <div className="">
-                {currentPlayerId !== player.id && (
+                {currentPlayerId !== roster.playerId && (
                   <div className="flex flex-col">
                     <div className="flex flex-row-reverse items-center space-x-2">
                       <SelectInput

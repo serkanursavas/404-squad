@@ -44,7 +44,7 @@ export default function PlayerCard({ player }: PlayersListProps) {
 
       <td
         scope="col"
-        className="flex flex-wrap justify-center px-4 py-2 space-y-4 border"
+        className="flex flex-wrap justify-center px-6 py-2 space-y-4 border"
       >
         <Button
           onClick={handleNavigate}
@@ -54,7 +54,7 @@ export default function PlayerCard({ player }: PlayersListProps) {
         <Button
           type="button"
           label="Delete"
-          className="text-xs text-white bg-error"
+          className="text-xs text-white bg-primary-error"
           onClick={handleDelete}
         />
       </td>

@@ -1,76 +1,54 @@
-import MatchesList from "../components/match/MatchesList";
+import MatchesList from '../components/match/MatchesList'
 
-import blackLogo from "../assets/images/club-black.svg";
-import whiteLogo from "../assets/images/club-white.svg";
-import TypingEffect from "../components/ui/TypingEffect";
+import TypingEffect from '../components/ui/TypingEffect'
+import { AllMatch } from '../types/MatchTypes'
 
-const dummyMatchInfo = [
+const matches: AllMatch[] = [
   {
     id: 1,
-    date: "Monday, 24 September",
-    team1: {
-      name: "Black",
-      logo: blackLogo,
-    },
-    score1: 4,
-    team2: {
-      name: "White",
-      logo: whiteLogo,
-    },
-    score2: 6,
+    dateTime: '2024-10-14T22:49:03.696Z',
+    homeTeamScore: 0,
+    awayTeamScore: 0,
+    played: true
   },
   {
     id: 2,
-    date: "Wednesday, 11 July",
-    team1: {
-      name: "White",
-      logo: whiteLogo,
-    },
-    score1: 2,
-    team2: {
-      name: "Black",
-      logo: blackLogo,
-    },
-    score2: 9,
+    dateTime: '2024-10-15T18:30:00.000Z',
+    homeTeamScore: 2,
+    awayTeamScore: 1,
+    played: true
   },
   {
     id: 3,
-    date: "Monday, 24 September",
-    team1: {
-      name: "Black",
-      logo: blackLogo,
-    },
-    score1: 4,
-    team2: {
-      name: "White",
-      logo: whiteLogo,
-    },
-    score2: 6,
+    dateTime: '2024-10-16T20:45:00.000Z',
+    homeTeamScore: 3,
+    awayTeamScore: 3,
+    played: false
   },
   {
     id: 4,
-    date: "Tuesday, 4 May",
-    team1: {
-      name: "Black",
-      logo: blackLogo,
-    },
-    score1: 9,
-    team2: {
-      name: "White",
-      logo: whiteLogo,
-    },
-    score2: 11,
+    dateTime: '2024-10-17T21:00:00.000Z',
+    homeTeamScore: 1,
+    awayTeamScore: 2,
+    played: false
   },
-];
+  {
+    id: 5,
+    dateTime: '2024-10-18T19:00:00.000Z',
+    homeTeamScore: 4,
+    awayTeamScore: 0,
+    played: true
+  }
+]
 
 export default function Matches() {
   return (
     <div className="space-y-6">
       <TypingEffect
-        text={["Latest Matches"]}
+        text={['Latest Matches']}
         className="text-sm text-purple-400 "
       />
-      <MatchesList matchesData={dummyMatchInfo} />
+      <MatchesList matchesData={matches} />
     </div>
-  );
+  )
 }

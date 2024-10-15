@@ -23,7 +23,7 @@ function AvailablePlayersList({ availablePlayers, submitHandler, saveGoalHandler
     >
       {({ values, errors, touched, setFieldValue }) => (
         <Form className="space-y-4">
-          <div className="grid items-start grid-cols-4 gap-4 pb-3 ">
+          <div className="grid items-start grid-cols-4 gap-4 pb-3">
             <div className="col-span-3">
               <SelectInput
                 key={availablePlayers.length}
@@ -42,7 +42,7 @@ function AvailablePlayersList({ availablePlayers, submitHandler, saveGoalHandler
                 name="goalCount"
                 min={1}
                 label="Count"
-                className="text-sm "
+                className="text-sm"
                 error={touched.goalCount && errors.goalCount ? errors.goalCount : false}
               />
             </div>

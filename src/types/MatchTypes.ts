@@ -1,29 +1,7 @@
-export interface MatchInfo {
-  id: number
-  date: string
-  team1: {
-    name: string
-    logo?: string
-  }
-  score1: number
-  team2: {
-    name: string
-    logo?: string
-  }
-  score2: number
-  isPlayed: boolean
-  goals: string[]
-}
-
-export interface Goal {
-  id: number
-  playerName: string
-}
-
 export interface Player {
   id: number
   name: string
-  form: number
+  rating: number
 }
 
 export interface Team {
@@ -34,13 +12,39 @@ export interface Team {
   players: Player[]
 }
 
+export interface AllMatch {
+  id: number
+  dateTime: string
+  homeTeamScore: number
+  awayTeamScore: number
+  played: boolean
+}
+
 export interface Match {
   id: number
-  date: string
   location: string
-  team1: Team
-  team2: Team
-  isPlayed: boolean
-  voteMode: boolean
-  isVoted: boolean
+  dateTime: string
+  weather: string
+  homeTeamScore: number
+  awayTeamScore: number
+  played: boolean
+  voted: boolean
+  goals: Goal[]
+  rosters: Roster[]
+}
+
+export interface Goal {
+  playerId: number
+
+  playerName: string
+
+  teamColor: string
+}
+
+export interface Roster {
+  id: number
+  teamColor: string
+  rating: number
+  playerId: number
+  playerName: string
 }

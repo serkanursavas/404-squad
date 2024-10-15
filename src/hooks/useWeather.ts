@@ -18,9 +18,7 @@ export default function useWeather(matchDate: string) {
 
       try {
         const response = await fetch(
-          `https://api.openweathermap.org/data/2.5/forecast?q=adana&appid=${
-            import.meta.env.VITE_WEATHER_API_KEY
-          }&units=metric`
+          `https://api.openweathermap.org/data/2.5/forecast?q=adana&appid=${import.meta.env.VITE_WEATHER_API_KEY}&units=metric`
         )
 
         const data = await response.json()
@@ -47,7 +45,7 @@ export default function useWeather(matchDate: string) {
     }
 
     fetchWeather()
-  }, [location])
+  }, [matchDate])
 
   return { weather, loading, error }
 }

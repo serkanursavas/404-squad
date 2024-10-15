@@ -57,7 +57,7 @@ export default function Input({ label, name, type = 'text', error, min, classNam
         <ErrorMessage
           name={name}
           component="div"
-          className="mt-1 text-xs italic text-error"
+          className="mt-1 text-xs italic text-primary-error"
         />
       )}
     </div>

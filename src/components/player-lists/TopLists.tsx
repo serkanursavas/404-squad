@@ -6,7 +6,7 @@ interface TopListsProps {
   statisticLabel: string
   watermark: string
   playersData: {
-    icon: string
+    playerId: number
     playerName: string
     statistic: string
   }[]
