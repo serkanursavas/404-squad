@@ -1,21 +1,25 @@
-import { Formik, Field, Form } from 'formik'
+import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import Button from '../components/ui/Button'
 import logo from '../assets/images/logos/logo.png'
 import Input from '../components/ui/Input'
 import { Link } from 'react-router-dom'
+import useAuth, { CustomError } from '../hooks/useAuth'
+import { ToastContainer } from 'react-toastify'
+import { FaSpinner } from 'react-icons/fa'
 
 export default function Login() {
-  // Formik validation schema ile basit bir doğrulama örneği
+  const { login, isLoading } = useAuth()
+
   const validationSchema = Yup.object({
-    username: Yup.string().required('Username is required'),
-    password: Yup.string().required('Password is required')
+    username: Yup.string().required('Username is required').min(3, 'Username must be at least 3 characters long'),
+    password: Yup.string().required('Password is required').min(6, 'Password must be at least 6 characters long')
   })
 
   return (
     <div className="flex items-center justify-center h-screen px-8 py-4 bg-white xs:py-12">
       <div className="flex flex-col justify-around min-h-screen space-y-6">
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center ">
           <img
             className="w-48 xs:w-56"
             src={logo}
@@ -30,11 +34,11 @@ export default function Login() {
             initialValues={{ username: '', password: '' }}
             validationSchema={validationSchema}
             onSubmit={values => {
-              console.log('Form submitted with values: ', values)
+              login(values)
             }}
           >
-            {({ getFieldProps, errors, touched }) => (
-              <Form className="flex flex-col space-y-8">
+            {({ errors, touched }) => (
+              <Form className="flex flex-col space-y-10">
                 <Input
                   type="text"
                   name="username"
@@ -51,12 +55,14 @@ export default function Login() {
                   error={touched.password && errors.password ? errors.password : false}
                 />
 
-                <Button
-                  label="Login"
-                  className="mx-1 text-white bg-primary"
-                  shadowColor="rgba(255,255,255, 0.2)"
-                  type="submit"
-                />
+                <div className="w-full">
+                  <Button
+                    label={'Login'}
+                    className={`w-full mx-1 mt-3 text-white bg-primary ${isLoading && 'animate-ping'}`}
+                    shadowColor="rgba(255,255,255, 0.2)"
+                    type="submit"
+                  />
+                </div>
               </Form>
             )}
           </Formik>
