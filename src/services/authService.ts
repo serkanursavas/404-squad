@@ -5,7 +5,7 @@ interface LoginResponse {
   token: string
 }
 
-interface User {
+export interface User {
   username: string
   role: string
 }
@@ -21,7 +21,7 @@ const login = async (username: string, password: string): Promise<{ user: User; 
   localStorage.setItem('token', token)
 
   const decodedToken = decodeToken(token)
-  if (!decodeToken) {
+  if (!decodedToken) {
     throw new Error('invalid token')
   }
 
