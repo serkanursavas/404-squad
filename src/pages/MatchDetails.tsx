@@ -19,8 +19,8 @@ const dummyMatches: Match[] = [
     weather: 'Cloud',
     homeTeamScore: 4,
     awayTeamScore: 5,
-    isPlayed: true,
-    isVoted: true,
+    played: true,
+    voted: false,
     goals: [
       { playerId: 6, playerName: 'Luke Skywalker', teamColor: 'white' },
       { playerId: 7, playerName: 'Anakin Skywalker', teamColor: 'black' },
@@ -61,8 +61,8 @@ const dummyMatches: Match[] = [
     weather: 'Sunny',
     homeTeamScore: 3,
     awayTeamScore: 2,
-    isPlayed: true,
-    isVoted: false,
+    played: true,
+    voted: false,
     goals: [
       { playerId: 2, playerName: 'Max Power', teamColor: 'white' },
       { playerId: 4, playerName: 'Steve Jobs', teamColor: 'white' },
@@ -88,8 +88,8 @@ const dummyMatches: Match[] = [
     weather: 'Rainy',
     homeTeamScore: 6,
     awayTeamScore: 4,
-    isPlayed: true,
-    isVoted: true,
+    played: true,
+    voted: true,
     goals: [
       { playerId: 6, playerName: 'Luke Skywalker', teamColor: 'white' },
       { playerId: 6, playerName: 'Luke Skywalker', teamColor: 'white' },
@@ -119,8 +119,8 @@ const dummyMatches: Match[] = [
     weather: 'Windy',
     homeTeamScore: 2,
     awayTeamScore: 3,
-    isPlayed: true,
-    isVoted: true,
+    played: true,
+    voted: true,
     goals: [
       { playerId: 7, playerName: 'Anakin Skywalker', teamColor: 'black' },
       { playerId: 9, playerName: 'Leia Organa', teamColor: 'black' },
@@ -168,21 +168,21 @@ export default function MatchDetails() {
         homeTeamScore={match.homeTeamScore}
         awayTeamScore={match.awayTeamScore}
         goals={match.goals}
-        isPlayed={match.isPlayed}
+        played={match.played}
       />
 
       <div className="px-2 text-[12px] mt-12 space-y-8">
         <SquadList
           teamLogo={homeTeamLogo}
           squad={homeTeamSquad}
-          isPlayed={match.isPlayed}
-          isVotingClosed={match.isVoted}
+          played={match.played}
+          isVotingClosed={match.voted}
         />
         <SquadList
           teamLogo={awayTeamLogo}
           squad={awayTeamSquad}
-          isPlayed={match.isPlayed}
-          isVotingClosed={match.isVoted}
+          played={match.played}
+          isVotingClosed={match.voted}
         />
       </div>
     </div>

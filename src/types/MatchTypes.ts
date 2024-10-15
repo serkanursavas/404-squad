@@ -22,23 +22,14 @@ export interface AllMatch {
 
 export interface Match {
   id: number
-
   location: string
-
   dateTime: string
-
   weather: string
-
   homeTeamScore: number
-
   awayTeamScore: number
-
-  isPlayed: boolean
-
-  isVoted: boolean
-
+  played: boolean
+  voted: boolean
   goals: Goal[]
-
   rosters: Roster[]
 }
 

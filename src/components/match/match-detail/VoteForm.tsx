@@ -15,7 +15,7 @@ interface VoteFormProps {
 
 export default function VoteForm({ squad, handlePlayerVoted }: VoteFormProps) {
   const navigate = useNavigate()
-  const currentPlayerId = 6
+  const currentPlayerId = 3
 
   const [isBouncing, setIsBouncing] = useState(true)
 
