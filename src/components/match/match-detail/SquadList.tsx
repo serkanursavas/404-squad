@@ -6,16 +6,16 @@ import VoteForm from './VoteForm'
 interface SquadListProps {
   teamLogo: string
   squad: Roster[]
-  isPlayed: boolean // Maçın oynanıp oynanmadığı
+  played: boolean // Maçın oynanıp oynanmadığı
   isVotingClosed: boolean // Maçın oylamaya kalıcı olarak kapalı olup olmadığı
 }
 
-export default function SquadList({ teamLogo, squad, isPlayed, isVotingClosed }: SquadListProps) {
-  const currentUserId = 6
-  const [hasVoted, setHasVoted] = useState(true) // backend api hazirlanacak rating sorgusu ile contexapi
+export default function SquadList({ teamLogo, squad, played, isVotingClosed }: SquadListProps) {
+  const currentUserId = 3
+  const [hasVoted, setHasVoted] = useState(false) // backend api hazirlanacak rating sorgusu ile contexapi
   const inTeam: boolean = squad.some(player => player.id === currentUserId)
 
-  const canVote = isPlayed && inTeam && !hasVoted && !isVotingClosed
+  const canVote = played && inTeam && !hasVoted && !isVotingClosed
 
   return (
     <div>

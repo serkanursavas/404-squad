@@ -7,12 +7,12 @@ export default function Scoreboard({
   homeTeamScore,
   awayTeamScore,
   goals,
-  isPlayed
+  played
 }: {
   homeTeamScore: number
   awayTeamScore: number
   goals: Goal[]
-  isPlayed: boolean
+  played: boolean
 }) {
   const homeTeamGoals = goals.filter(goal => goal.teamColor === 'black')
   const awayTeamGoals = goals.filter(goal => goal.teamColor === 'white')
@@ -26,9 +26,9 @@ export default function Scoreboard({
           className="w-24"
         />
         <span className="space-x-1">
-          <span>{isPlayed && homeTeamScore}</span>
+          <span>{played && homeTeamScore}</span>
           <span>-</span>
-          <span>{isPlayed && awayTeamScore}</span>
+          <span>{played && awayTeamScore}</span>
         </span>
         <img
           src={awayTeamLogo}
@@ -37,7 +37,7 @@ export default function Scoreboard({
         />
       </div>
 
-      {isPlayed && (
+      {played && (
         <div className="flex justify-between text-[10px] p-4">
           <GoalList goals={homeTeamGoals} />
           <GoalList goals={awayTeamGoals} />

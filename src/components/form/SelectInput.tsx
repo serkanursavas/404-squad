@@ -156,7 +156,7 @@ export default function SelectInput({
         <ErrorMessage
           name={name}
           component="div"
-          className="mt-1 text-xs italic text-error"
+          className="mt-1 text-xs italic text-primary-error"
         />
       )}
     </div>

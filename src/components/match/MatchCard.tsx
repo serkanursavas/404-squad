@@ -3,7 +3,7 @@ import CardWrapper from './CardWrapper'
 
 import homeTeamLogo from '../../assets/images/club-black.svg'
 import awayTeamLogo from '../../assets/images/club-white.svg'
-import { splitDateTime } from '../../utils/Date/dateUtils'
+import { getFormattedDayAndMonth, splitDateTime } from '../../utils/Date/dateUtils'
 
 type MatchInfoProps = {
   match: AllMatch
@@ -15,7 +15,7 @@ export default function MatchCard({ match, route }: MatchInfoProps) {
 
   return (
     <CardWrapper route={route}>
-      <div className="text-right text-[10px] text-neutral-dark">{date}</div>
+      <div className="text-right text-[10px] text-neutral-dark">{getFormattedDayAndMonth(date)}</div>
       <div className={`flex items-center justify-between ${match.id % 2 === 0 ? 'flex-row-reverse' : 'flex-row'}`}>
         <div className="flex items-center space-x-2">
           <span>Black</span>
