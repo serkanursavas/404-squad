@@ -61,7 +61,7 @@ const useAuth = (): UseAuth => {
     mutationFn: async (loginInput: AuthInput) => {
       return authService.login(loginInput.username, loginInput.password)
     },
-    onSuccess: (data: { user: { username: string; role: string }; token: string }) => {
+    onSuccess: (data: { user: { id: number; username: string; role: string }; token: string }) => {
       dispatch(loginSuccess(data))
       queryClient.invalidateQueries({ queryKey: ['auth'] })
       navigate('/')
@@ -128,7 +128,7 @@ const useAuth = (): UseAuth => {
   }, [logout])
 
   return {
-    user: auth.user ?? null,
+    user: auth.user ? { id: auth.user.id, username: auth.user.username, role: auth.user.role } : null,
     token: auth.token ?? null,
     isAuthenticated: auth.isAuthenticated,
     login,

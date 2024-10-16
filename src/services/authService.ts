@@ -8,8 +8,23 @@ interface LoginResponse {
 }
 
 export interface User {
+  id: number
   username: string
   role: string
+}
+
+export const getUserFromToken = (token: string): User | null => {
+  try {
+    const decodedToken = jwtDecode<JwtPayload & { role: string } & { id: number }>(token)
+    return {
+      id: decodedToken.id || 0,
+      username: decodedToken.sub || '',
+      role: decodedToken.role
+    }
+  } catch (error) {
+    console.error('Invalid token', error)
+    return null
+  }
 }
 
 const login = async (username: string, password: string): Promise<{ user: User; token: string }> => {
@@ -25,17 +40,14 @@ const login = async (username: string, password: string): Promise<{ user: User; 
     localStorage.setItem('token', token)
 
     // Token'ı decode et
-    const decodedToken = jwtDecode<JwtPayload & { role: string }>(token)
+    const decodedUser = getUserFromToken(token)
 
-    if (!decodedToken) {
+    if (!decodedUser) {
       throw new Error('Invalid token')
     }
 
     return {
-      user: {
-        username: decodedToken.sub || '',
-        role: decodedToken.role
-      },
+      user: decodedUser,
       token
     }
   } catch (error: any) {
@@ -48,7 +60,6 @@ const login = async (username: string, password: string): Promise<{ user: User; 
 }
 
 const logout = (): void => {
-  // Token'ı localStorage'dan sil
   localStorage.removeItem('token')
 }
 
@@ -72,17 +83,14 @@ const signup = async (signupData: SignupFormValues): Promise<{ user: User; token
     localStorage.setItem('token', token)
 
     // Token'ı decode et
-    const decodedToken = jwtDecode<JwtPayload & { role: string }>(token)
+    const decodedUser = getUserFromToken(token)
 
-    if (!decodedToken) {
+    if (!decodedUser) {
       throw new Error('Invalid token')
     }
 
     return {
-      user: {
-        username: decodedToken.sub || '',
-        role: decodedToken.role
-      },
+      user: decodedUser,
       token
     }
   } catch (error: any) {
