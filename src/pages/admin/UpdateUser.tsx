@@ -1,14 +1,17 @@
 import Button from '../../components/ui/Button'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useState, useEffect } from 'react'
-import { dummyUserInfo } from '../../dummyData/UserData'
-import { UserInfo } from '../../types/UserTypes'
+import { useState, useEffect, useMemo } from 'react'
 import { userUpdateValidationSchema } from '../../validators/userUpdateValidation'
 import { Form, Formik } from 'formik'
 import Input from '../../components/ui/Input'
 import SelectInput from '../../components/form/SelectInput'
 import { SelectOption } from '../../types/FormTypes'
 import { showConfirmationModal } from '../../utils/showConfirmationModal'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../store'
+import { User } from '../../services/userService'
+import useUser from '../../hooks/useUsers'
+import { toast } from 'react-toastify'
 
 const roles: SelectOption[] = [
   { value: 'USER', label: 'USER' },
@@ -18,8 +21,12 @@ const roles: SelectOption[] = [
 export default function UpdateUser() {
   const { id } = useParams()
   const navigate = useNavigate()
-  const [user, setUser] = useState<UserInfo | null>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [isLoading, setIsLoading] = useState(false)
+
+  const { updateUserRole } = useUser()
+
+  const usersState = useSelector((state: RootState) => state.users)
 
   const handleResetPassword = () => {
     showConfirmationModal(
@@ -31,47 +38,36 @@ export default function UpdateUser() {
       },
       () => {
         console.log('reset on database')
-      },
-      {
-        title: 'Password reset!',
-        text: 'Users password have been successfully resetting to username.',
-        icon: 'success'
       }
     )
   }
 
-  useEffect(() => {
+  const userToUpdate = useMemo(() => {
     if (id) {
       const userId = parseInt(id)
-      const userToUpdate = dummyUserInfo.find(user => user.id === userId)
-
-      if (userToUpdate) {
-        setUser(userToUpdate)
-      }
+      return usersState.users.find((user: User) => user.id === userId)
     }
-  }, [id])
+    return null
+  }, [id, usersState])
 
-  const handleSubmit = async (values: UserInfo) => {
-    setIsLoading(true)
+  useEffect(() => {
+    if (userToUpdate) {
+      setUser(userToUpdate)
+    }
+  }, [userToUpdate])
+
+  const handleSubmit = async (values: User) => {
     const updatedFields = Object.keys(values).reduce((acc, key) => {
-      if (user && values[key as keyof UserInfo] !== user[key as keyof UserInfo]) {
-        acc[key as keyof UserInfo] = values[key as keyof UserInfo] as any
+      if (user && values[key as keyof User] !== user[key as keyof User]) {
+        acc[key as keyof User] = values[key as keyof User] as any
       }
       return acc
-    }, {} as Partial<UserInfo>)
-
-    await new Promise(resolve => setTimeout(resolve, 2000))
+    }, {} as Partial<User>)
 
     if (Object.keys(updatedFields).length > 0) {
-      console.log('Fields to update:', updatedFields)
-      console.log('User updated successfully', values)
-      alert('User has been updated successfully!')
-      setIsLoading(false)
-      navigate('/admin/users')
+      updateUserRole({ username: values.username, updatedRole: values.role })
     } else {
-      alert('No changes detected!')
-      console.log('No fields were updated.')
-      setIsLoading(false)
+      toast.info('No changes detected!')
     }
   }
 
@@ -111,8 +107,7 @@ export default function UpdateUser() {
                 <div className="flex gap-4">
                   <Button
                     type="submit"
-                    label={isLoading ? 'Updating...' : 'Update'}
-                    disabled={isLoading}
+                    label={'Update'}
                   />
                   <Button
                     type="button"

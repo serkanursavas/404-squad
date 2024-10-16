@@ -4,10 +4,12 @@ import userService, { User } from '../services/userService'
 import { fetchUsersSuccess } from '../store/userSlice'
 import { useEffect } from 'react'
 import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
 
 const useUser = () => {
   const dispatch = useDispatch()
   const queryClient = useQueryClient()
+  const navigate = useNavigate()
 
   const { data, isLoading, isError, error } = useQuery<User[], Error>({
     queryKey: ['users'],
@@ -31,7 +33,18 @@ const useUser = () => {
     }
   })
 
-  return { users: data, isLoading, isError, error, deleteUser }
+  const { mutate: updateUserRole } = useMutation({
+    mutationFn: ({ username, updatedRole }: { username: string; updatedRole: string }) => userService.updateUserRoleByUsername(username, updatedRole),
+    onSuccess: () => {
+      navigate('/admin/users')
+      toast.success('User role updated successfully')
+    },
+    onError: (error: any) => {
+      toast.error(error?.response?.data?.message || 'Failed to update user role')
+    }
+  })
+
+  return { users: data, isLoading, isError, error, deleteUser, updateUserRole }
 }
 
 export default useUser
