@@ -70,20 +70,19 @@ const useAuth = (): UseAuth => {
   const logout = (): void => {
     authService.logout()
     dispatch(logoutSuccess())
+    toast.success('Logout successful')
     navigate('/login')
   }
 
   useEffect(() => {
     const token = localStorage.getItem('token')
 
-    // İlk yüklemede token'ı kontrol et, ama sadece bir kez çalışsın
     if (token && isTokenExpired(token)) {
       logout()
       toast.warning('Session expired. Please log in again.')
     }
 
     const handleStorageChange = (event: StorageEvent) => {
-      // Eğer token değişmişse ya da silinmişse
       if (event.key === 'token') {
         const newToken = event.newValue
         if (!newToken || isTokenExpired(newToken)) {

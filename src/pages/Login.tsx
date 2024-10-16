@@ -4,9 +4,7 @@ import Button from '../components/ui/Button'
 import logo from '../assets/images/logos/logo.png'
 import Input from '../components/ui/Input'
 import { Link } from 'react-router-dom'
-import useAuth, { CustomError } from '../hooks/useAuth'
-import { ToastContainer } from 'react-toastify'
-import { FaSpinner } from 'react-icons/fa'
+import useAuth from '../hooks/useAuth'
 
 export default function Login() {
   const { login, isLoading } = useAuth()
