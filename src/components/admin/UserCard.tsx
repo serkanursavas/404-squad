@@ -1,31 +1,11 @@
-import { UserInfo } from '../../types/UserTypes'
 import Button from '../ui/Button'
 import { useNavigate } from 'react-router-dom'
 import { showConfirmationModal } from '../../utils/showConfirmationModal'
+import { User } from '../../services/userService'
+import useUser from '../../hooks/useUsers'
 
 type UsersListProps = {
-  user: UserInfo
-}
-
-const handleDelete = () => {
-  showConfirmationModal(
-    {
-      title: 'Are you sure?',
-      text: 'Do you want to delete user?',
-      icon: 'error',
-      confirmButtonText: 'Delete',
-      cancelButtonColor: '#04764E',
-      confirmButtonColor: '#D32F2F'
-    },
-    () => {
-      console.log('reset on database')
-    },
-    {
-      title: 'Password reset!',
-      text: 'Users password have been successfully resetting to username.',
-      icon: 'success'
-    }
-  )
+  user: User
 }
 
 export default function UserCard({ user }: UsersListProps) {
@@ -33,6 +13,24 @@ export default function UserCard({ user }: UsersListProps) {
   const handleNavigate = () => {
     navigate(`/admin/update-user/${user.id}`)
   }
+  const { deleteUser } = useUser()
+
+  const handleDelete = (username: string) => {
+    showConfirmationModal(
+      {
+        title: 'Are you sure?',
+        text: 'Do you want to delete user?',
+        icon: 'error',
+        confirmButtonText: 'Delete',
+        cancelButtonColor: '#04764E',
+        confirmButtonColor: '#D32F2F'
+      },
+      () => {
+        deleteUser(username)
+      }
+    )
+  }
+
   return (
     <tr className="text-xs even:bg-neutral odd:bg-neutral-dark odd:text-white">
       <td
@@ -60,7 +58,7 @@ export default function UserCard({ user }: UsersListProps) {
           type="button"
           label="Delete"
           className="text-xs text-white bg-primary-error"
-          onClick={handleDelete}
+          onClick={() => handleDelete(user.username)}
         />
       </td>
     </tr>

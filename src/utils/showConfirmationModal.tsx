@@ -23,7 +23,12 @@ interface SuccessOptions {
   icon: 'success' | 'info' | 'warning' | 'error'
 }
 
-export const showConfirmationModal = async (options: SwalOptions, onConfirm: () => void, successOptions?: SuccessOptions, onCancel?: () => void) => {
+export const showConfirmationModal = async (
+  options: SwalOptions,
+  onConfirm: () => void,
+  successOptions?: SuccessOptions | null, // SuccessOptions opsiyonel ve null olabilir
+  onCancel?: () => void
+) => {
   const {
     title,
     text,
@@ -32,7 +37,7 @@ export const showConfirmationModal = async (options: SwalOptions, onConfirm: () 
     cancelButtonText = 'Cancel',
     confirmButtonColor = '#04764E',
     cancelButtonColor = '#D32F2F',
-    customClass = {} // Eğer özel sınıf belirtilmezse boş bırakıyoruz
+    customClass = {}
   } = options
 
   const result = await Swal.fire({
@@ -56,15 +61,14 @@ export const showConfirmationModal = async (options: SwalOptions, onConfirm: () 
   if (result.isConfirmed) {
     onConfirm()
 
-    if (successOptions) {
+    if (successOptions !== null && successOptions) {
       Swal.fire({
         title: successOptions.title,
         text: successOptions.text,
         icon: successOptions.icon || 'success'
       })
-    } else {
-      Swal.fire('Success!', 'Operation completed successfully!', 'success')
     }
+    // SuccessOptions yoksa veya null olarak belirlenmişse, başka bir işlem yapma
   } else if (result.dismiss === Swal.DismissReason.cancel && onCancel) {
     onCancel()
   }
