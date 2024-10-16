@@ -23,6 +23,7 @@ const footOptions = [
 const inputMappings = [
   { label: 'Username', name: 'username', type: 'text' },
   { label: 'Password', name: 'password', type: 'password' },
+  { label: 'Password Again', name: 'passwordAgain', type: 'password' },
   { label: 'Name', name: 'name', type: 'text' },
   { label: 'Surname', name: 'surname', type: 'text' }
 ]

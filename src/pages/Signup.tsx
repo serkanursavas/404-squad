@@ -1,10 +1,13 @@
 import { Link } from 'react-router-dom'
 import { SignupFormValues } from '../types/FormTypes'
 import SignupForm from '../components/form/SignupForm'
+import useAuth from '../hooks/useAuth'
 
 export default function Signup() {
+  const { signup } = useAuth()
+
   const handleSubmit = (values: SignupFormValues) => {
-    console.log(values)
+    signup(values)
   }
 
   return (

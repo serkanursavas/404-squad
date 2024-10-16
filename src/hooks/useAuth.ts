@@ -8,8 +8,9 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { jwtDecode } from 'jwt-decode'
 import { useEffect } from 'react'
+import { SignupFormValues } from '../types/FormTypes'
 
-interface LoginInput {
+interface AuthInput {
   username: string
   password: string
 }
@@ -18,11 +19,15 @@ type UseAuth = {
   user: User | null
   token: string | null
   isAuthenticated: boolean
-  login: (data: LoginInput) => void
+  login: (data: AuthInput) => void
   logout: () => void
+  signup: (data: SignupFormValues) => void
   isLoading: boolean
+  isSignupLoading: boolean
   isError: boolean
   error: Error | null
+  isSignupError: boolean
+  signupError: Error | null
 }
 
 // Token'ın süresi dolmuş mu kontrol eden fonksiyon
@@ -52,8 +57,8 @@ const useAuth = (): UseAuth => {
     isError,
     status,
     error
-  } = useMutation<{ user: User; token: string }, CustomError, LoginInput>({
-    mutationFn: async (loginInput: LoginInput) => {
+  } = useMutation<{ user: User; token: string }, CustomError, AuthInput>({
+    mutationFn: async (loginInput: AuthInput) => {
       return authService.login(loginInput.username, loginInput.password)
     },
     onSuccess: (data: { user: { username: string; role: string }; token: string }) => {
@@ -64,6 +69,29 @@ const useAuth = (): UseAuth => {
     },
     onError: (error: CustomError) => {
       toast.error(`${error.message}`)
+    }
+  })
+
+  const {
+    mutate: signup,
+    isError: isSignupError,
+    error: signupError
+  } = useMutation<{ user: User; token: string }, CustomError, SignupFormValues>({
+    mutationFn: async (signupInput: SignupFormValues) => {
+      return authService.signup(signupInput)
+    },
+    onSuccess: data => {
+      dispatch(loginSuccess(data))
+      queryClient.invalidateQueries({ queryKey: ['auth'] })
+      navigate('/')
+      toast.info('Signup and login successful')
+    },
+    onError: (error: CustomError) => {
+      if (error.details && Array.isArray(error.details) && error.details.length > 0) {
+        error.details.forEach(detail => toast.error(detail))
+      } else {
+        toast.error(`${error.message}`)
+      }
     }
   })
 
@@ -104,10 +132,14 @@ const useAuth = (): UseAuth => {
     token: auth.token ?? null,
     isAuthenticated: auth.isAuthenticated,
     login,
+    signup,
     logout,
     isLoading: status === 'pending',
+    isSignupLoading: status === 'pending',
     isError,
-    error
+    isSignupError,
+    error,
+    signupError
   }
 }
 
