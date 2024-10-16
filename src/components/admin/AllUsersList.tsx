@@ -1,8 +1,8 @@
-import { UserInfo } from '../../types/UserTypes'
+import { User } from '../../services/userService'
 import UserCard from './UserCard'
 
 type UsersListProps = {
-  usersData: UserInfo[]
+  usersData: User[]
 }
 
 export default function AllUsersList({ usersData }: UsersListProps) {
