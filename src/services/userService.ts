@@ -52,4 +52,17 @@ const updateUserRoleByUsername = async (username: string, updatedRole: string): 
   }
 }
 
-export default { getAllUsers, deleteUserByUsername, updateUserRoleByUsername }
+const resetPasswordByUsername = async (username: string): Promise<any> => {
+  try {
+    const response = await axiosInstance.post(`/users/admin/resetPassword/${username}`)
+    return response.data
+  } catch (error: any) {
+    const customError = new Error(error.response?.data?.message || error.message || 'An unknown error occurred') as CustomError
+    customError.status = error.response?.status || 500
+    customError.details = error.response?.data?.details || 'No additional details available'
+
+    throw customError
+  }
+}
+
+export default { getAllUsers, deleteUserByUsername, updateUserRoleByUsername, resetPasswordByUsername }

@@ -20,11 +20,9 @@ const roles: SelectOption[] = [
 
 export default function UpdateUser() {
   const { id } = useParams()
-  const navigate = useNavigate()
   const [user, setUser] = useState<User | null>(null)
-  const [isLoading, setIsLoading] = useState(false)
 
-  const { updateUserRole } = useUser()
+  const { updateUserRole, resetPassword } = useUser()
 
   const usersState = useSelector((state: RootState) => state.users)
 
@@ -37,7 +35,11 @@ export default function UpdateUser() {
         confirmButtonText: 'Yes'
       },
       () => {
-        console.log('reset on database')
+        if (user?.username) {
+          resetPassword(user.username)
+        } else {
+          toast.error('Username is undefined, cannot reset password.')
+        }
       }
     )
   }

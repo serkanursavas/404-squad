@@ -44,7 +44,18 @@ const useUser = () => {
     }
   })
 
-  return { users: data, isLoading, isError, error, deleteUser, updateUserRole }
+  const { mutate: resetPassword } = useMutation({
+    mutationFn: (username: string) => userService.resetPasswordByUsername(username),
+    onSuccess: () => {
+      navigate('/admin/users')
+      toast.success('Password reset successfully')
+    },
+    onError: (error: any) => {
+      toast.error(error?.response?.data?.message || 'Failed to reset password')
+    }
+  })
+
+  return { users: data, isLoading, isError, error, deleteUser, updateUserRole, resetPassword }
 }
 
 export default useUser
