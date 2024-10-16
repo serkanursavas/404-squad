@@ -1,5 +1,5 @@
 import Button from '../../components/ui/Button'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { useState, useEffect, useMemo } from 'react'
 import { userUpdateValidationSchema } from '../../validators/userUpdateValidation'
 import { Form, Formik } from 'formik'
