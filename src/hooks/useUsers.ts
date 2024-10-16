@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useDispatch } from 'react-redux'
-import userService, { User } from '../services/userService'
+import userService, { UpdateProfileParams, User } from '../services/userService'
 import { fetchUsersSuccess } from '../store/userSlice'
 import { useEffect } from 'react'
 import { toast } from 'react-toastify'
@@ -55,7 +55,19 @@ const useUser = () => {
     }
   })
 
-  return { users: data, isLoading, isError, error, deleteUser, updateUserRole, resetPassword }
+  const { mutate: updateProfile } = useMutation({
+    mutationFn: ({ username, updateData }: { username: string; updateData: UpdateProfileParams }) =>
+      userService.updateProfileByUsername(username, updateData),
+    onSuccess: () => {
+      navigate('/')
+      toast.success('Profile updated successfully')
+    },
+    onError: (error: any) => {
+      toast.error(error?.response?.data?.message || 'Failed to update profile')
+    }
+  })
+
+  return { users: data, isLoading, isError, error, deleteUser, updateUserRole, resetPassword, updateProfile }
 }
 
 export default useUser

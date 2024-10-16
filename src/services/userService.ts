@@ -8,6 +8,12 @@ export interface User {
   createdAt: string
 }
 
+export interface UpdateProfileParams {
+  username?: string
+  password?: string
+  passwordAgain?: string
+}
+
 const getAllUsers = async (): Promise<User[]> => {
   try {
     const response = await axiosInstance.get('/users/admin/getAllUsers')
@@ -65,4 +71,17 @@ const resetPasswordByUsername = async (username: string): Promise<any> => {
   }
 }
 
-export default { getAllUsers, deleteUserByUsername, updateUserRoleByUsername, resetPasswordByUsername }
+const updateProfileByUsername = async (username: string, updateData: UpdateProfileParams): Promise<any> => {
+  try {
+    const response = await axiosInstance.post(`/users/updateProfile/${username}`, updateData)
+    return response.data
+  } catch (error: any) {
+    const customError = new Error(error.response?.data?.message || error.message || 'An unknown error occurred') as CustomError
+    customError.status = error.response?.status || 500
+    customError.details = error.response?.data?.details || 'No additional details available'
+
+    throw customError
+  }
+}
+
+export default { getAllUsers, deleteUserByUsername, updateUserRoleByUsername, resetPasswordByUsername, updateProfileByUsername }
