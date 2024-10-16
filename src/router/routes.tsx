@@ -17,11 +17,18 @@ import ManageMatches from '../pages/admin/ManageMatches'
 import MatchFormPage from '../pages/admin/MatchFormPage'
 import UpdatePlayer from '../pages/admin/UpdatePlayer'
 import MatchGoalsPage from '../pages/admin/MatchGoalsPage'
+import ProtectedRoute from '../components/ProtectedRoute'
+import AdminRoute from '../components/AdminRoute'
+import PublicRoute from '../components/PublicRoute'
 
 const routes = createBrowserRouter([
   {
     path: '/',
-    element: <MainLayout />,
+    element: (
+      <ProtectedRoute>
+        <MainLayout />
+      </ProtectedRoute>
+    ),
     children: [
       {
         path: '/',
@@ -48,7 +55,13 @@ const routes = createBrowserRouter([
   },
   {
     path: '/admin',
-    element: <MainLayout />,
+    element: (
+      <ProtectedRoute>
+        <AdminRoute>
+          <MainLayout />
+        </AdminRoute>
+      </ProtectedRoute>
+    ),
     children: [
       {
         path: '',
@@ -74,7 +87,6 @@ const routes = createBrowserRouter([
         path: 'matches/create',
         element: <MatchFormPage />
       },
-
       {
         path: 'matches/:id',
         element: <MatchFormPage />
@@ -91,11 +103,19 @@ const routes = createBrowserRouter([
   },
   {
     path: '/login',
-    element: <Login />
+    element: (
+      <PublicRoute>
+        <Login />
+      </PublicRoute>
+    )
   },
   {
     path: '/signup',
-    element: <Signup />
+    element: (
+      <PublicRoute>
+        <Signup />
+      </PublicRoute>
+    )
   },
   {
     path: '*',
