@@ -1,12 +1,12 @@
-import { AllMatch } from '../../types/MatchTypes'
 import CardWrapper from './CardWrapper'
 
 import homeTeamLogo from '../../assets/images/club-black.svg'
 import awayTeamLogo from '../../assets/images/club-white.svg'
 import { getFormattedDayAndMonth, splitDateTime } from '../../utils/Date/dateUtils'
+import { Match } from '../../services/matchService'
 
 type MatchInfoProps = {
-  match: AllMatch
+  match: Match
   route: string
 }
 

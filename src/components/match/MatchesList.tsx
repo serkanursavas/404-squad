@@ -1,8 +1,8 @@
-import { AllMatch } from '../../types/MatchTypes'
+import { Match } from '../../services/matchService'
 import MatchCard from './MatchCard'
 
 type MatchesListProps = {
-  matchesData: AllMatch[]
+  matchesData: Match[]
 }
 
 export default function MatchesList({ matchesData }: MatchesListProps) {
