@@ -7,97 +7,122 @@ import { manageMatchValidationSchema } from '../../validators/manageMatchValidat
 import { initialValues as defaultInitialValues } from '../../forms/matchInitialValues'
 import { MatchFormData, SelectOption } from '../../types/FormTypes'
 import { useEffect, useState } from 'react'
+import useMatches from '../../hooks/useMatches'
+import { CreateMatchRequest, Match } from '../../services/matchService'
 
 const players: SelectOption[] = [
-  { value: 'Player 1', label: 'Player 1' },
-  { value: 'Player 2', label: 'Player 2' },
-  { value: 'Player 3', label: 'Player 3' },
-  { value: 'Player 4', label: 'Player 4' },
-  { value: 'Player 5', label: 'Player 5' },
-  { value: 'Player 6', label: 'Player 6' },
-  { value: 'Player 7', label: 'Player 7' },
-  { value: 'Player 8', label: 'Player 8' },
-  { value: 'Player 9', label: 'Player 9' },
-  { value: 'Player 10', label: 'Player 10' },
-  { value: 'Player 11', label: 'Player 11' },
-  { value: 'Player 12', label: 'Player 12' }
+  { value: '1', label: 'Player 1' },
+  { value: '2', label: 'Player 2' },
+  { value: '3', label: 'Player 3' },
+  { value: '4', label: 'Player 4' },
+  { value: '5', label: 'Player 5' },
+  { value: '6', label: 'Player 6' },
+  { value: '7', label: 'Player 7' },
+  { value: '8', label: 'Player 8' },
+  { value: '9', label: 'Player 9' },
+  { value: '10', label: 'Player 10' },
+  { value: '11', label: 'Player 11' },
+  { value: '12', label: 'Player 12' }
 ]
 
-const dummyMatchData = [
-  {
-    id: 1,
-    location: 'Central Stadium',
-    matchDate: '2024-10-10',
-    matchTime: '18:00',
-    teamSize: 11,
-    whiteTeam: ['Player 1', 'Player 2', 'Player 3', 'Player 4', 'Player 5', 'Player 6'],
-    blackTeam: ['Player 7', 'Player 8', 'Player 9', 'Player 10', 'Player 11'],
-    isPlayed: false
-  },
-  {
-    id: 2,
-    location: 'East Field',
-    matchDate: '2024-11-05',
-    matchTime: '18:00',
-    teamSize: 10,
-    whiteTeam: ['Player 12', 'Player 13', 'Player 14', 'Player 15', 'Player 16'],
-    blackTeam: ['Player 17', 'Player 18', 'Player 19', 'Player 20', 'Player 21'],
-    isPlayed: true
-  },
-  {
-    id: 3,
-    location: 'West Arena',
-    matchDate: '2024-12-15',
-    matchTime: '18:00',
-    teamSize: 9,
-    whiteTeam: ['Player 22', 'Player 23', 'Player 24', 'Player 25'],
-    blackTeam: ['Player 26', 'Player 27', 'Player 28', 'Player 29', 'Player 30'],
-    isPlayed: true
-  },
-  {
-    id: 4,
-    location: 'North Grounds',
-    matchDate: '2024-12-20',
-    matchTime: '18:00',
-    teamSize: 8,
-    whiteTeam: ['Player 31', 'Player 32', 'Player 33', 'Player 34'],
-    blackTeam: ['Player 35', 'Player 36', 'Player 37', 'Player 38'],
-    isPlayed: true
+const convertMatchToFormData = (match: Match): MatchFormData => {
+  const [matchDate, matchTime] = match.dateTime.split('T')
+
+  const whiteTeam = match.rosters?.filter(roster => roster.teamColor.toLowerCase() === 'white').map(roster => roster.playerId.toString()) || []
+  const blackTeam = match.rosters?.filter(roster => roster.teamColor.toLowerCase() === 'black').map(roster => roster.playerId.toString()) || []
+
+  return {
+    id: match.id,
+    location: match.location,
+    matchDate: matchDate,
+    matchTime: matchTime.split('.')[0], // Milisaniyeleri atıyoruz
+    // teamSize: match.rosters ? match.rosters.length / 2 : 6, // Rosters varsa, yoksa default olarak 6
+    teamSize: 8, // Rosters varsa, yoksa default olarak 6
+    whiteTeam: whiteTeam, // Beyaz takım oyuncuları
+    blackTeam: blackTeam, // Siyah takım oyuncuları
+    isPlayed: match.played
   }
-]
+}
+
+const convertFormDataToCreateMatchRequest = (formData: MatchFormData): CreateMatchRequest => {
+  const { matchDate, matchTime, location, teamSize, whiteTeam, blackTeam } = formData
+
+  // Tarih ve saat birleştiriliyor
+  const dateTime = `${matchDate}T${matchTime}`
+
+  // Roster verisi oluşturuluyor (beyaz ve siyah takım oyuncuları birleştiriliyor)
+  const rosters = [
+    ...whiteTeam.map(playerId => ({
+      teamColor: 'white',
+      playerId: Number(playerId) // String ID'yi sayıya dönüştür
+    })),
+    ...blackTeam.map(playerId => ({
+      teamColor: 'black',
+      playerId: Number(playerId) // String ID'yi sayıya dönüştür
+    }))
+  ]
+
+  // `CreateMatchRequest` nesnesi döndürülüyor
+  return {
+    location,
+    weather: '', // Eğer formdan alınan hava durumu yoksa boş bırakıyoruz (bu isteğe göre eklenebilir)
+    dateTime,
+    teamSize,
+    rosters
+  }
+}
 
 export default function MatchFormPage() {
   const [initialValues, setInitialValues] = useState<MatchFormData>(defaultInitialValues)
   const navigate = useNavigate()
   const { id } = useParams()
+  const { useMatchDetails, createMatch } = useMatches()
+  const [loading, setLoading] = useState(true)
+
+  // 'id' varsa, maçın detaylarını getiriyoruz
+  const match = useMatchDetails(Number(id))
 
   const isEditMode = Boolean(id)
 
   useEffect(() => {
-    if (isEditMode) {
-      const numericId = Number(id)
-      const match = dummyMatchData.find(match => match.id === numericId)
+    if (isEditMode && match) {
+      const formattedMatch = convertMatchToFormData(match)
+      console.log('Formatted match ', JSON.stringify(formattedMatch, null, 2))
 
-      if (match) {
-        setInitialValues(match)
+      // Eğer initialValues güncellenmemişse setInitialValues çağırılır
+      if (JSON.stringify(initialValues) !== JSON.stringify(formattedMatch)) {
+        setInitialValues(formattedMatch) // Tüm initialValues güncellenir
+        console.log('Updated initialValues with match data')
       }
-    } else {
+    } else if (!isEditMode) {
+      // Yeni maç oluşturuluyorsa default initialValues'u kullan
       setInitialValues(defaultInitialValues)
     }
-  }, [id, isEditMode])
+
+    // Loading'in doğru şekilde kapatılması
+    setLoading(false)
+  }, [isEditMode, match]) // `match` ve `isEditMode` değiştiğinde yeniden çalışır
 
   const handleSubmit = (values: MatchFormData) => {
     if (isEditMode) {
       console.log('Match Updated', values)
     } else {
       console.log('New Match Created', values)
+      // const createMatchData = convertFormDataToCreateMatchRequest(values)
+      // createMatch(createMatchData)
     }
     navigate('/admin/matches')
+  }
+
+  // Loading durumu
+  if (loading) {
+    return <div>Loading...</div>
   }
 
   return (
     <div className="">
       <Formik
+        key={JSON.stringify(initialValues)}
         initialValues={initialValues}
         validationSchema={manageMatchValidationSchema}
         validateOnBlur={true}
