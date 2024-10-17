@@ -1,12 +1,18 @@
-import { useDispatch } from 'react-redux'
-import { Match } from '../services/matchService'
+import { useDispatch, useSelector } from 'react-redux'
+import { CreateMatchRequest, Match } from '../services/matchService'
 import matchService from '../services/matchService'
 import { useEffect } from 'react'
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
-import { fetchAllMatchesSuccess, fetchNextMatchSuccess } from '../store/matchSlice'
+import { QueryClient, useInfiniteQuery, useMutation, useQuery } from '@tanstack/react-query'
+import { fetchAllMatchesSuccess, fetchMatchDetailsSuccess, fetchNextMatchSuccess } from '../store/matchSlice'
+import { CustomError } from './useAuth'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import { RootState } from '../store'
 
 const useMatches = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const queryClient = new QueryClient()
 
   const {
     data: nextMatch,
@@ -49,7 +55,63 @@ const useMatches = () => {
     }
   }, [allMatches])
 
-  return { nextMatch, isError, error, allMatches, isAllMatchesError, allMatchesError, fetchNextPage, hasNextPage }
+  const {
+    mutate: createMatch,
+    isError: isCreateMatchError,
+    error: createMatchError
+  } = useMutation<{ createMatchData: CreateMatchRequest }, CustomError, CreateMatchRequest>({
+    mutationFn: async (createMatchData: CreateMatchRequest) => {
+      return matchService.createMatch(createMatchData)
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['matches'] })
+      navigate('/')
+      toast.info('Match created successfully')
+    },
+    onError: (error: CustomError) => {
+      if (error.details && Array.isArray(error.details) && error.details.length > 0) {
+        error.details.forEach(detail => toast.error(detail))
+      } else {
+        toast.error(`${error.message}`)
+      }
+    }
+  })
+
+  const useMatchDetails = (id: number) => {
+    const dispatch = useDispatch()
+    const matchDetails = useSelector((state: RootState) => state.matches.allMatches.find(match => match.id === id))
+
+    useEffect(() => {
+      if (!matchDetails || !matchDetails.goals || !matchDetails.rosters) {
+        // Maç detayları eksikse, API'den detayı çekiyoruz
+        matchService
+          .getGameById(id)
+          .then(match => {
+            dispatch(fetchMatchDetailsSuccess(match)) // Redux'a detayı ekliyoruz
+          })
+          .catch(error => {
+            console.error('Failed to fetch match details', error)
+          })
+      }
+    }, [id, matchDetails, dispatch])
+
+    return matchDetails
+  }
+
+  return {
+    nextMatch,
+    isError,
+    error,
+    allMatches,
+    isAllMatchesError,
+    allMatchesError,
+    fetchNextPage,
+    hasNextPage,
+    createMatch,
+    isCreateMatchError,
+    createMatchError,
+    useMatchDetails
+  }
 }
 
 export default useMatches
