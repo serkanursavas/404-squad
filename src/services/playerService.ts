@@ -49,4 +49,18 @@ const updatePlayer = async (updatedData: UpdatePlayerData): Promise<any> => {
   }
 }
 
-export default { getAllPlayers, updatePlayer }
+const getPlayerById = async (id: number): Promise<any> => {
+  try {
+    const response = await axiosInstance.get(`/players/getPlayerById/${id}`)
+    return response.data
+  } catch (error: any) {
+    const customError = new Error(error.response?.data?.message || error.message || 'An unknown error occurred') as CustomError
+    customError.status = error.response?.status || 500
+    customError.details = error.response?.data?.details || 'No additional details available'
+    console.log(error)
+
+    throw customError
+  }
+}
+
+export default { getAllPlayers, updatePlayer, getPlayerById }
