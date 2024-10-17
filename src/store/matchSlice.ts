@@ -17,9 +17,12 @@ const matchSlice = createSlice({
   reducers: {
     fetchNextMatchSuccess: (state, action: PayloadAction<Match>) => {
       state.nextMatch = action.payload
+    },
+    fetchAllMatchesSuccess: (state, action: PayloadAction<Match[]>) => {
+      state.allMatches = [...state.allMatches, ...action.payload]
     }
   }
 })
 
-export const { fetchNextMatchSuccess } = matchSlice.actions
+export const { fetchNextMatchSuccess, fetchAllMatchesSuccess } = matchSlice.actions
 export default matchSlice.reducer
