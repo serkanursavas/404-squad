@@ -13,16 +13,16 @@ interface Props {
   toggleMobileMenu: () => void
 }
 
-const navLinks = [
-  { to: '/', label: 'Home', icon: homeIcon },
-  { to: '/matches', label: 'Matches', icon: matchesIcon },
-  { to: '/profile/1', label: 'Profile', icon: profileIcon },
-  { to: '/players', label: 'Players', icon: playersIcon },
-  { to: '/admin', label: 'Admin', icon: adminIcon }
-]
-
 export default function Navigation({ toggleMobileMenu }: Props) {
   const { logout, user } = useAuth()
+
+  const navLinks = [
+    { to: '/', label: 'Home', icon: homeIcon },
+    { to: '/matches', label: 'Matches', icon: matchesIcon },
+    { to: `/profile/${user?.id}`, label: 'Profile', icon: profileIcon },
+    { to: '/players', label: 'Players', icon: playersIcon },
+    { to: '/admin', label: 'Admin', icon: adminIcon }
+  ]
 
   // Sadece admin rolü varsa admin linkini ekleyelim
   const filteredNavLinks = user?.role === 'ROLE_ADMIN' ? navLinks : navLinks.filter(link => link.label !== 'Admin')

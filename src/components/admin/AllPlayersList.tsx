@@ -1,11 +1,7 @@
-import { PlayerInfo } from '../../types/PlayerTypes'
+import { Player } from '../../services/playerService'
 import PlayerCard from './PlayerCard'
 
-type PlayersListProps = {
-  playersData: PlayerInfo[]
-}
-
-export default function AllPlayersList({ playersData }: PlayersListProps) {
+export default function AllPlayersList({ playersData }: { playersData: Player[] }) {
   return (
     <div className="mx-auto mt-3 text-center md:w-10/12">
       <h1 className="text-2xl text-neutral-dark ">Manage Players</h1>
@@ -14,7 +10,7 @@ export default function AllPlayersList({ playersData }: PlayersListProps) {
           <tr>
             <th
               scope="col"
-              className="px-4 py-2 border"
+              className="px-4 py-2 border min-w-48"
             >
               Surname
             </th>

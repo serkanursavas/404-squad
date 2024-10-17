@@ -1,13 +1,16 @@
 import Button from '../../components/ui/Button'
-import { useNavigate, useParams } from 'react-router-dom'
-import { useState, useEffect } from 'react'
-import { dummyPlayerInfo } from '../../dummyData/PlayerData'
-import { PlayerInfo } from '../../types/PlayerTypes'
+import { useParams } from 'react-router-dom'
+import { useState, useEffect, useMemo } from 'react'
 import { playerUpdateValidationSchema } from '../../validators/playerUpdateValidation'
 import { Field, FieldProps, Form, Formik, ErrorMessage } from 'formik'
 import Input from '../../components/ui/Input'
 import SelectInput from '../../components/form/SelectInput'
 import { SelectOption } from '../../types/FormTypes'
+import { Player } from '../../services/playerService'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../store'
+import { toast } from 'react-toastify'
+import usePlayer from '../../hooks/usePlayers'
 
 const position: SelectOption[] = [
   { value: 'Goalkeeper', label: 'Goalkeeper' },
@@ -24,42 +27,36 @@ const foot: SelectOption[] = [
 
 export default function UpdatePlayer() {
   const { id } = useParams()
-  const navigate = useNavigate()
-  const [player, setPlayer] = useState<PlayerInfo | null>(null)
-  const [isLoading, setIsLoading] = useState(false)
+  const [player, setPlayer] = useState<Player | null>(null)
+  const { players } = useSelector((state: RootState) => state.players)
+  const { updatePlayer } = usePlayer()
 
-  useEffect(() => {
+  const playerToUpdate = useMemo(() => {
     if (id) {
       const playerId = parseInt(id)
-      const playerToUpdate = dummyPlayerInfo.find(player => player.id === playerId)
-
-      if (playerToUpdate) {
-        setPlayer(playerToUpdate)
-      }
+      return players.find((player: Player) => player.id === playerId)
     }
-  }, [id])
+    return null
+  }, [id, players])
 
-  const handleSubmit = async (values: PlayerInfo) => {
-    setIsLoading(true)
+  useEffect(() => {
+    if (playerToUpdate) {
+      setPlayer(playerToUpdate)
+    }
+  }, [playerToUpdate])
+
+  const handleSubmit = async (values: Player) => {
     const updatedFields = Object.keys(values).reduce((acc, key) => {
-      if (player && values[key as keyof PlayerInfo] !== player[key as keyof PlayerInfo]) {
-        acc[key as keyof PlayerInfo] = values[key as keyof PlayerInfo] as any
+      if (player && values[key as keyof Player] !== player[key as keyof Player]) {
+        acc[key as keyof Player] = values[key as keyof Player] as any
       }
       return acc
-    }, {} as Partial<PlayerInfo>)
-
-    await new Promise(resolve => setTimeout(resolve, 2000))
+    }, {} as Partial<Player>)
 
     if (Object.keys(updatedFields).length > 0) {
-      console.log('Fields to update:', updatedFields)
-      console.log('User updated successfully', values)
-      alert('User has been updated successfully!')
-      setIsLoading(false)
-      navigate('/admin/players')
+      updatePlayer({ updatedData: values })
     } else {
-      alert('No changes detected!')
-      console.log('No fields were updated.')
-      setIsLoading(false)
+      toast('No changes detected!')
     }
   }
 
@@ -140,8 +137,7 @@ export default function UpdatePlayer() {
                   <Button
                     type="submit"
                     className="text-white bg-primary"
-                    label={isLoading ? 'Updating...' : 'Update'}
-                    disabled={isLoading}
+                    label="Update"
                   />
                 </div>
               </div>
