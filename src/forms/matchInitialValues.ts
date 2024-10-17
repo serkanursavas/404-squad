@@ -1,4 +1,6 @@
-export const initialValues = {
+import { MatchFormData } from '../types/FormTypes'
+
+export const initialValues: MatchFormData = {
   id: null,
   location: '',
   matchDate: '',
