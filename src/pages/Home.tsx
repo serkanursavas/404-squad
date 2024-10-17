@@ -5,17 +5,7 @@ import ballIcon from '../assets/icons/ball.png'
 import ratingIcon from '../assets/icons/coin.svg'
 import MvpCard from '../components/player-lists/MvpCard'
 import { PlayerInfo } from '../types/PlayerTypes'
-
-const dummyMatch = {
-  id: 1,
-  location: 'Central Stadium',
-  weather: 'Clear',
-  homeTeamScore: 1,
-  awayTeamScore: 2,
-  dateTime: '2024-10-17T23:35:33.957',
-  played: false,
-  voted: false
-}
+import useMatches from '../hooks/useMatches'
 
 const dummyPlayerData = [
   {
@@ -52,9 +42,12 @@ const player: PlayerInfo = {
 }
 
 export default function Home() {
+  const { nextMatch } = useMatches()
+
   return (
     <div className="space-y-6">
-      <Banner match={dummyMatch} />
+      {nextMatch && <Banner match={nextMatch} />}
+      {!nextMatch && <p>Loading next match...</p>}
 
       <MvpCard player={player} />
 
