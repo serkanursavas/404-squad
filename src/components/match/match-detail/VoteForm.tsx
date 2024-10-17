@@ -11,18 +11,18 @@ import { VoteFormSchema } from '../../../validators/voteFormValidation'
 interface VoteFormProps {
   squad: Roster[]
   handlePlayerVoted: () => void
+  currentPlayerId: number
 }
 
-export default function VoteForm({ squad, handlePlayerVoted }: VoteFormProps) {
+export default function VoteForm({ squad, handlePlayerVoted, currentPlayerId }: VoteFormProps) {
   const navigate = useNavigate()
-  const currentPlayerId = 3
 
   const [isBouncing, setIsBouncing] = useState(true)
 
   return (
     <Formik
       initialValues={{
-        ratings: squad.map(roster => ({
+        ratings: squad?.map(roster => ({
           playerId: roster.playerId,
           rating: '' // Default is empty, meaning not selected
         }))

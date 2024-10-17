@@ -10,154 +10,46 @@ import Icons from '../components/ui/Icons'
 import Scoreboard from '../components/match/match-detail/Scoreboard'
 import SquadList from '../components/match/match-detail/SquadList'
 import { getFormattedDayAndMonth } from '../utils/Date/dateUtils'
-
-const dummyMatches: Match[] = [
-  {
-    id: 1,
-    location: 'Star',
-    dateTime: '2024-09-24',
-    weather: 'Cloud',
-    homeTeamScore: 4,
-    awayTeamScore: 5,
-    played: true,
-    voted: false,
-    goals: [
-      { playerId: 6, playerName: 'Luke Skywalker', teamColor: 'white' },
-      { playerId: 7, playerName: 'Anakin Skywalker', teamColor: 'black' },
-      { playerId: 6, playerName: 'Luke Skywalker', teamColor: 'white' },
-      { playerId: 7, playerName: 'Anakin Skywalker', teamColor: 'black' },
-      { playerId: 8, playerName: 'Obi-Wan Kenobi', teamColor: 'white' },
-      { playerId: 9, playerName: 'Leia Organa', teamColor: 'black' },
-      { playerId: 9, playerName: 'Leia Organa', teamColor: 'black' },
-      { playerId: 9, playerName: 'Leia Organa', teamColor: 'black' },
-      { playerId: 10, playerName: 'Darth Vader', teamColor: 'white' },
-      { playerId: 10, playerName: 'Darth Vader', teamColor: 'white' },
-      { playerId: 10, playerName: 'Darth Vader', teamColor: 'white' },
-      { playerId: 10, playerName: 'Darth Vader', teamColor: 'white' },
-      { playerId: 4, playerName: 'Steve Jobs', teamColor: 'white' },
-      { playerId: 2, playerName: 'Max Power', teamColor: 'white' },
-      { playerId: 4, playerName: 'Steve Jobs', teamColor: 'white' },
-      { playerId: 2, playerName: 'Max Power', teamColor: 'white' },
-      { playerId: 3, playerName: 'Chris Rock', teamColor: 'black' },
-      { playerId: 1, playerName: 'John Doe', teamColor: 'black' }
-    ],
-    rosters: [
-      { id: 1, playerName: 'John Doe', rating: 0, playerId: 1, teamColor: 'black' },
-      { id: 2, playerName: 'Max Power', rating: 7, playerId: 2, teamColor: 'white' },
-      { id: 3, playerName: 'Chris Rock', rating: 6, playerId: 3, teamColor: 'black' },
-      { id: 4, playerName: 'Steve Jobs', rating: 9, playerId: 4, teamColor: 'white' },
-      { id: 5, playerName: 'Elon Musk', rating: 5, playerId: 5, teamColor: 'black' },
-      { id: 6, playerName: 'Luke Skywalker', rating: 9, playerId: 6, teamColor: 'white' },
-      { id: 7, playerName: 'Anakin Skywalker', rating: 8, playerId: 7, teamColor: 'black' },
-      { id: 8, playerName: 'Obi-Wan Kenobi', rating: 7, playerId: 8, teamColor: 'white' },
-      { id: 9, playerName: 'Leia Organa', rating: 6, playerId: 9, teamColor: 'black' },
-      { id: 10, playerName: 'Darth Vader', rating: 10, playerId: 10, teamColor: 'white' }
-    ]
-  },
-  {
-    id: 2,
-    location: 'Galaxy Arena',
-    dateTime: '2024-10-10',
-    weather: 'Sunny',
-    homeTeamScore: 3,
-    awayTeamScore: 2,
-    played: true,
-    voted: false,
-    goals: [
-      { playerId: 2, playerName: 'Max Power', teamColor: 'white' },
-      { playerId: 4, playerName: 'Steve Jobs', teamColor: 'white' },
-      { playerId: 7, playerName: 'Anakin Skywalker', teamColor: 'black' },
-      { playerId: 9, playerName: 'Leia Organa', teamColor: 'black' },
-      { playerId: 6, playerName: 'Luke Skywalker', teamColor: 'white' }
-    ],
-    rosters: [
-      { id: 1, playerName: 'John Doe', rating: 5, playerId: 1, teamColor: 'black' },
-      { id: 2, playerName: 'Max Power', rating: 8, playerId: 2, teamColor: 'white' },
-      { id: 3, playerName: 'Chris Rock', rating: 6, playerId: 3, teamColor: 'black' },
-      { id: 4, playerName: 'Steve Jobs', rating: 9, playerId: 4, teamColor: 'white' },
-      { id: 5, playerName: 'Elon Musk', rating: 4, playerId: 5, teamColor: 'black' },
-      { id: 6, playerName: 'Luke Skywalker', rating: 9, playerId: 6, teamColor: 'white' },
-      { id: 7, playerName: 'Anakin Skywalker', rating: 7, playerId: 7, teamColor: 'black' },
-      { id: 9, playerName: 'Leia Organa', rating: 6, playerId: 9, teamColor: 'black' }
-    ]
-  },
-  {
-    id: 3,
-    location: 'Tatooine Stadium',
-    dateTime: '2024-10-12',
-    weather: 'Rainy',
-    homeTeamScore: 6,
-    awayTeamScore: 4,
-    played: true,
-    voted: true,
-    goals: [
-      { playerId: 6, playerName: 'Luke Skywalker', teamColor: 'white' },
-      { playerId: 6, playerName: 'Luke Skywalker', teamColor: 'white' },
-      { playerId: 10, playerName: 'Darth Vader', teamColor: 'white' },
-      { playerId: 8, playerName: 'Obi-Wan Kenobi', teamColor: 'white' },
-      { playerId: 4, playerName: 'Steve Jobs', teamColor: 'white' },
-      { playerId: 5, playerName: 'Elon Musk', teamColor: 'black' },
-      { playerId: 5, playerName: 'Elon Musk', teamColor: 'black' },
-      { playerId: 9, playerName: 'Leia Organa', teamColor: 'black' },
-      { playerId: 7, playerName: 'Anakin Skywalker', teamColor: 'black' },
-      { playerId: 4, playerName: 'Steve Jobs', teamColor: 'white' }
-    ],
-    rosters: [
-      { id: 1, playerName: 'John Doe', rating: 3, playerId: 1, teamColor: 'black' },
-      { id: 5, playerName: 'Elon Musk', rating: 7, playerId: 5, teamColor: 'black' },
-      { id: 6, playerName: 'Luke Skywalker', rating: 9, playerId: 6, teamColor: 'white' },
-      { id: 7, playerName: 'Anakin Skywalker', rating: 6, playerId: 7, teamColor: 'black' },
-      { id: 8, playerName: 'Obi-Wan Kenobi', rating: 8, playerId: 8, teamColor: 'white' },
-      { id: 9, playerName: 'Leia Organa', rating: 7, playerId: 9, teamColor: 'black' },
-      { id: 10, playerName: 'Darth Vader', rating: 10, playerId: 10, teamColor: 'white' }
-    ]
-  },
-  {
-    id: 4,
-    location: 'Death Star Arena',
-    dateTime: '2024-10-14',
-    weather: 'Windy',
-    homeTeamScore: 2,
-    awayTeamScore: 3,
-    played: true,
-    voted: true,
-    goals: [
-      { playerId: 7, playerName: 'Anakin Skywalker', teamColor: 'black' },
-      { playerId: 9, playerName: 'Leia Organa', teamColor: 'black' },
-      { playerId: 9, playerName: 'Leia Organa', teamColor: 'black' },
-      { playerId: 4, playerName: 'Steve Jobs', teamColor: 'white' },
-      { playerId: 10, playerName: 'Darth Vader', teamColor: 'white' }
-    ],
-    rosters: [
-      { id: 1, playerName: 'John Doe', rating: 4, playerId: 1, teamColor: 'black' },
-      { id: 3, playerName: 'Chris Rock', rating: 7, playerId: 3, teamColor: 'black' },
-      { id: 4, playerName: 'Steve Jobs', rating: 8, playerId: 4, teamColor: 'white' },
-      { id: 5, playerName: 'Elon Musk', rating: 5, playerId: 5, teamColor: 'black' },
-      { id: 7, playerName: 'Anakin Skywalker', rating: 8, playerId: 7, teamColor: 'black' },
-      { id: 9, playerName: 'Leia Organa', rating: 7, playerId: 9, teamColor: 'black' },
-      { id: 10, playerName: 'Darth Vader', rating: 9, playerId: 10, teamColor: 'white' }
-    ]
-  }
-]
+import { useSelector } from 'react-redux'
+import { RootState } from '../store'
+import { useEffect, useState } from 'react'
+import useMatches from '../hooks/useMatches'
 
 export default function MatchDetails() {
   const { id } = useParams<{ id: string }>()
 
-  const match = dummyMatches.find(match => match.id === Number(id))
+  const [loading, setLoading] = useState(true)
+
+  const { useMatchDetails } = useMatches()
+
+  // 'id' varsa, maçın detaylarını getiriyoruz
+  const match = useMatchDetails(Number(id))
+
+  useEffect(() => {
+    if (match) {
+      console.log(match)
+
+      setLoading(false)
+    }
+  }, [match])
+
+  if (loading) {
+    return <div className="absolute top-0 left-0 flex items-center justify-center w-screen h-screen text-xl">Loading...</div>
+  }
 
   if (!match) {
     return <div className="absolute top-0 left-0 flex items-center justify-center w-screen h-screen text-xl">Match Not Found</div>
   }
 
-  const homeTeamSquad = match.rosters.filter(player => player.teamColor === 'black')
-  const awayTeamSquad = match.rosters.filter(player => player.teamColor === 'white')
+  const homeTeamSquad = match.rosters?.filter(player => player.teamColor === 'BLACK')
+  const awayTeamSquad = match.rosters?.filter(player => player.teamColor === 'WHITE')
 
   return (
     <div className="pt-6 border-t border-neutral-dark">
       <div className="w-full text-[12px] items-center justify-between mb-6 tracking-tighter flex text-primary ">
         <div className="flex items-center text-purple-400">
           <Icons src={locationIcon} />
-          <span className="ml-1"> {match.location}</span>
+          <span className="ml-1"> {match?.location}</span>
         </div>
         <div className="flex items-center text-right">
           <span className="mr-1"> {getFormattedDayAndMonth(match?.dateTime)}</span>

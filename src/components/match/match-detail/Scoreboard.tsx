@@ -14,8 +14,8 @@ export default function Scoreboard({
   goals: Goal[]
   played: boolean
 }) {
-  const homeTeamGoals = goals.filter(goal => goal.teamColor === 'black')
-  const awayTeamGoals = goals.filter(goal => goal.teamColor === 'white')
+  const homeTeamGoals = goals?.filter(goal => goal.teamColor === 'BLACK')
+  const awayTeamGoals = goals?.filter(goal => goal.teamColor === 'WHITE')
 
   return (
     <div className="border-2 border-black shadow-pixel">
@@ -37,7 +37,7 @@ export default function Scoreboard({
         />
       </div>
 
-      {played && (
+      {played && goals && goals.length > 0 && (
         <div className="flex justify-between text-[10px] p-4">
           <GoalList goals={homeTeamGoals} />
           <GoalList goals={awayTeamGoals} />
