@@ -15,7 +15,7 @@ export default function PlayerCard({ player }: { player: Player }) {
         scope="col"
         className="px-4 py-2 border "
       >
-        {player.surname}
+        {player.name.split(' ')[0][0]}.{player.surname.split(' ').pop()}
       </td>
 
       <td
