@@ -6,9 +6,11 @@ type MatchesListProps = {
 }
 
 export default function MatchesList({ matchesData }: MatchesListProps) {
+  const activeMatches = matchesData?.filter(match => match.played)
+
   return (
     <>
-      {matchesData?.map(match => {
+      {activeMatches?.map(match => {
         return (
           <MatchCard
             key={match.id}

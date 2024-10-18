@@ -29,7 +29,7 @@ export default function MatchCard({ match, route, classname = 'bg-white' }: Matc
           />
         </div>
         <div className={`text-base ${match.id % 2 === 0 ? 'flex-row-reverse' : 'flex-row'}`}>
-          <span>{match.homeTeamScore}</span>-<span>{match.awayTeamScore}</span>
+          <span>{match?.goals?.length > 0 && match.homeTeamScore}</span>-<span>{match?.goals?.length > 0 && match.awayTeamScore}</span>
         </div>
         <div className="flex items-center space-x-2">
           <img

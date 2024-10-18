@@ -42,12 +42,13 @@ const player: PlayerInfo = {
 }
 
 export default function Home() {
-  const { nextMatch } = useMatches()
+  const { nextMatch, isError, isLoading } = useMatches()
 
   return (
     <div className="space-y-6">
-      {nextMatch && <Banner match={nextMatch} />}
-      {!nextMatch && <p>Loading next match...</p>}
+      {isError && <p>Error loading match data.</p>}
+      {isLoading && <p>Loading next match...</p>}
+      {!isLoading && !isError && nextMatch && <Banner match={nextMatch} />}
 
       <MvpCard player={player} />
 
