@@ -6,19 +6,7 @@ import { signupInitialValues } from '../../forms/signupInitialValues'
 import { signupValidationSchema } from '../../validators/signupValidation'
 import SelectInput from './SelectInput'
 import { SignupFormValues } from '../../types/FormTypes'
-
-const positionOptions = [
-  { value: 'goalkeeper', label: 'Goalkeeper' },
-  { value: 'defender', label: 'Defender' },
-  { value: 'midfielder', label: 'Midfielder' },
-  { value: 'forward', label: 'Forward' }
-]
-
-const footOptions = [
-  { value: 'left', label: 'Left' },
-  { value: 'right', label: 'Right' },
-  { value: 'both', label: 'Both' }
-]
+import { footOptions, positionOptions } from '../../utils/select-options'
 
 const inputMappings = [
   { label: 'Username', name: 'username', type: 'text' },

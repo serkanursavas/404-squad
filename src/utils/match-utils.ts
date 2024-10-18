@@ -1,5 +1,6 @@
 import { CreateMatchRequest, Match } from '../services/matchService'
-import { MatchFormData } from '../types/FormTypes'
+import { Player } from '../services/playerService'
+import { MatchFormData, SelectOption } from '../types/FormTypes'
 
 export const convertMatchToFormData = (match: Match): MatchFormData => {
   const [matchDate, matchTime] = match.dateTime.split('T')
@@ -45,4 +46,13 @@ export const convertFormDataToCreateMatchRequest = (formData: MatchFormData): Cr
     teamSize,
     rosters
   }
+}
+
+export function activePlayersToSelectOptions(players: Player[]): SelectOption[] {
+  return players
+    .filter(player => player.active) // Sadece aktif olan oyuncuları filtrele
+    .map(player => ({
+      value: player.id.toString(), // value'yu id'den al
+      label: `${player.name} ${player.surname}` // label için name ve surname birleştir
+    }))
 }
