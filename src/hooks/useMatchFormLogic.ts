@@ -1,16 +1,20 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { MatchFormData } from '../types/FormTypes'
-import { convertMatchToFormData } from '../utils/match-utils'
+import { convertMatchToFormData, activePlayersToSelectOptions, convertFormDataToCreateMatchRequest } from '../utils/match-utils'
 import { initialValues as defaultInitialValues } from '../forms/matchInitialValues'
 import useMatches from './useMatches'
+import usePlayer from './usePlayers'
 
 export function useMatchFormLogic() {
   const [initialValues, setInitialValues] = useState<MatchFormData>(defaultInitialValues)
   const navigate = useNavigate()
   const { id } = useParams()
-  const { useMatchDetails } = useMatches()
+  const { useMatchDetails, createMatch } = useMatches()
   const [loading, setLoading] = useState(true)
+  const { players } = usePlayer()
+
+  const selectPlayers = activePlayersToSelectOptions(players || [])
 
   const match = useMatchDetails(Number(id))
   const isEditMode = Boolean(id)
@@ -31,8 +35,11 @@ export function useMatchFormLogic() {
     if (isEditMode) {
       console.log('Match Updated', values)
     } else {
-      console.log('New Match Created', values)
-      // createMatch logic can be added here
+      const convertedMatchData = convertFormDataToCreateMatchRequest(values)
+
+      convertedMatchData.weather = 'Sunny'
+
+      createMatch(convertedMatchData)
     }
     navigate('/admin/matches')
   }
@@ -41,6 +48,7 @@ export function useMatchFormLogic() {
     initialValues,
     handleSubmit,
     loading,
-    isEditMode
+    isEditMode,
+    selectPlayers
   }
 }

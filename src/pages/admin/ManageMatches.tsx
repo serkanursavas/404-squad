@@ -3,7 +3,7 @@ import Button from '../../components/ui/Button'
 
 import MatchCard from '../../components/match/MatchCard'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import useMatches from '../../hooks/useMatches'
 import { Match } from '../../services/matchService'
 
@@ -12,11 +12,17 @@ export default function ManageMatches() {
 
   const [matchInfo, setMatchInfo] = useState<Match | null>(nextMatch || null)
 
-  const route = matchInfo?.played ? `/admin/matches/${matchInfo.id}/add-goals` : `/admin/matches/${matchInfo?.id}`
+  useEffect(() => {
+    setMatchInfo(nextMatch || null)
+  }, [nextMatch])
+
+  console.log(matchInfo)
+
+  const route = matchInfo?.played ? `/admin/matches/${matchInfo?.id}/add-goals` : `/admin/matches/${matchInfo?.id}`
 
   return (
     <div>
-      {matchInfo && (matchInfo?.goals ?? []).length === 0 ? (
+      {matchInfo ? (
         <MatchCard
           match={matchInfo}
           route={route}
