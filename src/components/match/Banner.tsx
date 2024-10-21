@@ -36,7 +36,8 @@ export default function Banner({ match }: BannerProps) {
               />
             </div>
             <div className="text-2xl text-white">
-              <span>{match?.goals?.length > 0 && match.homeTeamScore}</span>-<span>{match?.goals?.length > 0 && match.awayTeamScore}</span>
+              <span>{(match?.homeTeamScore > 0 && match.homeTeamScore) || ''}</span>-
+              <span>{(match?.awayTeamScore && match.awayTeamScore) || ''}</span>
             </div>
             <div className="flex items-center space-x-2">
               <img

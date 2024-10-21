@@ -15,7 +15,7 @@ export default function ManageMatches() {
 
   return (
     <div>
-      {nextMatch ? (
+      {nextMatch && (nextMatch.awayTeamScore <= 0 || nextMatch.homeTeamScore <= 0) ? (
         <MatchCard
           match={nextMatch}
           route={route}
