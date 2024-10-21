@@ -18,7 +18,8 @@ const usePlayer = () => {
   const { data, isLoading, isError, error } = useQuery<Player[], Error>({
     queryKey: ['players'],
     queryFn: playerService.getAllPlayers,
-    enabled: players.length === 0 // Eğer Redux'ta veri varsa, bu istek atılmaz
+    staleTime: 1000 * 60 * 1, // 5 dakika boyunca veri taze kabul edilir
+    refetchInterval: players.length > 0 ? 1000 * 60 * 1 : false // Eğer Redux'ta veri varsa 5 dakikada bir refetch yapılır
   })
 
   useEffect(() => {
