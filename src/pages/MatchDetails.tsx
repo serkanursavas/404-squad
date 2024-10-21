@@ -27,8 +27,6 @@ export default function MatchDetails() {
 
   useEffect(() => {
     if (match) {
-      console.log(match)
-
       setLoading(false)
     }
   }, [match])

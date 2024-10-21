@@ -16,9 +16,8 @@ export default function SquadList({ teamLogo, squad, played, isVotingClosed }: S
 
   const currentPlayerId = user?.id ?? 0
   const [hasVoted, setHasVoted] = useState(false) // backend api hazirlanacak rating sorgusu ile contexapi
-  console.log(squad)
 
-  const inTeam: boolean = squad?.some(player => player.id === currentPlayerId)
+  const inTeam: boolean = squad?.some(player => player.playerId === currentPlayerId)
 
   const canVote = played && inTeam && !hasVoted && !isVotingClosed
 
