@@ -5,7 +5,7 @@ import TypingEffect from '../components/ui/TypingEffect'
 import useMatches from '../hooks/useMatches'
 
 export default function Matches() {
-  const { allMatches, fetchNextPage, hasNextPage } = useMatches()
+  const { allMatches, fetchNextPage, hasNextPage } = useMatches(true)
   const loadMoreRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {

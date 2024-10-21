@@ -9,9 +9,10 @@ interface MatchFormProps {
   initialValues: MatchFormData
   handleSubmit: (values: MatchFormData) => void
   players: SelectOption[]
+  handleDeleteMatch: (id: number) => void
 }
 
-export default function MatchForm({ initialValues, handleSubmit, players }: MatchFormProps) {
+export default function MatchForm({ initialValues, handleSubmit, players, handleDeleteMatch }: MatchFormProps) {
   return (
     <Formik
       key={JSON.stringify(initialValues)}
@@ -84,6 +85,14 @@ export default function MatchForm({ initialValues, handleSubmit, players }: Matc
               label="Submit"
               type="submit"
             />
+            {values.id && (
+              <Button
+                type="button"
+                label="Cancel Match"
+                className="text-white bg-primary-error"
+                onClick={() => values.id !== null && handleDeleteMatch(values.id)}
+              />
+            )}
           </Form>
         )
       }}

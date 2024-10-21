@@ -3,30 +3,21 @@ import Button from '../../components/ui/Button'
 
 import MatchCard from '../../components/match/MatchCard'
 
-import { useEffect, useState } from 'react'
-import useMatches from '../../hooks/useMatches'
-import { Match } from '../../services/matchService'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../store'
 
 export default function ManageMatches() {
-  const { nextMatch } = useMatches()
+  const nextMatch = useSelector((state: RootState) => state.matches.nextMatch)
 
-  const [matchInfo, setMatchInfo] = useState<Match | null>(nextMatch || null)
-
-  useEffect(() => {
-    setMatchInfo(nextMatch || null)
-  }, [nextMatch])
-
-  console.log(matchInfo)
-
-  const route = matchInfo?.played ? `/admin/matches/${matchInfo?.id}/add-goals` : `/admin/matches/${matchInfo?.id}`
+  const route = nextMatch?.played ? `/admin/matches/${nextMatch?.id}/add-goals` : `/admin/matches/${nextMatch?.id}`
 
   return (
     <div>
-      {matchInfo ? (
+      {nextMatch ? (
         <MatchCard
-          match={matchInfo}
+          match={nextMatch}
           route={route}
-          classname={`${matchInfo.played ? 'bg-secondary ' : 'bg-third text-white'}`}
+          classname={`${nextMatch.played ? 'bg-secondary ' : 'bg-third text-white'}`}
         />
       ) : (
         <div className="flex items-center justify-center mt-40">

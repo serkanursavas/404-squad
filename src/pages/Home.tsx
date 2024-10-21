@@ -7,6 +7,9 @@ import MvpCard from '../components/player-lists/MvpCard'
 import { PlayerInfo } from '../types/PlayerTypes'
 import useMatches from '../hooks/useMatches'
 
+import { useSelector } from 'react-redux'
+import { RootState } from '../store'
+
 const dummyPlayerData = [
   {
     playerId: 1,
@@ -42,13 +45,12 @@ const player: PlayerInfo = {
 }
 
 export default function Home() {
-  const { nextMatch, isError, isLoading } = useMatches()
+  useMatches(false, true)
+  const reduxNextMatch = useSelector((state: RootState) => state.matches.nextMatch)
 
   return (
     <div className="space-y-6">
-      {isError && <p>Error loading match data.</p>}
-      {isLoading && <p>Loading next match...</p>}
-      {!isLoading && !isError && nextMatch && <Banner match={nextMatch} />}
+      {reduxNextMatch && <Banner match={reduxNextMatch} />}
 
       <MvpCard player={player} />
 
