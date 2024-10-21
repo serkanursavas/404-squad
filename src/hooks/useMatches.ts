@@ -8,6 +8,7 @@ import { CustomError } from './useAuth'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { RootState } from '../store'
+import goalService, { GoalsUpdate } from '../services/goalService'
 
 const useMatches = (shouldFetchAllMatches = false, isNeededNextMatch = false) => {
   const dispatch = useDispatch()
@@ -171,6 +172,29 @@ const useMatches = (shouldFetchAllMatches = false, isNeededNextMatch = false) =>
     }
   })
 
+  const {
+    mutate: addGoals,
+    isError: isAddGoalsError,
+    error: addGoalsError
+  } = useMutation<{ goalsData: GoalsUpdate }, CustomError, GoalsUpdate>({
+    mutationFn: async (goalsData: GoalsUpdate) => {
+      return goalService.addGoals(goalsData)
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['matches'] })
+      fetchNextMatch() // Manuel olarak nextMatch'i tekrar tetikleyin
+      navigate('/')
+      toast.info('Goals updated successfully')
+    },
+    onError: (error: CustomError) => {
+      if (error.details && Array.isArray(error.details) && error.details.length > 0) {
+        error.details.forEach(detail => toast.error(detail))
+      } else {
+        toast.error(`${error.message}`)
+      }
+    }
+  })
+
   return {
     // nextMatch: nextMatchFromRedux || nextMatch,
     nextMatch: reduxNextMatch,
@@ -190,7 +214,10 @@ const useMatches = (shouldFetchAllMatches = false, isNeededNextMatch = false) =>
     deleteMatchError,
     updateMatch,
     isUpdateMatchError,
-    updateMatchError
+    updateMatchError,
+    addGoals,
+    isAddGoalsError,
+    addGoalsError
   }
 }
 
