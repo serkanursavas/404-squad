@@ -35,10 +35,10 @@ function GoalsList({ goals, handleGoalRemove }: GoalsListProps) {
         >
           <span
             className={`absolute top-0 left-0 flex items-center justify-center w-12 h-full 
-              ${groupedGoals[playerName].teamColor === 'white' ? 'bg-neutral' : ' bg-black text-white'}
+              ${groupedGoals[playerName].teamColor === 'WHITE' ? 'bg-neutral' : ' bg-black text-white'}
               `}
           >
-            {groupedGoals[playerName].teamColor === 'white' ? 'W' : 'B'}
+            {groupedGoals[playerName].teamColor === 'WHITE' ? 'W' : 'B'}
           </span>
 
           <span>{playerName}</span>
