@@ -1,29 +1,9 @@
-import { useState, useMemo } from 'react'
-import { useParams } from 'react-router-dom'
+import { useState, useMemo, useEffect } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import AvailablePlayersList from '../../components/admin/goal/AvailablePlayerList'
 import GoalsList from '../../components/admin/goal/GoalsList'
 import { showConfirmationModal } from '../../utils/showConfirmationModal'
-
-const dummyPlayers = [
-  { id: 1, playerName: 'John', teamColor: 'black' },
-  { id: 2, playerName: 'Emily', teamColor: 'white' },
-  { id: 3, playerName: 'Michael', teamColor: 'black' },
-  { id: 4, playerName: 'Sophia', teamColor: 'white' },
-  { id: 5, playerName: 'David', teamColor: 'black' },
-  { id: 6, playerName: 'Emma', teamColor: 'white' },
-  { id: 7, playerName: 'James', teamColor: 'black' },
-  { id: 8, playerName: 'Olivia', teamColor: 'white' },
-  { id: 9, playerName: 'Daniel', teamColor: 'black' },
-  { id: 10, playerName: 'Ava', teamColor: 'white' },
-  { id: 11, playerName: 'Henry', teamColor: 'black' },
-  { id: 12, playerName: 'Isabella', teamColor: 'white' }
-]
-
-// Player data for React-select component
-const initialPlayers = dummyPlayers.map(player => ({
-  value: player.id.toString(),
-  label: player.playerName
-}))
+import useMatches from '../../hooks/useMatches'
 
 interface Goals {
   playerId: number
@@ -33,22 +13,39 @@ interface Goals {
 
 export default function MatchGoalsPage() {
   const [goals, setGoals] = useState<Goals[]>([])
-  const [availablePlayers, setAvailablePlayers] = useState(initialPlayers)
-
-  // State for the number of goals for white and black teams
-  const [whiteTeamGoals, setWhiteTeamGoals] = useState(0)
-  const [blackTeamGoals, setBlackTeamGoals] = useState(0)
-
+  const { useMatchDetails, addGoals } = useMatches()
   const { id } = useParams()
+  const [availablePlayers, setAvailablePlayers] = useState<{ value: string; label: string }[]>([])
+  const [loading, setLoading] = useState(true)
+  const [blackTeamGoals, setBlackTeamGoals] = useState(0)
+  const [whiteTeamGoals, setWhiteTeamGoals] = useState(0)
 
-  // Memoize available players to avoid unnecessary recalculations
+  const navigate = useNavigate()
+
+  const match = useMatchDetails(Number(id))
+
+  const rosters = match?.rosters
+
+  useEffect(() => {
+    if (rosters && (match.homeTeamScore <= 0 || match.awayTeamScore <= 0)) {
+      const players = rosters.map(player => ({
+        value: player.playerId.toString(),
+        label: player.playerName
+      }))
+      setAvailablePlayers(players)
+      setLoading(false)
+    } else {
+      navigate('/')
+    }
+  }, [rosters])
+
   const filteredPlayers = useMemo(() => {
-    return availablePlayers.filter(option => !goals.some(goal => goal.playerId.toString() === option.value))
+    return availablePlayers?.filter(option => !goals.some(goal => goal.playerId.toString() === option.value))
   }, [goals, availablePlayers])
 
   function saveGoalHandler() {
     const postData = {
-      gameId: id,
+      gameId: Number(id),
       goals: goals.map(goals => ({ playerId: goals.playerId, teamColor: goals.teamColor }))
     }
 
@@ -60,7 +57,7 @@ export default function MatchGoalsPage() {
         confirmButtonText: 'Yes'
       },
       () => {
-        console.log(postData)
+        addGoals(postData)
       },
       {
         title: 'Saved!',
@@ -71,11 +68,11 @@ export default function MatchGoalsPage() {
   }
 
   function submitHandler(values: { playerId: string; goalCount: number }, { resetForm }: { resetForm: () => void }) {
-    const player = dummyPlayers.find(player => player.id === parseInt(values.playerId))
+    const player = rosters?.find(player => player.playerId === parseInt(values.playerId))
 
     if (player) {
       const newGoals = Array.from({ length: values.goalCount }, () => ({
-        playerId: player.id,
+        playerId: player.playerId,
         playerName: player.playerName,
         teamColor: player.teamColor
       }))
@@ -84,7 +81,7 @@ export default function MatchGoalsPage() {
       setGoals(prevGoals => [...prevGoals, ...newGoals])
 
       // Update the number of goals for white and black teams
-      if (player.teamColor === 'white') {
+      if (player.teamColor === 'WHITE') {
         setWhiteTeamGoals(prevGoals => prevGoals + values.goalCount)
       } else {
         setBlackTeamGoals(prevGoals => prevGoals + values.goalCount)
@@ -97,7 +94,7 @@ export default function MatchGoalsPage() {
 
   function handleGoalRemove(id: number) {
     const countGoals = goals.filter(goal => goal.playerId === id).length
-    const player = dummyPlayers.find(player => player.id === id)
+    const player = rosters?.find(player => player.playerId === id)
 
     if (player) {
       if (player.teamColor === 'white') {
@@ -109,7 +106,7 @@ export default function MatchGoalsPage() {
 
     setGoals(goals.filter(goal => goal.playerId !== id))
 
-    const availablePlayer = dummyPlayers.find(player => player.id === id)
+    const availablePlayer = rosters?.find(player => player.playerId === id)
     if (availablePlayer) {
       setAvailablePlayers(prevState => {
         if (!prevState.find(player => player.value === availablePlayer.id.toString())) {
