@@ -1,33 +1,49 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { CreateMatchRequest, Match } from '../services/matchService'
 import matchService from '../services/matchService'
-import { useEffect } from 'react'
-import { QueryClient, useInfiniteQuery, useMutation, useQuery } from '@tanstack/react-query'
+import { useEffect, useState } from 'react'
+import { QueryClient, useInfiniteQuery, useMutation } from '@tanstack/react-query'
 import { fetchAllMatchesSuccess, fetchMatchDetailsSuccess, fetchNextMatchSuccess } from '../store/matchSlice'
 import { CustomError } from './useAuth'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { RootState } from '../store'
 
-const useMatches = () => {
+const useMatches = (shouldFetchAllMatches = false, isNeededNextMatch = false) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const queryClient = new QueryClient()
 
+  const reduxNextMatch = useSelector((state: RootState) => state.matches.nextMatch)
+
+  const [isLoading, setIsLoading] = useState(false)
+
   const {
-    data: nextMatch,
-    isError,
-    error
-  } = useQuery<Match, Error>({
-    queryKey: ['nextMatch'],
-    queryFn: matchService.getNextGame
+    mutate: fetchNextMatch,
+    error: nextMatchError,
+    status: fetchStatus
+  } = useMutation<Match, CustomError, void>({
+    mutationFn: matchService.getNextGame,
+    onSuccess: (data: Match) => {
+      dispatch(fetchNextMatchSuccess(data))
+    }
   })
 
   useEffect(() => {
-    if (nextMatch) {
-      dispatch(fetchNextMatchSuccess(nextMatch))
+    if (!reduxNextMatch && isNeededNextMatch) {
+      setIsLoading(true)
+      fetchNextMatch()
+      setIsLoading(false)
     }
-  }, [nextMatch])
+
+    const interval = setInterval(() => {
+      if (isNeededNextMatch) {
+        fetchNextMatch()
+      }
+    }, 300000)
+
+    return () => clearInterval(interval)
+  }, [reduxNextMatch, dispatch, isNeededNextMatch, fetchNextMatch])
 
   const {
     data,
@@ -43,6 +59,7 @@ const useMatches = () => {
       const nextPage = allPages.length
       return nextPage < totalPages ? nextPage : undefined // Eğer daha fazla sayfa varsa, devam et
     },
+    enabled: shouldFetchAllMatches, // Yalnızca gerekli olduğunda çalışır
     initialPageParam: 0 // İlk sayfa için başlangıç değeri
   })
 
@@ -79,6 +96,13 @@ const useMatches = () => {
 
   const useMatchDetails = (id: number) => {
     const dispatch = useDispatch()
+
+    // ID'nin geçerli bir sayı olup olmadığını kontrol et
+    if (isNaN(id)) {
+      console.error(`Invalid match id: ${id}`)
+      return null
+    }
+
     const matchDetails = useSelector((state: RootState) => state.matches.allMatches.find(match => match.id === id))
 
     useEffect(() => {
@@ -98,10 +122,35 @@ const useMatches = () => {
     return matchDetails
   }
 
+  const {
+    mutate: deleteMatch,
+    isError: isdeleteMatchError,
+    error: deleteMatchError
+  } = useMutation<{ id: number }, CustomError, number>({
+    mutationFn: async (id: number) => {
+      return matchService.deleteGameById(id)
+    },
+    onSuccess: () => {
+      // Cache temizleme ve Redux güncellemesi
+      queryClient.invalidateQueries({ queryKey: ['nextMatch'] }) // React Query cache'ini sıfırlıyoruz
+      queryClient.removeQueries({ queryKey: ['nextMatch'] }) // Remove cache entry manually
+      dispatch(fetchNextMatchSuccess(null)) // Redux'taki nextMatch'i sıfırlıyoruz
+      navigate('/')
+    },
+    onError: (error: CustomError) => {
+      if (error.status === 404) {
+        dispatch(fetchNextMatchSuccess(null))
+      } else {
+        toast.error(error.message)
+      }
+    }
+  })
+
   return {
-    nextMatch,
-    isError,
-    error,
+    // nextMatch: nextMatchFromRedux || nextMatch,
+    nextMatch: reduxNextMatch,
+    nextMatchIsLoading: isLoading || fetchStatus === 'pending',
+    nextMatchError,
     allMatches,
     isAllMatchesError,
     allMatchesError,
@@ -110,7 +159,10 @@ const useMatches = () => {
     createMatch,
     isCreateMatchError,
     createMatchError,
-    useMatchDetails
+    useMatchDetails,
+    deleteMatch,
+    isdeleteMatchError,
+    deleteMatchError
   }
 }
 

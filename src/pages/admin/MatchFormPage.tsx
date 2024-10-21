@@ -2,7 +2,7 @@ import MatchForm from '../../components/match-form/MatchForm'
 import { useMatchFormLogic } from '../../hooks/useMatchFormLogic'
 
 export default function MatchFormPage() {
-  const { initialValues, handleSubmit, loading, selectPlayers } = useMatchFormLogic()
+  const { initialValues, handleSubmit, loading, selectPlayers, handleDeleteMatch } = useMatchFormLogic()
 
   if (loading) {
     return <div>Loading...</div>
@@ -13,6 +13,7 @@ export default function MatchFormPage() {
       initialValues={initialValues}
       handleSubmit={handleSubmit}
       players={selectPlayers}
+      handleDeleteMatch={handleDeleteMatch}
     />
   )
 }

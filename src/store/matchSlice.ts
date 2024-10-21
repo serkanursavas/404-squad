@@ -15,7 +15,7 @@ const matchSlice = createSlice({
   name: 'match',
   initialState,
   reducers: {
-    fetchNextMatchSuccess: (state, action: PayloadAction<Match>) => {
+    fetchNextMatchSuccess: (state, action: PayloadAction<Match | null>) => {
       state.nextMatch = action.payload
     },
     fetchAllMatchesSuccess: (state, action: PayloadAction<Match[]>) => {

@@ -49,8 +49,6 @@ const getNextGame = async (): Promise<Match> => {
     const customError = new Error(error.response?.data?.message || error.message || 'An unknown error occurred') as CustomError
     customError.status = error.response?.status || 500
     customError.details = error.response?.data?.details || 'No additional details available'
-    console.log(error)
-
     throw customError
   }
 }
@@ -91,4 +89,16 @@ const getGameById = async (id: number): Promise<Match> => {
   }
 }
 
-export default { getNextGame, getAllGames, createMatch, getGameById }
+const deleteGameById = async (id: number): Promise<Match> => {
+  try {
+    const response = await axiosInstance.delete(`/games/admin/deleteGame/${id}`)
+    return response.data
+  } catch (error: any) {
+    const customError = new Error(error.response?.data?.message || error.message || 'An unknown error occurred') as CustomError
+    customError.status = error.response?.status || 500
+    customError.details = error.response?.data?.details || 'No additional details available'
+    throw customError
+  }
+}
+
+export default { getNextGame, getAllGames, createMatch, getGameById, deleteGameById }
