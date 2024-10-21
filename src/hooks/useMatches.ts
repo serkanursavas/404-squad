@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { CreateMatchRequest, Match } from '../services/matchService'
+import { CreateMatchRequest, Match, UpdateMatchRequest } from '../services/matchService'
 import matchService from '../services/matchService'
 import { useEffect, useState } from 'react'
 import { QueryClient, useInfiniteQuery, useMutation } from '@tanstack/react-query'
@@ -94,6 +94,31 @@ const useMatches = (shouldFetchAllMatches = false, isNeededNextMatch = false) =>
     }
   })
 
+  const {
+    mutate: updateMatch,
+    isError: isUpdateMatchError,
+    error: updateMatchError
+  } = useMutation<{ id: number; updateMatchData: UpdateMatchRequest }, CustomError, { id: number; updateMatchData: UpdateMatchRequest }>({
+    mutationFn: async ({ id, updateMatchData }: { id: number; updateMatchData: UpdateMatchRequest }) => {
+      return matchService.updateMatch(id, updateMatchData)
+    },
+    onSuccess: (data, { id }) => {
+      queryClient.invalidateQueries({ queryKey: ['matches'] }) // invalidate matches
+      queryClient.invalidateQueries({ queryKey: ['nextMatch'] }) // nextMatch verisini sıfırlıyoruz
+      queryClient.invalidateQueries({ queryKey: ['matchDetails', id] }) // Maç detaylarını invalidate ediyoruz
+      fetchNextMatch() // Manuel olarak nextMatch'i tekrar tetikleyin
+      navigate('/')
+      toast.info('Match updates successfully')
+    },
+    onError: (error: CustomError) => {
+      if (error.details && Array.isArray(error.details) && error.details.length > 0) {
+        error.details.forEach(detail => toast.error(detail))
+      } else {
+        toast.error(`${error.message}`)
+      }
+    }
+  })
+
   const useMatchDetails = (id: number) => {
     const dispatch = useDispatch()
 
@@ -162,7 +187,10 @@ const useMatches = (shouldFetchAllMatches = false, isNeededNextMatch = false) =>
     useMatchDetails,
     deleteMatch,
     isdeleteMatchError,
-    deleteMatchError
+    deleteMatchError,
+    updateMatch,
+    isUpdateMatchError,
+    updateMatchError
   }
 }
 

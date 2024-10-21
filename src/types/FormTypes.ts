@@ -19,7 +19,7 @@ export interface MatchFormData {
   matchDate: string
   matchTime: string
   teamSize: number
-  whiteTeam: String[]
-  blackTeam: String[]
+  whiteTeam: (string | { rosterId: number; playerId: string })[]
+  blackTeam: (string | { rosterId: number; playerId: string })[]
   isPlayed: boolean
 }

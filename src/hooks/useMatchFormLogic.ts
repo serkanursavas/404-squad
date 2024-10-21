@@ -1,17 +1,19 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { MatchFormData } from '../types/FormTypes'
-import { convertMatchToFormData, activePlayersToSelectOptions, convertFormDataToCreateMatchRequest } from '../utils/match-utils'
+import { convertMatchToFormData, activePlayersToSelectOptions, convertFormDataToMatchRequest, createUpdatedMatchRequest } from '../utils/match-utils'
 import { initialValues as defaultInitialValues } from '../forms/matchInitialValues'
 import useMatches from './useMatches'
 import usePlayer from './usePlayers'
 import { showConfirmationModal } from '../utils/showConfirmationModal'
+import { Roster } from '../services/matchService'
 
 export function useMatchFormLogic() {
   const [initialValues, setInitialValues] = useState<MatchFormData>(defaultInitialValues)
+  const [rosters, setRosters] = useState<Roster[]>([])
   const navigate = useNavigate()
   const { id } = useParams()
-  const { useMatchDetails, createMatch, deleteMatch } = useMatches()
+  const { useMatchDetails, createMatch, deleteMatch, updateMatch } = useMatches()
   const [loading, setLoading] = useState(true)
   const { players } = usePlayer()
 
@@ -24,6 +26,8 @@ export function useMatchFormLogic() {
   useEffect(() => {
     if (isEditMode && match) {
       const formattedMatch = convertMatchToFormData(match)
+      setRosters(match.rosters)
+
       if (JSON.stringify(initialValues) !== JSON.stringify(formattedMatch)) {
         setInitialValues(formattedMatch)
       }
@@ -35,11 +39,11 @@ export function useMatchFormLogic() {
 
   const handleSubmit = (values: MatchFormData) => {
     if (isEditMode) {
-      console.log('Match Updated', values)
-    } else {
-      const convertedMatchData = convertFormDataToCreateMatchRequest(values)
+      const updatedMatchData = createUpdatedMatchRequest(values, rosters)
 
-      convertedMatchData.weather = 'test'
+      updateMatch({ id: Number(updatedMatchData.id), updateMatchData: updatedMatchData })
+    } else {
+      const convertedMatchData = convertFormDataToMatchRequest(values)
 
       createMatch(convertedMatchData)
     }

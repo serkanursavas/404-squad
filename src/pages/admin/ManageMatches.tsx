@@ -5,8 +5,10 @@ import MatchCard from '../../components/match/MatchCard'
 
 import { useSelector } from 'react-redux'
 import { RootState } from '../../store'
+import useMatches from '../../hooks/useMatches'
 
 export default function ManageMatches() {
+  useMatches(false, true)
   const nextMatch = useSelector((state: RootState) => state.matches.nextMatch)
 
   const route = nextMatch?.played ? `/admin/matches/${nextMatch?.id}/add-goals` : `/admin/matches/${nextMatch?.id}`
