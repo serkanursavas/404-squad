@@ -33,12 +33,22 @@ export interface CreateMatchRoster {
   playerId: number
 }
 
-export interface CreateMatchRequest {
+export interface UpdateMatchRoster extends CreateMatchRoster {
+  id: number
+}
+
+export interface BaseMatchRequest<T> {
   location: string
   weather: string
   dateTime: string
   teamSize: number
-  rosters: CreateMatchRoster[]
+  rosters: T[]
+}
+
+export interface CreateMatchRequest extends BaseMatchRequest<CreateMatchRoster> {}
+
+export interface UpdateMatchRequest extends BaseMatchRequest<UpdateMatchRoster> {
+  id: number
 }
 
 const getNextGame = async (): Promise<Match> => {
@@ -77,6 +87,18 @@ const createMatch = async (createMatchData: CreateMatchRequest): Promise<any> =>
   }
 }
 
+const updateMatch = async (id: number, createMatchData: UpdateMatchRequest): Promise<any> => {
+  try {
+    const response = await axiosInstance.put(`/games/admin/updateGame/${id}`, createMatchData)
+    return response.data
+  } catch (error: any) {
+    const customError = new Error(error.response?.data?.message || error.message || 'An unknown error occurred') as CustomError
+    customError.status = error.response?.status || 500
+    customError.details = error.response?.data?.details || 'No additional details available'
+    throw customError
+  }
+}
+
 const getGameById = async (id: number): Promise<Match> => {
   try {
     const response = await axiosInstance.get(`/games/getGameById/${id}`)
@@ -101,4 +123,4 @@ const deleteGameById = async (id: number): Promise<Match> => {
   }
 }
 
-export default { getNextGame, getAllGames, createMatch, getGameById, deleteGameById }
+export default { getNextGame, getAllGames, createMatch, getGameById, deleteGameById, updateMatch }
