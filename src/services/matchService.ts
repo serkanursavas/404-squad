@@ -34,7 +34,7 @@ export interface CreateMatchRoster {
 }
 
 export interface UpdateMatchRoster extends CreateMatchRoster {
-  id: number
+  id?: number
 }
 
 export interface BaseMatchRequest<T> {

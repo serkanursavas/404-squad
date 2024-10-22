@@ -23,8 +23,9 @@ export default function VoteForm({ squad, handlePlayerVoted, currentPlayerId }: 
     <Formik
       initialValues={{
         ratings: squad?.map(roster => ({
-          playerId: roster.playerId,
-          rating: '' // Default is empty, meaning not selected
+          rosterId: roster.id,
+          playerId: currentPlayerId,
+          rating: 0
         }))
       }}
       validationSchema={() => VoteFormSchema(currentPlayerId)}
@@ -38,7 +39,6 @@ export default function VoteForm({ squad, handlePlayerVoted, currentPlayerId }: 
           },
           () => {
             console.log('Submitted values:', values)
-            handlePlayerVoted()
           },
           {
             title: 'Saved!',

@@ -83,6 +83,7 @@ const useMatches = (shouldFetchAllMatches = false, isNeededNextMatch = false) =>
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['matches'] })
+      fetchNextMatch() // Manuel olarak nextMatch'i tekrar tetikleyin
       navigate('/')
       toast.info('Match created successfully')
     },
@@ -180,10 +181,11 @@ const useMatches = (shouldFetchAllMatches = false, isNeededNextMatch = false) =>
     mutationFn: async (goalsData: GoalsUpdate) => {
       return goalService.addGoals(goalsData)
     },
-    onSuccess: () => {
+    onSuccess: data => {
       queryClient.invalidateQueries({ queryKey: ['matches'] })
       fetchNextMatch() // Manuel olarak nextMatch'i tekrar tetikleyin
       navigate('/')
+      window.location.reload()
       toast.info('Goals updated successfully')
     },
     onError: (error: CustomError) => {

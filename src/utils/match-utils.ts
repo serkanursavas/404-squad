@@ -26,8 +26,6 @@ export const convertFormDataToMatchRequest = (formData: MatchFormData): CreateMa
   // Tarih ve saat birleştiriliyor
   const dateTime = `${matchDate}T${matchTime}`
 
-  console.log(whiteTeam)
-
   const rosters: UpdateMatchRoster[] = [
     ...whiteTeam.map(player => {
       if (typeof player === 'string') {

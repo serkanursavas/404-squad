@@ -1,19 +1,15 @@
 import { useParams } from 'react-router-dom'
 
-import { Match } from '../types/MatchTypes'
-
 import homeTeamLogo from '../assets/images/club-black.svg'
 import awayTeamLogo from '../assets/images/club-white.svg'
 import locationIcon from '../assets/icons/bookmarks.svg'
-import dateIcon from '../assets/icons/calendar.svg'
 import Icons from '../components/ui/Icons'
 import Scoreboard from '../components/match/match-detail/Scoreboard'
 import SquadList from '../components/match/match-detail/SquadList'
 import { getFormattedDayAndMonth } from '../utils/Date/dateUtils'
-import { useSelector } from 'react-redux'
-import { RootState } from '../store'
 import { useEffect, useState } from 'react'
 import useMatches from '../hooks/useMatches'
+import rainSvg from '../assets/icons/rain.svg'
 
 export default function MatchDetails() {
   const { id } = useParams<{ id: string }>()
@@ -44,13 +40,23 @@ export default function MatchDetails() {
 
   return (
     <div className="pt-6 border-t border-neutral-dark">
-      <div className="w-full text-[12px] items-center justify-between mb-6 tracking-tighter flex text-primary ">
-        <div className="flex items-center text-purple-400">
-          <Icons src={locationIcon} />
-          <span className="ml-1"> {match?.location}</span>
+      <div className="mb-6 tracking-tighter text-primary text-[12px] space-y-2">
+        <div className="flex items-center justify-between w-full">
+          <div className="flex items-center text-purple-400">
+            <Icons src={locationIcon} />
+            <span className="ml-1"> {match?.location}</span>
+          </div>
+
+          <div className="flex items-center text-right">
+            <span className="mr-1"> {getFormattedDayAndMonth(match?.dateTime)}</span>
+          </div>
         </div>
-        <div className="flex items-center text-right">
-          <span className="mr-1"> {getFormattedDayAndMonth(match?.dateTime)}</span>
+        <div className="flex items-center justify-start ">
+          <Icons
+            src={rainSvg}
+            className="w-6"
+          />
+          <span className="ml-1 text-third">Rainy</span>
         </div>
       </div>
 
@@ -59,9 +65,10 @@ export default function MatchDetails() {
         awayTeamScore={match.awayTeamScore}
         goals={match.goals}
         played={match.played}
+        twist={match.id % 2 === 0}
       />
 
-      <div className="px-2 text-[12px] mt-12 space-y-8">
+      <div className={`flex flex-col px-2 text-[12px] mt-12 space-y-8 ${match.id % 2 === 0 ? 'flex-col-reverse' : 'flex-col'} `}>
         <SquadList
           teamLogo={homeTeamLogo}
           squad={homeTeamSquad}
