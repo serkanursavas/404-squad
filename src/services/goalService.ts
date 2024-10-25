@@ -11,11 +11,12 @@ export interface GoalsUpdate {
   goals: Goal[]
 }
 
-export interface TopScorer {
-  id: number
+export interface TopPlayer {
+  playerId: number
   name: string
   surname: string
-  goalCount: number
+  rating?: number // Optional, sadece en iyi rating listesi için kullanılır
+  goalCount?: number // Optional, sadece en iyi golcü listesi için kullanılır
 }
 
 const addGoals = async (goalsData: GoalsUpdate): Promise<any> => {
@@ -30,7 +31,7 @@ const addGoals = async (goalsData: GoalsUpdate): Promise<any> => {
   }
 }
 
-const getTopScorers = async (): Promise<TopScorer[]> => {
+const getTopScorers = async (): Promise<TopPlayer[]> => {
   try {
     const response = await axiosInstance.get('/goals/topScorers')
     return response.data
