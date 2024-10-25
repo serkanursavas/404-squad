@@ -9,29 +9,7 @@ import useMatches from '../hooks/useMatches'
 
 import { useSelector } from 'react-redux'
 import { RootState } from '../store'
-
-const dummyPlayerData = [
-  {
-    playerId: 1,
-    playerName: 'Serkan',
-    statistic: '9'
-  },
-  {
-    playerId: 2,
-    playerName: 'Mete',
-    statistic: '19'
-  },
-  {
-    playerId: 3,
-    playerName: 'Ismail',
-    statistic: '2'
-  },
-  {
-    playerId: 4,
-    playerName: 'Isa',
-    statistic: '7'
-  }
-]
+import useTopLists from '../hooks/useTopLists'
 
 const player: PlayerInfo = {
   id: 1,
@@ -48,6 +26,8 @@ export default function Home() {
   useMatches(false, true)
   const reduxNextMatch = useSelector((state: RootState) => state.matches.nextMatch)
 
+  const { topScorers } = useTopLists()
+
   return (
     <div className="space-y-6">
       {reduxNextMatch && <Banner match={reduxNextMatch} />}
@@ -58,13 +38,13 @@ export default function Home() {
         title="Top Scorer"
         statisticLabel="Goal"
         watermark={ballIcon}
-        playersData={dummyPlayerData}
+        playersData={topScorers}
       />
       <TopLists
         title="Top Rating"
         statisticLabel="Form"
         watermark={ratingIcon}
-        playersData={dummyPlayerData}
+        playersData={topScorers}
       />
     </div>
   )

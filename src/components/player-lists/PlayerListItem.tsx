@@ -4,11 +4,12 @@ import Icons from '../ui/Icons'
 interface PlayerListItemProps {
   icon: string
   playerName: string
-  statistic: string
+  playerSurname: string
+  statistic: number
   playerId: number
 }
 
-export default function PlayerListItem({ icon, playerName, statistic, playerId }: PlayerListItemProps) {
+export default function PlayerListItem({ icon, playerName, statistic, playerId, playerSurname }: PlayerListItemProps) {
   const navigate = useNavigate()
   return (
     <div
@@ -18,7 +19,7 @@ export default function PlayerListItem({ icon, playerName, statistic, playerId }
       <div className="flex justify-between px-4 py-2 mt-2 text-sm ">
         <span className="flex items-center space-x-2">
           <Icons src={icon} />
-          <span className="font-thin">{playerName}</span>
+          <span className="font-thin">{playerName.split(' ')[0][0] + '.' + playerSurname}</span>
         </span>
         <span>{statistic}</span>
       </div>
