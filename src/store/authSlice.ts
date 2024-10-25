@@ -8,12 +8,14 @@ interface AuthState {
   } | null
   token?: string | null
   isAuthenticated: boolean
+  hasVoted: boolean // Kullanıcının oy verip vermediği bilgisi
 }
 
 const initialState: AuthState = {
   user: null,
   token: localStorage.getItem('token'),
-  isAuthenticated: !!localStorage.getItem('token')
+  isAuthenticated: !!localStorage.getItem('token'),
+  hasVoted: false // Varsayılan olarak false
 }
 
 const authSlice = createSlice({
@@ -29,9 +31,12 @@ const authSlice = createSlice({
       state.user = null
       state.token = null
       state.isAuthenticated = false
+    },
+    setVoteStatus: (state, action: PayloadAction<boolean>) => {
+      state.hasVoted = action.payload // Oy durumunu güncelle
     }
   }
 })
 
-export const { loginSuccess, logoutSuccess } = authSlice.actions
+export const { loginSuccess, logoutSuccess, setVoteStatus } = authSlice.actions
 export default authSlice.reducer
