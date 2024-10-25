@@ -10,6 +10,8 @@ interface PlayerListItemProps {
 }
 
 export default function PlayerListItem({ icon, playerName, statistic, playerId, playerSurname }: PlayerListItemProps) {
+  playerId
+
   const navigate = useNavigate()
   return (
     <div

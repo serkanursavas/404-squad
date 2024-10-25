@@ -26,7 +26,7 @@ export default function Home() {
   useMatches(false, true)
   const reduxNextMatch = useSelector((state: RootState) => state.matches.nextMatch)
 
-  const { topScorers } = useTopLists()
+  const { topScorers, topRatedPlayers } = useTopLists()
 
   return (
     <div className="space-y-6">
@@ -44,7 +44,7 @@ export default function Home() {
         title="Top Rating"
         statisticLabel="Form"
         watermark={ratingIcon}
-        playersData={topScorers}
+        playersData={topRatedPlayers}
       />
     </div>
   )

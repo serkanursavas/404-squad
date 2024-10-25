@@ -1,10 +1,10 @@
 import PlayerListItem from './PlayerListItem'
 
 import userIcon from '../../assets/icons/user.svg'
-import { TopScorer } from '../../services/goalService'
+import { TopPlayer } from '../../services/goalService'
 
 type PlayerListProp = {
-  players: TopScorer[]
+  players: TopPlayer[]
 }
 
 export default function PlayerList({ players }: PlayerListProp) {
@@ -14,11 +14,11 @@ export default function PlayerList({ players }: PlayerListProp) {
         return (
           <PlayerListItem
             key={player.name}
-            playerId={player.id}
+            playerId={player.playerId}
             icon={userIcon}
             playerName={player.name}
             playerSurname={player.surname}
-            statistic={player.goalCount}
+            statistic={player?.goalCount ?? player.rating ?? 0}
           />
         )
       })}
