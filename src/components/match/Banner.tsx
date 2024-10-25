@@ -6,30 +6,22 @@ import MatchInfo from './MatchInfo'
 import homeTeamLogo from '../../assets/images/club-black.svg'
 import awayTeamLogo from '../../assets/images/club-white.svg'
 import { useNavigate } from 'react-router-dom'
-
-interface MatchInfo {
-  id: number
-  location: string
-  weather: string
-  homeTeamScore: number
-  awayTeamScore: number
-  dateTime: string
-  played: boolean
-  voted: boolean
-}
+import { Match } from '../../services/matchService'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../store'
 
 type BannerProps = {
-  match: MatchInfo
+  match: Match
 }
 
 export default function Banner({ match }: BannerProps) {
-  const [hasVoted, setHasVoted] = useState(true) // backend api hazirlanacak rating sorgusu ile contexapi
+  const { hasVoted } = useSelector((state: RootState) => state.auth)
 
   const navigate = useNavigate()
 
   const { date, time } = splitDateTime(match.dateTime)
 
-  const { weather, loading, error } = useWeather(date)
+  const { weather, loading } = useWeather(date)
 
   return (
     <div className={`relative px-4 py-8 overflow-hidden text-sm ${match.played ? 'bg-neutral-dark' : 'bg-primary'} shadow-pixel `}>
@@ -46,7 +38,8 @@ export default function Banner({ match }: BannerProps) {
               />
             </div>
             <div className="text-2xl text-white">
-              <span>{match.homeTeamScore}</span>-<span>{match.awayTeamScore}</span>
+              <span>{(match?.homeTeamScore > 0 && match.homeTeamScore) || ''}</span>-
+              <span>{(match?.awayTeamScore > 0 && match.awayTeamScore) || ''}</span>
             </div>
             <div className="flex items-center space-x-2">
               <img
@@ -75,6 +68,8 @@ export default function Banner({ match }: BannerProps) {
             <span>{weather.description}</span>
           </div>
         )}
+
+        {match.played && <p>{match.weather}</p>}
 
         <div className="pt-6 text-right">
           {match.played && match.voted ? (

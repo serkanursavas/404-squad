@@ -11,8 +11,8 @@ document {
   background: #e5e7eb;
 }
 
-/* body .Toastify__toast {
-  background-color: #343a40 !important; 
+body .Toastify__toast {
+  background-color: #343a40 !important;
 }
 
 body .Toastify__toast--info {
@@ -20,13 +20,13 @@ body .Toastify__toast--info {
 }
 
 body .Toastify__toast--success {
-  background-color: #28a745 !important; 
+  background-color: #04764e !important;
 }
 
 body .Toastify__toast--error {
-  background-color: #dc3545 !important; 
+  background-color: #d32f2f !important;
 }
 
 body .Toastify__toast--warning {
-  background-color: #ffc107 !important; 
-} */
+  background-color: #ffc107 !important;
+}

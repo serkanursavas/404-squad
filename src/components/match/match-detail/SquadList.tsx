@@ -1,7 +1,10 @@
 import { Roster } from '../../../types/MatchTypes'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import SquadListDisplay from './SquadListDisplay'
 import VoteForm from './VoteForm'
+import useAuth from '../../../hooks/useAuth'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../../store'
 
 interface SquadListProps {
   teamLogo: string
@@ -11,9 +14,14 @@ interface SquadListProps {
 }
 
 export default function SquadList({ teamLogo, squad, played, isVotingClosed }: SquadListProps) {
-  const currentUserId = 3
-  const [hasVoted, setHasVoted] = useState(false) // backend api hazirlanacak rating sorgusu ile contexapi
-  const inTeam: boolean = squad.some(player => player.id === currentUserId)
+  const { user } = useAuth()
+
+  const currentPlayerId = user?.id ?? 0
+  const { hasVoted } = useSelector((state: RootState) => state.auth)
+
+  console.log(hasVoted)
+
+  const inTeam: boolean = squad?.some(player => player.playerId === currentPlayerId)
 
   const canVote = played && inTeam && !hasVoted && !isVotingClosed
 
@@ -35,12 +43,13 @@ export default function SquadList({ teamLogo, squad, played, isVotingClosed }: S
         {canVote ? (
           <VoteForm
             squad={squad}
-            handlePlayerVoted={() => setHasVoted(true)}
+            currentPlayerId={currentPlayerId}
           />
         ) : (
           <SquadListDisplay
             squad={squad}
             isVoted={isVotingClosed}
+            currentPlayerId={currentPlayerId}
           />
         )}
       </div>

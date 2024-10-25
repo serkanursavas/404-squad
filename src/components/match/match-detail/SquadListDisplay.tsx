@@ -4,12 +4,11 @@ import { Roster } from '../../../types/MatchTypes'
 interface SquadListDisplayProps {
   squad: Roster[]
   isVoted: boolean
+  currentPlayerId: number
 }
 
-export default function SquadListDisplay({ squad, isVoted }: SquadListDisplayProps) {
+export default function SquadListDisplay({ squad, isVoted, currentPlayerId }: SquadListDisplayProps) {
   const navigate = useNavigate()
-
-  const currentPlayerId = 3
 
   return (
     <div className="relative">

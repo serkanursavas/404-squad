@@ -1,17 +1,19 @@
 import { Navigate } from 'react-router-dom'
 import useAuth from '../hooks/useAuth'
-import { ReactNode } from 'react'
+import { ReactNode, useMemo } from 'react'
 
 const ProtectedRoute = ({ children }: { children: ReactNode }) => {
   const { isAuthenticated, isLoading } = useAuth()
 
-  // Oturum durumu yüklenirken loading göstergesi
-  if (isLoading) {
+  // Memoize state values to prevent unnecessary renders
+  const isUserAuthenticated = useMemo(() => isAuthenticated, [isAuthenticated])
+  const isAppLoading = useMemo(() => isLoading, [isLoading])
+
+  if (isAppLoading) {
     return <div>Loading...</div>
   }
 
-  // Eğer kullanıcı oturum açmamışsa login sayfasına yönlendirilir
-  if (!isAuthenticated) {
+  if (!isUserAuthenticated) {
     return (
       <Navigate
         to="/login"

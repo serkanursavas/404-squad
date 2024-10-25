@@ -5,17 +5,10 @@ import ballIcon from '../assets/icons/ball.png'
 import ratingIcon from '../assets/icons/coin.svg'
 import MvpCard from '../components/player-lists/MvpCard'
 import { PlayerInfo } from '../types/PlayerTypes'
+import useMatches from '../hooks/useMatches'
 
-const dummyMatch = {
-  id: 1,
-  location: 'Central Stadium',
-  weather: 'Clear',
-  homeTeamScore: 1,
-  awayTeamScore: 2,
-  dateTime: '2024-10-17T23:35:33.957',
-  played: false,
-  voted: false
-}
+import { useSelector } from 'react-redux'
+import { RootState } from '../store'
 
 const dummyPlayerData = [
   {
@@ -52,9 +45,12 @@ const player: PlayerInfo = {
 }
 
 export default function Home() {
+  useMatches(false, true)
+  const reduxNextMatch = useSelector((state: RootState) => state.matches.nextMatch)
+
   return (
     <div className="space-y-6">
-      <Banner match={dummyMatch} />
+      {reduxNextMatch && <Banner match={reduxNextMatch} />}
 
       <MvpCard player={player} />
 

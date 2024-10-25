@@ -17,6 +17,7 @@ export default {
           error: '#D32F2F'
         },
         secondary: '#C084FC', // İkincil renk (örn: vurgu, butonlar)
+        third: '#3498db', // Üçüncü renk (örn: vurgu, butonlar)
         accent: '#F25C05', // Canlı vurgu renkleri (örn: CTA butonları)
         success: '#28a745',
         neutral: {

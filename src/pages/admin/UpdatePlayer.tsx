@@ -11,19 +11,7 @@ import { useSelector } from 'react-redux'
 import { RootState } from '../../store'
 import { toast } from 'react-toastify'
 import usePlayer from '../../hooks/usePlayers'
-
-const position: SelectOption[] = [
-  { value: 'Goalkeeper', label: 'Goalkeeper' },
-  { value: 'Defender', label: 'Defender' },
-  { value: 'Midfielder', label: 'Midfielder' },
-  { value: 'Forward', label: 'Forward' }
-]
-
-const foot: SelectOption[] = [
-  { value: 'left', label: 'Left' },
-  { value: 'right', label: 'Right' },
-  { value: 'both', label: 'Both' }
-]
+import { footOptions, positionOptions } from '../../utils/select-options'
 
 export default function UpdatePlayer() {
   const { id } = useParams()
@@ -92,7 +80,7 @@ export default function UpdatePlayer() {
                 <SelectInput
                   label="Position"
                   name="position"
-                  options={position}
+                  options={positionOptions}
                   placeholder="Select position"
                   setFieldValue={(field, value) => setFieldValue(field, value)}
                   error={touched.position && errors.position ? errors.position : false}
@@ -100,7 +88,7 @@ export default function UpdatePlayer() {
                 <SelectInput
                   label="Foot"
                   name="foot"
-                  options={foot}
+                  options={footOptions}
                   placeholder="Select foot"
                   setFieldValue={(field, value) => setFieldValue(field, value)}
                   error={touched.foot && errors.foot ? errors.foot : false}

@@ -1,26 +1,27 @@
-import React, { ReactNode } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { ReactNode } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 interface CardWrapperProps {
-  children: ReactNode;
-  route?: string;
+  children: ReactNode
+  route?: string
+  classname?: string
 }
 
-const CardWrapper: React.FC<CardWrapperProps> = ({ route, children }) => {
-  const navigate = useNavigate();
+const CardWrapper: React.FC<CardWrapperProps> = ({ route, children, classname }) => {
+  const navigate = useNavigate()
 
   function handleRoute() {
-    route && navigate(route);
+    route && navigate(route)
   }
 
   return (
     <div
       onClick={handleRoute}
-      className="p-4 space-y-4 text-sm bg-white border-2 border-black cursor-pointer shadow-pixel"
+      className={`p-4 space-y-4 text-sm  border-2 border-black cursor-pointer shadow-pixel ${classname}`}
     >
       {children}
     </div>
-  );
-};
+  )
+}
 
-export default CardWrapper;
+export default CardWrapper

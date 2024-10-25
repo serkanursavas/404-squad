@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { RootState } from '../store'
-import { loginSuccess, logoutSuccess } from '../store/authSlice'
+import { loginSuccess, logoutSuccess, setVoteStatus } from '../store/authSlice'
 import authService from '../services/authService'
 import { User } from '../services/authService'
 import { useNavigate } from 'react-router-dom'
@@ -9,6 +9,7 @@ import { toast } from 'react-toastify'
 import { jwtDecode } from 'jwt-decode'
 import { useEffect } from 'react'
 import { SignupFormValues } from '../types/FormTypes'
+import ratingService from '../services/ratingService'
 
 interface AuthInput {
   username: string
@@ -28,6 +29,7 @@ type UseAuth = {
   error: Error | null
   isSignupError: boolean
   signupError: Error | null
+  hasVoted: boolean
 }
 
 // Token'ın süresi dolmuş mu kontrol eden fonksiyon
@@ -98,6 +100,7 @@ const useAuth = (): UseAuth => {
   const logout = (): void => {
     authService.logout()
     dispatch(logoutSuccess())
+    dispatch(setVoteStatus(false))
     toast.success('Logout successful')
     navigate('/login')
   }
@@ -131,6 +134,7 @@ const useAuth = (): UseAuth => {
     user: auth.user ? { id: auth.user.id, username: auth.user.username, role: auth.user.role } : null,
     token: auth.token ?? null,
     isAuthenticated: auth.isAuthenticated,
+    hasVoted: auth.hasVoted, // Oy durumu burada global state'den çekiliyor
     login,
     signup,
     logout,

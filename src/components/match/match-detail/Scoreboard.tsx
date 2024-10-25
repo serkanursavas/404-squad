@@ -7,28 +7,30 @@ export default function Scoreboard({
   homeTeamScore,
   awayTeamScore,
   goals,
-  played
+  played,
+  twist
 }: {
   homeTeamScore: number
   awayTeamScore: number
   goals: Goal[]
   played: boolean
+  twist: boolean
 }) {
-  const homeTeamGoals = goals.filter(goal => goal.teamColor === 'black')
-  const awayTeamGoals = goals.filter(goal => goal.teamColor === 'white')
+  const homeTeamGoals = goals?.filter(goal => goal.teamColor === 'BLACK')
+  const awayTeamGoals = goals?.filter(goal => goal.teamColor === 'WHITE')
 
   return (
     <div className="border-2 border-black shadow-pixel">
-      <div className="flex items-center justify-between px-2 py-2 text-3xl ">
+      <div className={`flex items-center justify-between px-2 py-2 text-3xl ${twist ? 'flex-row-reverse' : 'flex-row'}`}>
         <img
           src={homeTeamLogo}
           alt={homeTeamLogo}
           className="w-24"
         />
         <span className="space-x-1">
-          <span>{played && homeTeamScore}</span>
+          <span>{homeTeamScore > 0 && homeTeamScore}</span>
           <span>-</span>
-          <span>{played && awayTeamScore}</span>
+          <span>{awayTeamScore > 0 && awayTeamScore}</span>
         </span>
         <img
           src={awayTeamLogo}
@@ -37,7 +39,7 @@ export default function Scoreboard({
         />
       </div>
 
-      {played && (
+      {played && goals && goals.length > 0 && (
         <div className="flex justify-between text-[10px] p-4">
           <GoalList goals={homeTeamGoals} />
           <GoalList goals={awayTeamGoals} />
