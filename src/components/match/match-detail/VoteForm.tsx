@@ -7,15 +7,17 @@ import { useState } from 'react'
 import SelectInput from '../../form/SelectInput'
 import { showConfirmationModal } from '../../../utils/showConfirmationModal'
 import { VoteFormSchema } from '../../../validators/voteFormValidation'
+import useRatings from '../../../hooks/useRatings'
 
 interface VoteFormProps {
   squad: Roster[]
-  handlePlayerVoted: () => void
   currentPlayerId: number
 }
 
-export default function VoteForm({ squad, handlePlayerVoted, currentPlayerId }: VoteFormProps) {
+export default function VoteForm({ squad, currentPlayerId }: VoteFormProps) {
   const navigate = useNavigate()
+
+  const { saveRatings } = useRatings()
 
   const [isBouncing, setIsBouncing] = useState(true)
 
@@ -25,7 +27,7 @@ export default function VoteForm({ squad, handlePlayerVoted, currentPlayerId }: 
         ratings: squad?.map(roster => ({
           rosterId: roster.id,
           playerId: currentPlayerId,
-          rating: 0
+          rate: 0
         }))
       }}
       validationSchema={() => VoteFormSchema(currentPlayerId)}
@@ -38,7 +40,14 @@ export default function VoteForm({ squad, handlePlayerVoted, currentPlayerId }: 
             confirmButtonText: 'Yes'
           },
           () => {
-            console.log('Submitted values:', values)
+            const updatedRosters = values.ratings
+              .filter(roster => roster.rate !== 0) // Remove object where rating is 0
+              .map(roster => ({
+                ...roster,
+                rate: Number(roster.rate) // Convert rating to number
+              }))
+
+            saveRatings(updatedRosters)
           },
           {
             title: 'Saved!',
@@ -67,21 +76,21 @@ export default function VoteForm({ squad, handlePlayerVoted, currentPlayerId }: 
                   <div className="flex flex-col">
                     <div className="flex flex-row-reverse items-center space-x-2">
                       <SelectInput
-                        name={`ratings.${index}.rating`}
+                        name={`ratings.${index}.rate`}
                         options={[...Array(10)].map((_, i) => ({ value: (i + 1).toString(), label: (i + 1).toString() }))}
                         placeholder="?"
                         setFieldValue={setFieldValue}
                         borderColor="#C084FC"
                         focusColor="#C084FC"
                         hoverColor="#C084FC"
-                        className={`${isBouncing && !values.ratings?.[index]?.rating ? 'animate-bounce' : ''} shadow-pixel `} // Animation control
+                        className={`${isBouncing && !values.ratings?.[index]?.rate ? 'animate-bounce' : ''} shadow-pixel `} // Animation control
                         onMenuOpen={() => setIsBouncing(false)} // Stop animation when menu opens
                         onMenuClose={() => setIsBouncing(true)} // Bring back animation when menu closes
                       />
 
                       {/* Error message will come next to the select */}
                       <ErrorMessage
-                        name={`ratings.${index}.rating`}
+                        name={`ratings.${index}.rate`}
                         component="div"
                         className="text-xl text-red-500 "
                       />

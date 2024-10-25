@@ -7,13 +7,15 @@ import homeTeamLogo from '../../assets/images/club-black.svg'
 import awayTeamLogo from '../../assets/images/club-white.svg'
 import { useNavigate } from 'react-router-dom'
 import { Match } from '../../services/matchService'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../store'
 
 type BannerProps = {
   match: Match
 }
 
 export default function Banner({ match }: BannerProps) {
-  const [hasVoted, setHasVoted] = useState(false) // backend api hazirlanacak rating sorgusu ile contexapi
+  const { hasVoted } = useSelector((state: RootState) => state.auth)
 
   const navigate = useNavigate()
 

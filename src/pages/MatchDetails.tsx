@@ -68,7 +68,7 @@ export default function MatchDetails() {
         twist={match.id % 2 === 0}
       />
 
-      <div className={`flex flex-col px-2 text-[12px] mt-12 space-y-8 ${match.id % 2 === 0 ? 'flex-col-reverse' : 'flex-col'} `}>
+      <div className={`flex flex-col px-2 text-[12px] mt-12 gap-y-8 ${match.id % 2 === 0 ? 'flex-col-reverse space-y-0' : 'flex-col '} `}>
         <SquadList
           teamLogo={homeTeamLogo}
           squad={homeTeamSquad}
