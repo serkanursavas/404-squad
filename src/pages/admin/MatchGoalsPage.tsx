@@ -4,6 +4,7 @@ import AvailablePlayersList from '../../components/admin/goal/AvailablePlayerLis
 import GoalsList from '../../components/admin/goal/GoalsList'
 import { showConfirmationModal } from '../../utils/showConfirmationModal'
 import useMatches from '../../hooks/useMatches'
+import { toast } from 'react-toastify'
 
 interface Goals {
   playerId: number
@@ -27,17 +28,26 @@ export default function MatchGoalsPage() {
   const rosters = match?.rosters
 
   useEffect(() => {
-    if (rosters && (match.homeTeamScore <= 0 || match.awayTeamScore <= 0)) {
-      const players = rosters.map(player => ({
-        value: player.playerId.toString(),
-        label: player.playerName
-      }))
-      setAvailablePlayers(players)
-      setLoading(false)
-    } else {
-      navigate('/')
+    // Eğer match verisi henüz yüklenmemişse return yapıyoruz
+    if (!match || !rosters) {
+      return
     }
-  }, [rosters])
+
+    // Eğer gol verileri mevcutsa, başka bir sayfaya yönlendiriyoruz
+    if (match.homeTeamScore > 0 || match.awayTeamScore > 0) {
+      navigate('/') // Hedef sayfayı ihtiyacına göre değiştir
+      return
+    }
+
+    // Eğer veriler geldiyse availablePlayers state'ini ayarlayıp loading'i false yapıyoruz
+    const players = rosters.map(player => ({
+      value: player.playerId.toString(),
+      label: player.playerName
+    }))
+
+    setAvailablePlayers(players)
+    setLoading(false)
+  }, [match, rosters, navigate])
 
   const filteredPlayers = useMemo(() => {
     return availablePlayers?.filter(option => !goals.some(goal => goal.playerId.toString() === option.value))
@@ -58,11 +68,7 @@ export default function MatchGoalsPage() {
       },
       () => {
         addGoals(postData)
-      },
-      {
-        title: 'Saved!',
-        text: 'Goals have been saved.',
-        icon: 'success'
+        navigate('/')
       }
     )
   }
@@ -116,6 +122,10 @@ export default function MatchGoalsPage() {
         return prevState
       })
     }
+  }
+
+  if (loading) {
+    return <p>loadinggg</p>
   }
 
   return (

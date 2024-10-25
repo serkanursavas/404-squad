@@ -181,12 +181,33 @@ const useMatches = (shouldFetchAllMatches = false, isNeededNextMatch = false) =>
     mutationFn: async (goalsData: GoalsUpdate) => {
       return goalService.addGoals(goalsData)
     },
-    onSuccess: data => {
-      queryClient.invalidateQueries({ queryKey: ['matches'] })
-      fetchNextMatch() // Manuel olarak nextMatch'i tekrar tetikleyin
-      navigate('/')
-      window.location.reload()
-      toast.info('Goals updated successfully')
+    onSuccess: async data => {
+      fetchNextMatch()
+
+      try {
+        // nextMatch ve id'si varsa güncellenmiş detayları al
+        if (reduxNextMatch && reduxNextMatch.id) {
+          // İlgili maç detayını API'den tekrar çekiyoruz
+          const updatedMatchDetails = await matchService.getGameById(reduxNextMatch.id)
+
+          // Redux'a güncellenmiş maçı dispatch ediyoruz
+          dispatch(fetchMatchDetailsSuccess(updatedMatchDetails))
+
+          // Query cache'ini güncelleyebiliriz
+          queryClient.invalidateQueries({ queryKey: ['matches'] })
+
+          // Yönlendirme işlemi
+          navigate('/')
+
+          // Kullanıcıya başarı mesajı
+          toast.info('Goals updated and match details refreshed successfully')
+        } else {
+          throw new Error('No next match found or match id is missing')
+        }
+      } catch (error) {
+        console.error('Failed to fetch updated match details', error)
+        toast.error('Failed to refresh match details')
+      }
     },
     onError: (error: CustomError) => {
       if (error.details && Array.isArray(error.details) && error.details.length > 0) {
@@ -219,7 +240,8 @@ const useMatches = (shouldFetchAllMatches = false, isNeededNextMatch = false) =>
     updateMatchError,
     addGoals,
     isAddGoalsError,
-    addGoalsError
+    addGoalsError,
+    fetchNextMatch
   }
 }
 
