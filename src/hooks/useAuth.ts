@@ -9,7 +9,6 @@ import { toast } from 'react-toastify'
 import { jwtDecode } from 'jwt-decode'
 import { useEffect } from 'react'
 import { SignupFormValues } from '../types/FormTypes'
-import ratingService from '../services/ratingService'
 
 interface AuthInput {
   username: string
@@ -32,6 +31,11 @@ type UseAuth = {
   hasVoted: boolean
 }
 
+export interface CustomError extends Error {
+  status?: number
+  details?: string
+}
+
 // Token'ın süresi dolmuş mu kontrol eden fonksiyon
 const isTokenExpired = (token: string) => {
   try {
@@ -41,11 +45,6 @@ const isTokenExpired = (token: string) => {
   } catch (error) {
     return true // Eğer decode edilemiyorsa süresi dolmuş veya geçersiz say
   }
-}
-
-export interface CustomError extends Error {
-  status?: number
-  details?: string
 }
 
 const useAuth = (): UseAuth => {
@@ -101,7 +100,6 @@ const useAuth = (): UseAuth => {
     authService.logout()
     dispatch(logoutSuccess())
     dispatch(setVoteStatus(false))
-    toast.success('Logout successful')
     navigate('/login')
   }
 
