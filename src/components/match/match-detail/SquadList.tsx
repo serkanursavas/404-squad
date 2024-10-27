@@ -19,8 +19,6 @@ export default function SquadList({ teamLogo, squad, played, isVotingClosed }: S
   const currentPlayerId = user?.id ?? 0
   const { hasVoted } = useSelector((state: RootState) => state.auth)
 
-  console.log(hasVoted)
-
   const inTeam: boolean = squad?.some(player => player.playerId === currentPlayerId)
 
   const canVote = played && inTeam && !hasVoted && !isVotingClosed

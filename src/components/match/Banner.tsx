@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import useWeather from '../../hooks/useWeather'
 import { splitDateTime } from '../../utils/Date/dateUtils'
 import Button from '../ui/Button'
@@ -68,8 +67,6 @@ export default function Banner({ match }: BannerProps) {
             <span>{weather.description}</span>
           </div>
         )}
-
-        {match.played && <p>{match.weather}</p>}
 
         <div className="pt-6 text-right">
           {match.played && match.voted ? (

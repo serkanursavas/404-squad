@@ -1,15 +1,10 @@
 import PlayerListItem from './PlayerListItem'
 
 import userIcon from '../../assets/icons/user.svg'
-
-interface PlayerInfo {
-  playerId: number
-  playerName: string
-  statistic: string
-}
+import { TopPlayer } from '../../services/goalService'
 
 type PlayerListProp = {
-  players: PlayerInfo[]
+  players: TopPlayer[]
 }
 
 export default function PlayerList({ players }: PlayerListProp) {
@@ -18,11 +13,12 @@ export default function PlayerList({ players }: PlayerListProp) {
       {players.map(player => {
         return (
           <PlayerListItem
-            key={player.playerName}
+            key={player.name}
             playerId={player.playerId}
             icon={userIcon}
-            playerName={player.playerName}
-            statistic={player.statistic}
+            playerName={player.name}
+            playerSurname={player.surname}
+            statistic={player?.goalCount ?? player.rating ?? 0}
           />
         )
       })}

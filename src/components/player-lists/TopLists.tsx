@@ -1,15 +1,12 @@
 import PlayerList from './PlayerList'
 import Watermark from '../ui/Watermark'
+import { TopPlayer } from '../../services/goalService'
 
 interface TopListsProps {
   title: string
   statisticLabel: string
   watermark: string
-  playersData: {
-    playerId: number
-    playerName: string
-    statistic: string
-  }[]
+  playersData: TopPlayer[]
 }
 
 export default function TopLists({ title, statisticLabel, watermark, playersData }: TopListsProps) {

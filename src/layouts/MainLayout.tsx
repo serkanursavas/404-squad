@@ -5,8 +5,7 @@ import { useEffect, useState } from 'react'
 import Footer from '../components/layout/Footer'
 import { useDispatch, useSelector } from 'react-redux'
 import { getUserFromToken } from '../services/authService'
-import { loginSuccess, setVoteStatus } from '../store/authSlice'
-import ratingService from '../services/ratingService'
+import { loginSuccess } from '../store/authSlice'
 import { RootState } from '../store'
 import useRatings from '../hooks/useRatings'
 
@@ -35,8 +34,6 @@ export default function MainLayout() {
       }
     }
   }, [dispatch, hasVoted, checkVote, voteChecked])
-
-  console.log(hasVoted)
 
   return (
     <div className="flex flex-col min-h-screen bg-neutral">
