@@ -68,8 +68,6 @@ export default function Banner({ match }: BannerProps) {
           </div>
         )}
 
-        {match.played && <p>{match.weather}</p>}
-
         <div className="pt-6 text-right">
           {match.played && match.voted ? (
             <Button

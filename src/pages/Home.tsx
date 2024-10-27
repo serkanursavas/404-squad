@@ -18,7 +18,7 @@ export default function Home() {
 
   const { topScorers, topRatedPlayers } = useTopLists()
 
-  const { mvpData, isMvpLoading, isMvpError } = usePlayer()
+  const { mvpData } = usePlayer()
 
   return (
     <div className="space-y-6">
