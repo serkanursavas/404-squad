@@ -2,10 +2,10 @@ import Watermark from '../ui/Watermark'
 
 import mvpPic from '../../assets/images/mvp.png'
 import starIcon from '../../assets/icons/star.svg'
-import { PlayerInfo } from '../../types/PlayerTypes'
 import { useNavigate } from 'react-router-dom'
+import { MvpInfo } from '../../services/playerService'
 
-export default function MvpCard({ player }: { player: PlayerInfo }) {
+export default function MvpCard({ player }: { player: MvpInfo }) {
   const navigate = useNavigate()
 
   return (

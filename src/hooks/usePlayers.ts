@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { Player, UpdatePlayerData } from '../services/playerService'
+import { MvpInfo, Player, UpdatePlayerData } from '../services/playerService'
 import playerService from '../services/playerService'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchPlayersSuccess } from '../store/playerSlice'
@@ -39,7 +39,18 @@ const usePlayer = () => {
     }
   })
 
-  return { players: players.length > 0 ? players : data, isLoading, isError, error, updatePlayer }
+  const {
+    data: mvpData,
+    isLoading: isMvpLoading,
+    isError: isMvpError,
+    error: mvpError
+  } = useQuery<MvpInfo, Error>({
+    queryKey: ['mvp'],
+    queryFn: playerService.getMvp,
+    staleTime: 1000 * 60 * 1 // 5 dakika boyunca veri taze kabul edilir
+  })
+
+  return { players: players.length > 0 ? players : data, isLoading, isError, error, updatePlayer, mvpData, isMvpLoading, isMvpError, mvpError }
 }
 
 export default usePlayer

@@ -22,6 +22,15 @@ export interface UpdatePlayerData {
   position: string
 }
 
+export interface MvpInfo {
+  id: number
+  name: string
+  surname: string
+  photo: string
+  position: string
+  rating: number
+}
+
 const getAllPlayers = async (): Promise<any> => {
   try {
     const response = await axiosInstance.get('/players/getAllPlayers')
@@ -74,4 +83,17 @@ const getTopRatedPlayers = async (): Promise<TopPlayer[]> => {
   }
 }
 
-export default { getAllPlayers, updatePlayer, getPlayerById, getTopRatedPlayers }
+const getMvp = async (): Promise<MvpInfo> => {
+  try {
+    const response = await axiosInstance.get('/games/getMvp')
+    return response.data
+  } catch (error: any) {
+    const customError = new Error(error.response?.data?.message || error.message || 'An unknown error occurred') as CustomError
+    customError.status = error.response?.status || 500
+    customError.details = error.response?.data?.details || 'No additional details available'
+
+    throw customError
+  }
+}
+
+export default { getAllPlayers, updatePlayer, getPlayerById, getTopRatedPlayers, getMvp }

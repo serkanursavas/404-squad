@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import useWeather from '../../hooks/useWeather'
 import { splitDateTime } from '../../utils/Date/dateUtils'
 import Button from '../ui/Button'
