@@ -1,5 +1,4 @@
 import { Roster } from '../../../types/MatchTypes'
-import { useEffect, useState } from 'react'
 import SquadListDisplay from './SquadListDisplay'
 import VoteForm from './VoteForm'
 import useAuth from '../../../hooks/useAuth'

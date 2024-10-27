@@ -4,7 +4,6 @@ import AvailablePlayersList from '../../components/admin/goal/AvailablePlayerLis
 import GoalsList from '../../components/admin/goal/GoalsList'
 import { showConfirmationModal } from '../../utils/showConfirmationModal'
 import useMatches from '../../hooks/useMatches'
-import { toast } from 'react-toastify'
 
 interface Goals {
   playerId: number

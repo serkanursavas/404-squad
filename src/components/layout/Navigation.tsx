@@ -8,6 +8,7 @@ import adminIcon from '../../assets/icons/android.svg'
 
 import Icons from '../ui/Icons'
 import useAuth from '../../hooks/useAuth'
+import { toast } from 'react-toastify'
 
 interface Props {
   toggleMobileMenu: () => void
@@ -26,6 +27,11 @@ export default function Navigation({ toggleMobileMenu }: Props) {
 
   // Sadece admin rolü varsa admin linkini ekleyelim
   const filteredNavLinks = user?.role === 'ROLE_ADMIN' ? navLinks : navLinks.filter(link => link.label !== 'Admin')
+
+  const handleLogout = () => {
+    logout()
+    toast.success('Logout successful')
+  }
 
   return (
     <div className="absolute top-0 left-0 flex flex-col items-center justify-center w-screen h-full text-3xl bg-primary">
@@ -52,7 +58,7 @@ export default function Navigation({ toggleMobileMenu }: Props) {
         })}
         <div>
           <button
-            onClick={logout}
+            onClick={handleLogout}
             className="flex w-full items-center border-2 border-black justify-center px-4 py-2 mt-10 text-lg font-semibold tracking-[0.5rem] text-white transition duration-300 bg-red-600 hover:bg-red-700 active:scale-95 shadow-pixel"
           >
             LOGOUT

@@ -1,4 +1,4 @@
-import mvpPic from '../../assets/images/mvp.png'
+import unknownPicture from '../../assets/images/unknown-player.png'
 import starIcon from '../../assets/icons/starAlt.svg'
 import { PlayerInfo } from '../../types/PlayerTypes'
 import { useNavigate } from 'react-router-dom'
@@ -17,7 +17,7 @@ export default function PlayerCard({ player }: PlayersListProps) {
        ${player.active ? 'bg-primary hover:bg-primary-dark' : 'bg-neutral-dark opacity-50 border-2 border-dashed border-gray-500 grayscale'}
       `}
     >
-      <div className={`w-5/12 p-6 pr-0 space-y-8 ${!player.active ? 'opacity-50 grayscale' : ''}`}>
+      <div className={`w-3/5 p-6 pr-0 space-y-8 ${!player.active ? 'opacity-50 grayscale' : ''}`}>
         <div className="space-y-2 ">
           <p>{player.name}</p>
           <p className="text-[10px] text-purple-300 ">{player.position}</p>
@@ -28,14 +28,20 @@ export default function PlayerCard({ player }: PlayersListProps) {
             src={starIcon}
             className="mr-1 text-white w-7 "
           />
-          <div>{player.rating.toString().split('.')[0]}</div>
-          <div className="text-base pt-1 tracking-[-0.3em]">.{player.rating.toString().split('.')[1]}</div>
+          {player.rating !== 0 ? (
+            <>
+              <div>{player.rating.toString().split('.')[0]}</div>
+              <div className="text-base pt-1 tracking-[-0.3em]">.{Math.round(Number(player.rating.toFixed(2).split('.')[1]) / 10)}</div>
+            </>
+          ) : (
+            '-'
+          )}
         </div>
       </div>
-      <div className="relative flex justify-end w-7/12 ">
+      <div className="relative flex justify-end w-2/5">
         <img
-          src={mvpPic}
-          className="w-60"
+          src={unknownPicture}
+          className="self-end w-40 pr-4 "
         />
       </div>
       <br />
