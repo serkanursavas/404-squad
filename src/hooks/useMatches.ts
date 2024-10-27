@@ -104,7 +104,7 @@ const useMatches = (shouldFetchAllMatches = false, isNeededNextMatch = false) =>
     mutationFn: async ({ id, updateMatchData }: { id: number; updateMatchData: UpdateMatchRequest }) => {
       return matchService.updateMatch(id, updateMatchData)
     },
-    onSuccess: (data, { id }) => {
+    onSuccess: (_, { id }) => {
       queryClient.invalidateQueries({ queryKey: ['matches'] }) // invalidate matches
       queryClient.invalidateQueries({ queryKey: ['nextMatch'] }) // nextMatch verisini sıfırlıyoruz
       queryClient.invalidateQueries({ queryKey: ['matchDetails', id] }) // Maç detaylarını invalidate ediyoruz
@@ -181,7 +181,7 @@ const useMatches = (shouldFetchAllMatches = false, isNeededNextMatch = false) =>
     mutationFn: async (goalsData: GoalsUpdate) => {
       return goalService.addGoals(goalsData)
     },
-    onSuccess: async data => {
+    onSuccess: async () => {
       fetchNextMatch()
 
       try {

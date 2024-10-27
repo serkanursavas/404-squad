@@ -5,7 +5,6 @@ import { playerUpdateValidationSchema } from '../../validators/playerUpdateValid
 import { Field, FieldProps, Form, Formik, ErrorMessage } from 'formik'
 import Input from '../../components/ui/Input'
 import SelectInput from '../../components/form/SelectInput'
-import { SelectOption } from '../../types/FormTypes'
 import { Player } from '../../services/playerService'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../store'

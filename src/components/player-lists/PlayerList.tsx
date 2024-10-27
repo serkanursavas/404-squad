@@ -11,6 +11,10 @@ export default function PlayerList({ players }: PlayerListProp) {
   return (
     <>
       {players.map(player => {
+        const { rating } = player
+
+        const formattedRating = rating !== undefined && rating !== null ? Math.round(rating * 10) / 10 : 0
+
         return (
           <PlayerListItem
             key={player.name}
@@ -18,7 +22,7 @@ export default function PlayerList({ players }: PlayerListProp) {
             icon={userIcon}
             playerName={player.name}
             playerSurname={player.surname}
-            statistic={player?.goalCount ?? player.rating ?? 0}
+            statistic={player?.goalCount ?? formattedRating ?? 0}
           />
         )
       })}

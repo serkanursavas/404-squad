@@ -1,4 +1,3 @@
-import mvpPic from '../../assets/images/mvp.png'
 import unknownPicture from '../../assets/images/unknown-player.png'
 import starIcon from '../../assets/icons/starAlt.svg'
 import { PlayerInfo } from '../../types/PlayerTypes'
@@ -32,7 +31,7 @@ export default function PlayerCard({ player }: PlayersListProps) {
           {player.rating !== 0 ? (
             <>
               <div>{player.rating.toString().split('.')[0]}</div>
-              <div className="text-base pt-1 tracking-[-0.3em]">.{player.rating.toString().split('.')[1]}</div>
+              <div className="text-base pt-1 tracking-[-0.3em]">.{Math.round(Number(player.rating.toFixed(2).split('.')[1]) / 10)}</div>
             </>
           ) : (
             '-'

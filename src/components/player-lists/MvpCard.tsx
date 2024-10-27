@@ -1,6 +1,5 @@
 import Watermark from '../ui/Watermark'
 
-import mvpPic from '../../assets/images/mvp.png'
 import unknownPicture from '../../assets/images/unknown-player.png'
 import starIcon from '../../assets/icons/star.svg'
 import { useNavigate } from 'react-router-dom'

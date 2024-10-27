@@ -38,6 +38,9 @@ export default function Profile() {
     }
   }, [playerFromRedux, playerFromAPI])
 
+  // Eğer rating tanımlı ve sayısal bir değer ise işlemi yapıyoruz
+  const formattedRating = player?.rating !== undefined && player?.rating !== null ? Math.round(player?.rating * 10) / 10 : 0
+
   return (
     <div className="relative flex flex-col items-center justify-center space-y-8 ">
       <div className={`relative flex flex-col items-center w-full px-12 pt-16 ${!player?.active ? 'grayscale ' : ''}`}>
@@ -60,7 +63,7 @@ export default function Profile() {
           icon={playerNumber}
         />
         <PlayerInfoItem
-          text={String(player?.rating)}
+          text={String(formattedRating)}
           icon={playerRaiting}
         />
         <PlayerInfoItem
