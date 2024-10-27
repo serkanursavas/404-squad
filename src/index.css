@@ -30,3 +30,10 @@ body .Toastify__toast--error {
 body .Toastify__toast--warning {
   background-color: #ffc107 !important;
 }
+
+.pixelated-effect {
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  filter: contrast(500%) brightness(0.4) saturate(3);
+}

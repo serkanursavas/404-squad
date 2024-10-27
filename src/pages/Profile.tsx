@@ -1,4 +1,4 @@
-import playerPicture from '../assets/images/player.svg'
+// import playerPicture from '../assets/images/player.svg'
 import playerFoot from '../assets/icons/foot.svg'
 import playerRaiting from '../assets/icons/starAlt.svg'
 import playerPosition from '../assets/icons/position.svg'
@@ -10,6 +10,8 @@ import playerService, { Player } from '../services/playerService'
 import { useQuery } from '@tanstack/react-query'
 import { useSelector } from 'react-redux'
 import { RootState } from '../store'
+
+import unknownPicture from '../assets/images/unknown-player.png'
 
 export default function Profile() {
   const { id } = useParams()
@@ -41,8 +43,8 @@ export default function Profile() {
       <div className={`relative flex flex-col items-center w-full px-12 pt-16 ${!player?.active ? 'grayscale ' : ''}`}>
         <div className="absolute w-screen h-full -mt-20 bg-gradient-to-t from-primary to-neutral opacity-80"></div>
         <img
-          src={playerPicture}
-          className={`z-10 w-48 ${!player?.active ? '' : ''}`}
+          src={unknownPicture}
+          className={`z-10 w-56 ${!player?.active ? '' : ''}`}
           alt="player Photo"
         />
         <div
