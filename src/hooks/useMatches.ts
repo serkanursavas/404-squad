@@ -56,13 +56,15 @@ const useMatches = (shouldFetchAllMatches = false, isNeededNextMatch = false) =>
     queryKey: ['matches'],
     queryFn: ({ pageParam = 0 }) => matchService.getAllGames(pageParam, 10), // pageParam, API'den gelen mevcut sayfa
     getNextPageParam: (lastPage, allPages) => {
-      const { totalPages } = lastPage // Backend'den dönen toplam sayfa sayısını kullanıyoruz
+      const { totalPages } = lastPage // Toplam sayfa ve toplam maç sayısını alıyoruz
       const nextPage = allPages.length
       return nextPage < totalPages ? nextPage : undefined // Eğer daha fazla sayfa varsa, devam et
     },
     enabled: shouldFetchAllMatches, // Yalnızca gerekli olduğunda çalışır
     initialPageParam: 0 // İlk sayfa için başlangıç değeri
   })
+
+  const totalCount = data?.pages[0]?.totalElements || 0 // Toplam maç sayısını
 
   // Tüm sayfaları birleştiriyoruz
   const allMatches = data?.pages.flatMap(page => page.content) || []
@@ -224,6 +226,7 @@ const useMatches = (shouldFetchAllMatches = false, isNeededNextMatch = false) =>
     nextMatchIsLoading: isLoading || fetchStatus === 'pending',
     nextMatchError,
     allMatches,
+    totalCount, // Toplam sayıyı döndürüyoruz
     isAllMatchesError,
     allMatchesError,
     fetchNextPage,

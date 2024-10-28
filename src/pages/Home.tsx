@@ -26,18 +26,23 @@ export default function Home() {
 
       {mvpData && <MvpCard player={mvpData} />}
 
-      <TopLists
-        title="Top Scorer"
-        statisticLabel="Goal"
-        watermark={ballIcon}
-        playersData={topScorers}
-      />
-      <TopLists
-        title="Top Rating"
-        statisticLabel="Form"
-        watermark={ratingIcon}
-        playersData={topRatedPlayers}
-      />
+      {topScorers && topScorers.length > 0 && (
+        <TopLists
+          title="Top Scorer"
+          statisticLabel="Goal"
+          watermark={ballIcon}
+          playersData={topScorers}
+        />
+      )}
+
+      {topRatedPlayers && topRatedPlayers.length > 0 && (
+        <TopLists
+          title="Top Rating"
+          statisticLabel="Form"
+          watermark={ratingIcon}
+          playersData={topRatedPlayers}
+        />
+      )}
     </div>
   )
 }
