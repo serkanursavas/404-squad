@@ -1,5 +1,4 @@
 import { Formik, Form } from 'formik'
-
 import Button from '../ui/Button'
 import Input from '../ui/Input'
 import { signupInitialValues } from '../../forms/signupInitialValues'
@@ -31,7 +30,7 @@ export default function SignupForm({ handleSubmit }: SignupFormProps) {
         handleSubmit(values)
       }}
     >
-      {({ errors, touched, setFieldValue }) => (
+      {({ errors, touched, setFieldValue, isSubmitting }) => (
         <Form className="flex flex-col space-y-8">
           {inputMappings.map((input, index) => (
             <Input
@@ -66,9 +65,10 @@ export default function SignupForm({ handleSubmit }: SignupFormProps) {
           />
 
           <Button
-            label="Create"
+            label={isSubmitting ? 'Creating...' : 'Create'} // Butonun label'ini değiştiriyoruz
             className="mx-1 text-black bg-secondary"
             shadowColor="rgba(255,255,255, 0.2)"
+            disabled={isSubmitting} // isSubmitting true olduğunda buton pasif hale gelir
           />
         </Form>
       )}
