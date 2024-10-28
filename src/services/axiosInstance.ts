@@ -1,7 +1,7 @@
 import axios, { InternalAxiosRequestConfig } from 'axios'
 
 const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL,
+  baseURL: 'https://squad-404-90b8d38132d9.herokuapp.com/api',
   headers: {
     'Content-Type': 'application/json'
   }
