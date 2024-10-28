@@ -11,6 +11,7 @@ const useTopLists = () => {
   } = useQuery({
     queryKey: ['topScorers'],
     queryFn: goalService.getTopScorers,
+    retry: 0, // Yeniden denemeleri devre dışı bırakır
     staleTime: 1000 * 60 * 15, // 15 dakika boyunca taze tut
     refetchOnWindowFocus: false // Pencere odağı değiştiğinde yeniden fetch etme
   })
@@ -22,6 +23,7 @@ const useTopLists = () => {
   } = useQuery({
     queryKey: ['topRatedPlayers'],
     queryFn: playerService.getTopRatedPlayers,
+    retry: 0, // Yeniden denemeleri devre dışı bırakır
     staleTime: 1000 * 60 * 15, // 15 dakika boyunca taze tut
     refetchOnWindowFocus: false // Pencere odağı değiştiğinde yeniden fetch etme
   })
