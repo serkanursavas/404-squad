@@ -97,7 +97,6 @@ export default function SelectInput({
   hoverColor,
   multiValueColor,
   onMenuOpen, // Menü açıldığında çalıştırılacak fonksiyon
-  // onMenuClose, // Menü kapandığında çalıştırılacak fonksiyon
   searchable = false
 }: SelectInputProps) {
   const [selectedOptions, setSelectedOptions] = useState<SelectOption[]>([])
