@@ -20,6 +20,7 @@ interface SelectInputProps {
   multiValueColor?: string
   onMenuOpen?: () => void // Menü açıldığında tetiklenecek fonksiyon
   onMenuClose?: () => void // Menü kapandığında tetiklenecek fonksiyon
+  searchable?: boolean
 }
 
 const getCustomStyles = ({
@@ -96,7 +97,8 @@ export default function SelectInput({
   hoverColor,
   multiValueColor,
   onMenuOpen, // Menü açıldığında çalıştırılacak fonksiyon
-  onMenuClose // Menü kapandığında çalıştırılacak fonksiyon
+  onMenuClose, // Menü kapandığında çalıştırılacak fonksiyon
+  searchable = false
 }: SelectInputProps) {
   const [selectedOptions, setSelectedOptions] = useState<SelectOption[]>([])
 
@@ -147,7 +149,7 @@ export default function SelectInput({
               className={`block w-full mt-1 text-xs focus:border-primary focus:outline-primary hover:border-primary ${className}`}
               isMulti={isMultiSelect}
               onMenuOpen={onMenuOpen} // Menü açıldığında tetiklenecek fonksiyon
-              onMenuClose={onMenuClose} // Menü kapandığında tetiklenecek fonksiyon
+              isSearchable={searchable}
             />
           )
         }}
