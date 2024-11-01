@@ -1,0 +1,55 @@
+/* EnhancedPixelSnake.css */
+
+.snake-container {
+  display: grid;
+  grid-template-columns: repeat(4, 16px);
+  grid-gap: 1px;
+  width: 66px;
+  height: 66px;
+  position: relative;
+}
+
+.snake-pixel {
+  width: 14px;
+  height: 14px;
+  background-color: #333;
+  position: absolute;
+  animation: snake-move 1.6s infinite;
+}
+
+/* Her pikselin farklı bir animasyon gecikmesi ile sırayla hareket etmesi için ayarlamalar */
+.snake-pixel:nth-child(1) {
+  animation-delay: 0s;
+}
+.snake-pixel:nth-child(2) {
+  animation-delay: 0.4s;
+}
+.snake-pixel:nth-child(3) {
+  animation-delay: 0.8s;
+}
+.snake-pixel:nth-child(4) {
+  animation-delay: 1.2s;
+}
+
+@keyframes snake-move {
+  0% {
+    transform: translate(0, 0);
+    background-color: #04764e;
+  }
+  25% {
+    transform: translate(48px, 0);
+    background-color: #c084fc;
+  }
+  50% {
+    transform: translate(48px, 48px);
+    background-color: #04764e;
+  }
+  75% {
+    transform: translate(0, 48px);
+    background-color: #c084fc;
+  }
+  100% {
+    transform: translate(0, 0);
+    background-color: #04764e;
+  }
+}

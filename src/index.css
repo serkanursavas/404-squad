@@ -37,3 +37,13 @@ body .Toastify__toast--warning {
   image-rendering: crisp-edges;
   filter: contrast(500%) brightness(0.4) saturate(3);
 }
+
+/* Tüm input alanları için varsayılan stilleri sıfırlama */
+input,
+textarea,
+select {
+  border-radius: 0; /* Yuvarlaklığı kaldırma */
+  box-shadow: none; /* Varsayılan gölgeyi kaldırma */
+  appearance: none; /* iOS ve bazı tarayıcılardaki varsayılan stilleri kaldırma */
+  -webkit-appearance: none; /* Safari ve diğer WebKit tabanlı tarayıcılar için */
+}

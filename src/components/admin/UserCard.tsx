@@ -41,7 +41,7 @@ export default function UserCard({ user }: UsersListProps) {
       </td>
       <td
         scope="col"
-        className="px-2 py-2 border"
+        className="hidden px-2 py-2 border xs:table-cell"
       >
         {user.role}
       </td>

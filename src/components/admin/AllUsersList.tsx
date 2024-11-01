@@ -20,7 +20,7 @@ export default function AllUsersList({ usersData }: UsersListProps) {
             </th>
             <th
               scope="col"
-              className="px-4 py-2 border"
+              className="hidden px-4 py-2 border xs:table-cell"
             >
               Role
             </th>

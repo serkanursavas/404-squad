@@ -29,7 +29,7 @@ export default function Banner({ match }: BannerProps) {
         <h2 className={`mb-4 text-white text-center ${match.played ? 'text-xl' : 'text-3xl'}`}>{match.played ? 'Last Match' : 'NEXT MATCH'}</h2>
 
         {match.played ? (
-          <div className="flex items-center justify-between px-10">
+          <div className="flex items-center justify-between px-4">
             <div className="flex items-center space-x-2">
               <img
                 src={homeTeamLogo}

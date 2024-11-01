@@ -3,6 +3,7 @@ import MatchesList from '../components/match/MatchesList'
 
 import TypingEffect from '../components/ui/TypingEffect'
 import useMatches from '../hooks/useMatches'
+import PixelSpinner from '../components/ui/PixelSpinner'
 
 export default function Matches() {
   const { allMatches, fetchNextPage, hasNextPage, totalCount } = useMatches(true)
@@ -28,11 +29,10 @@ export default function Matches() {
     }
   }, [hasNextPage, fetchNextPage])
 
-  if (totalCount === 0) {
+  if (!totalCount) {
     return (
-      <div className="flex flex-col items-center justify-center py-12 border border-black bg-neutral-light shadow-pixel">
-        <p className="text-lg font-bold">Coming Soon</p>
-        <p className="text-sm text-center text-neutral-dark">There are no matches played yet. Stay tuned!</p>
+      <div className="absolute top-0 left-0 z-0 flex items-center justify-center w-screen h-screen ">
+        <PixelSpinner />
       </div>
     )
   }
@@ -49,7 +49,7 @@ export default function Matches() {
         ref={loadMoreRef}
         className="loading-indicator"
       >
-        {hasNextPage ? 'Loading more matches...' : allMatches.length > 0 && allMatches.length < totalCount ? '' : 'No more matches'}
+        {hasNextPage ? 'Loading more matches...' : allMatches.length >= 10 && allMatches.length >= totalCount ? 'No more matches' : ''}
       </div>
     </div>
   )
