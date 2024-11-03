@@ -1,3 +1,6 @@
+import { register } from './serviceWorkerRegistration'
+register()
+
 import { RouterProvider } from 'react-router-dom'
 import 'react-toastify/dist/ReactToastify.css'
 
