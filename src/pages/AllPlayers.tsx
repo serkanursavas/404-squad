@@ -7,6 +7,7 @@ export default function AllPlayers() {
   const { players } = usePlayer()
 
   const activePlayers = players?.filter(player => player.active)
+  activePlayers?.sort((a, b) => b.rating - a.rating)
 
   if (!activePlayers) {
     return (
