@@ -16,12 +16,7 @@ export default function TopLists({ title, statisticLabel, watermark, playersData
       <Watermark watermarkIcon={watermark} />
       <div className="flex items-center justify-between px-4">
         <h2 className="text-xl text-primary">{title}</h2>
-        <Link
-          to={statisticLabel === 'Form' ? '/players' : '/'}
-          className="text-[12px] text-purple-400"
-        >
-          See All
-        </Link>
+        <a className="text-[12px] text-purple-400">See All</a>
       </div>
 
       <div className="flex justify-between mt-6 text-[12px] px-4">
