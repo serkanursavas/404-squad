@@ -20,23 +20,23 @@ export default function MatchCard({ match, route, classname = 'bg-white' }: Matc
       classname={`${classname}`}
     >
       <div className="text-right text-[10px] text-neutral-dark">{getFormattedDayAndMonth(date)}</div>
-      <div className={`flex items-center justify-between ${match.id % 2 === 0 ? 'flex-row-reverse' : 'flex-row'}`}>
-        <div className="flex items-center space-x-2">
-          <span>Black</span>
+      <div className={`flex  items-center justify-around xs:justify-between  ${match.id % 2 === 0 ? 'flex-row-reverse' : 'flex-row'}`}>
+        <div className={`flex items-center gap-4  ${match.id % 2 === 0 ? 'flex-row-reverse' : 'flex-row'}`}>
+          <span className="hidden xs:block">Black</span>
           <img
             src={homeTeamLogo}
             className="w-12"
           />
         </div>
-        <div className={`text-base ${match.id % 2 === 0 ? 'flex-row-reverse' : 'flex-row'}`}>
+        <div className={`flex  text-base ${match.id % 2 === 0 ? 'flex-row-reverse' : 'flex-row'}`}>
           <span>{match?.homeTeamScore > 0 && match.homeTeamScore}</span>-<span>{match?.awayTeamScore > 0 && match.awayTeamScore}</span>
         </div>
-        <div className="flex items-center space-x-2">
+        <div className={`flex items-center gap-4  ${match.id % 2 === 0 ? 'flex-row-reverse' : 'flex-row'}`}>
           <img
             src={awayTeamLogo}
             className="w-12"
           />
-          <span>White</span>
+          <span className="hidden xs:block">White</span>
         </div>
       </div>
     </CardWrapper>
