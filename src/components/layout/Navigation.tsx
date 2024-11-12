@@ -66,7 +66,7 @@ export default function Navigation({ toggleMobileMenu }: Props) {
     <div>
       {/* Header yüksekliği kadar boşluk ekle */}
       <div style={{ height: headerHeight }}></div>
-      <div className="absolute top-0 left-0 z-20 flex flex-col items-center justify-center w-screen h-full text-xl md:text-3xl bg-primary">
+      <div className="absolute top-0 left-0 z-20 flex flex-col items-center justify-center w-screen h-full overflow-hidden text-xl md:text-3xl bg-primary">
         <ul className="space-y-4 md:space-y-10">
           {filteredNavLinks.map(navLink => {
             return (
