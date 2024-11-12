@@ -42,7 +42,7 @@ export default function MainLayout() {
         isOpen={isOpen}
       />
       <main className="flex-grow p-2">{isOpen ? <Navigation toggleMobileMenu={toggleMobileMenu} /> : <Outlet />}</main>
-      <Footer />
+      {!isOpen && <Footer />}
     </div>
   )
 }
