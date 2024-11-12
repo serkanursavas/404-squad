@@ -37,7 +37,7 @@ export default function Navigation({ toggleMobileMenu }: Props) {
 
   return (
     <div className="absolute top-0 left-0 z-20 flex flex-col items-center justify-center w-screen h-full text-xl md:text-3xl bg-primary">
-      <ul className="space-y-10">
+      <ul className="space-y-4  md:space-y-10">
         {filteredNavLinks.map(navLink => {
           return (
             <li key={navLink.to}>
