@@ -10,7 +10,7 @@ import settingsIcon from '../../assets/icons/settings.svg'
 import Icons from '../ui/Icons'
 import useAuth from '../../hooks/useAuth'
 import { toast } from 'react-toastify'
-import { useEffect, useRef, useState } from 'react'
+// import { useEffect, useRef, useState } from 'react'
 
 interface Props {
   toggleMobileMenu: () => void
