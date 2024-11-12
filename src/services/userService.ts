@@ -73,12 +73,12 @@ const resetPasswordByUsername = async (username: string): Promise<any> => {
 
 const updateProfileByUsername = async (username: string, updateData: UpdateProfileParams): Promise<any> => {
   try {
-    const response = await axiosInstance.post(`/users/updateProfile/${username}`, updateData)
+    const response = await axiosInstance.put(`/users/updateProfile/${username}`, updateData)
     return response.data
   } catch (error: any) {
     const customError = new Error(error.response?.data?.message || error.message || 'An unknown error occurred') as CustomError
     customError.status = error.response?.status || 500
-    customError.details = error.response?.data?.details || 'No additional details available'
+    customError.details = error.response?.data || 'No additional details available'
 
     throw customError
   }

@@ -5,6 +5,7 @@ import matchesIcon from '../../assets/icons/matches.svg'
 import profileIcon from '../../assets/icons/profile.svg'
 import playersIcon from '../../assets/icons/players.svg'
 import adminIcon from '../../assets/icons/android.svg'
+import settingsIcon from '../../assets/icons/settings.svg'
 
 import Icons from '../ui/Icons'
 import useAuth from '../../hooks/useAuth'
@@ -22,7 +23,8 @@ export default function Navigation({ toggleMobileMenu }: Props) {
     { to: '/matches', label: 'Matches', icon: matchesIcon },
     { to: `/profile/${user?.id}`, label: 'Profile', icon: profileIcon },
     { to: '/players', label: 'Players', icon: playersIcon },
-    { to: '/admin', label: 'Admin', icon: adminIcon }
+    { to: '/admin', label: 'Admin', icon: adminIcon },
+    { to: '/settings', label: 'Settings', icon: settingsIcon }
   ]
 
   // Sadece admin rolü varsa admin linkini ekleyelim
@@ -34,7 +36,7 @@ export default function Navigation({ toggleMobileMenu }: Props) {
   }
 
   return (
-    <div className="absolute top-0 left-0 flex flex-col items-center justify-center w-screen h-full text-3xl bg-primary">
+    <div className="absolute top-0 left-0 z-20 flex flex-col items-center justify-center w-screen h-full text-3xl bg-primary">
       <ul className="space-y-10">
         {filteredNavLinks.map(navLink => {
           return (

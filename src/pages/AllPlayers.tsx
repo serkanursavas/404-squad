@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import AllPlayersList from '../components/player-lists/AllPlayersList'
 import PixelSpinner from '../components/ui/PixelSpinner'
 import TypingEffect from '../components/ui/TypingEffect'
@@ -16,6 +17,10 @@ export default function AllPlayers() {
       </div>
     )
   }
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   return (
     <div className="space-y-6">
