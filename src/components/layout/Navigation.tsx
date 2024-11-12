@@ -10,7 +10,6 @@ import settingsIcon from '../../assets/icons/settings.svg'
 import Icons from '../ui/Icons'
 import useAuth from '../../hooks/useAuth'
 import { toast } from 'react-toastify'
-// import { useEffect, useRef, useState } from 'react'
 
 interface Props {
   toggleMobileMenu: () => void
@@ -35,32 +34,6 @@ export default function Navigation({ toggleMobileMenu }: Props) {
     logout()
     toast.success('Logout successful')
   }
-
-  // const headerRef = useRef<HTMLDivElement>(null)
-  // const [headerHeight, setHeaderHeight] = useState(0)
-
-  // useEffect(() => {
-  //   const updateHeaderHeight = () => {
-  //     if (headerRef.current) {
-  //       setHeaderHeight(headerRef.current.offsetHeight)
-  //     }
-  //   }
-
-  //   // İlk yüklemede yüksekliği ayarla
-  //   updateHeaderHeight()
-
-  //   // ResizeObserver ile header yüksekliğini takip et
-  //   const resizeObserver = new ResizeObserver(updateHeaderHeight)
-  //   if (headerRef.current) {
-  //     resizeObserver.observe(headerRef.current)
-  //   }
-
-  //   return () => {
-  //     if (headerRef.current) {
-  //       resizeObserver.unobserve(headerRef.current)
-  //     }
-  //   }
-  // }, [])
 
   return (
     <div>

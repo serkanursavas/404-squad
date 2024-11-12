@@ -14,6 +14,7 @@ export default function MainLayout() {
   const [voteChecked, setVoteChecked] = useState(false) // Ekledik
 
   const toggleMobileMenu = () => {
+    document.body.classList.toggle('overflow-hidden') // Body'ye overflow hidden ekleyip kaldırır
     setIsOpen(prevIsOpen => !prevIsOpen)
   }
 
