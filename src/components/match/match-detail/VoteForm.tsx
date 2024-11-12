@@ -17,7 +17,7 @@ interface VoteFormProps {
 export default function VoteForm({ squad, currentPlayerId }: VoteFormProps) {
   const navigate = useNavigate()
 
-  const { saveRatings } = useRatings()
+  const { saveRatings, saveRatingStatus } = useRatings()
 
   const [isBouncing, setIsBouncing] = useState(true)
 
@@ -88,7 +88,6 @@ export default function VoteForm({ squad, currentPlayerId }: VoteFormProps) {
                         onMenuClose={() => setIsBouncing(true)} // Bring back animation when menu closes
                       />
 
-                      {/* Error message will come next to the select */}
                       <ErrorMessage
                         name={`ratings.${index}.rate`}
                         component="div"
@@ -104,8 +103,9 @@ export default function VoteForm({ squad, currentPlayerId }: VoteFormProps) {
           <div className="py-2 text-right">
             <Button
               type="submit"
-              label="Save Votes"
+              label={saveRatingStatus === 'pending' ? 'Saving...' : 'Save Votes'}
               className="text-white bg-primary"
+              disabled={saveRatingStatus === 'pending'} // saveRatingStatus durumuna göre butonu disable ediyoruz
             />
           </div>
         </Form>

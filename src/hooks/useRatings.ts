@@ -16,7 +16,8 @@ const useRatings = () => {
   const {
     mutate: saveRatings,
     isError: isError,
-    error: saveRatingError
+    error: saveRatingError,
+    status: saveRatingStatus
   } = useMutation<{ ratingsData: RatingData[] }, CustomError, RatingData[]>({
     mutationFn: async (ratingsData: RatingData[]) => {
       return ratingService.saveRatings(ratingsData)
@@ -61,6 +62,7 @@ const useRatings = () => {
   return {
     saveRatings,
     isError,
+    saveRatingStatus,
     saveRatingError,
     checkVote,
     isCheckVoteError,
