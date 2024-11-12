@@ -29,5 +29,9 @@
     }
   ],
   "start_url": "/",
-  "display": "standalone"
+  "display": "standalone",
+  "background_color": "#E5E7EB",
+  "status_bar": {
+    "background_color": "#E5E7EB"
+  }
 }
