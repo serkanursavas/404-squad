@@ -9,12 +9,14 @@ import { getUserFromToken } from '../services/authService'
 import { logoutSuccess } from '../store/authSlice'
 import { RootState } from '../store'
 import authService from '../services/authService'
+import useAuth from './useAuth'
 
 const useUser = () => {
   const dispatch = useDispatch()
   const queryClient = useQueryClient()
   const navigate = useNavigate()
   const { users } = useSelector((state: RootState) => state.users)
+  const { logout } = useAuth()
 
   const { data, isLoading, isError, error } = useQuery<User[], Error>({
     queryKey: ['users'],
@@ -92,14 +94,24 @@ const useUser = () => {
   })
 
   const { mutate: updateProfile } = useMutation({
-    mutationFn: ({ username, updateData }: { username: string; updateData: UpdateProfileParams }) =>
-      userService.updateProfileByUsername(username, updateData),
+    mutationFn: ({ username, updateData }: { username?: string; updateData?: UpdateProfileParams }) => {
+      // Güncelleme için `username` veya `updateData` varsa işlemi başlatıyoruz.
+      if (username && updateData) {
+        return userService.updateProfileByUsername(username, updateData)
+      } else if (username) {
+        return userService.updateProfileByUsername(username, {}) // Yalnızca username güncelleniyorsa boş bir updateData gönderiyoruz.
+      } else if (updateData) {
+        return userService.updateProfileByUsername('', updateData) // Yalnızca updateData gönderilecekse username boş olabilir.
+      }
+      throw new Error('Güncellenecek bir veri bulunamadı')
+    },
     onSuccess: () => {
       navigate('/')
       toast.success('Profile updated successfully')
+      logout()
     },
     onError: (error: any) => {
-      toast.error(error?.response?.data?.message || 'Failed to update profile')
+      toast.error(error.details)
     }
   })
 

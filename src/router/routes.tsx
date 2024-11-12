@@ -20,6 +20,7 @@ import MatchGoalsPage from '../pages/admin/MatchGoalsPage'
 import ProtectedRoute from '../components/ProtectedRoute'
 import AdminRoute from '../components/AdminRoute'
 import PublicRoute from '../components/PublicRoute'
+import AccountSettings from '../pages/AccountSettings'
 
 const routes = createBrowserRouter([
   {
@@ -50,6 +51,10 @@ const routes = createBrowserRouter([
       {
         path: 'players',
         element: <AllPlayers />
+      },
+      {
+        path: 'settings',
+        element: <AccountSettings />
       }
     ]
   },
