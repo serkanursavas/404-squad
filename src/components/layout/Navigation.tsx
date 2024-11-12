@@ -36,36 +36,34 @@ export default function Navigation({ toggleMobileMenu }: Props) {
     toast.success('Logout successful')
   }
 
-  const headerRef = useRef<HTMLDivElement>(null)
-  const [headerHeight, setHeaderHeight] = useState(0)
+  // const headerRef = useRef<HTMLDivElement>(null)
+  // const [headerHeight, setHeaderHeight] = useState(0)
 
-  useEffect(() => {
-    const updateHeaderHeight = () => {
-      if (headerRef.current) {
-        setHeaderHeight(headerRef.current.offsetHeight)
-      }
-    }
+  // useEffect(() => {
+  //   const updateHeaderHeight = () => {
+  //     if (headerRef.current) {
+  //       setHeaderHeight(headerRef.current.offsetHeight)
+  //     }
+  //   }
 
-    // İlk yüklemede yüksekliği ayarla
-    updateHeaderHeight()
+  //   // İlk yüklemede yüksekliği ayarla
+  //   updateHeaderHeight()
 
-    // ResizeObserver ile header yüksekliğini takip et
-    const resizeObserver = new ResizeObserver(updateHeaderHeight)
-    if (headerRef.current) {
-      resizeObserver.observe(headerRef.current)
-    }
+  //   // ResizeObserver ile header yüksekliğini takip et
+  //   const resizeObserver = new ResizeObserver(updateHeaderHeight)
+  //   if (headerRef.current) {
+  //     resizeObserver.observe(headerRef.current)
+  //   }
 
-    return () => {
-      if (headerRef.current) {
-        resizeObserver.unobserve(headerRef.current)
-      }
-    }
-  }, [])
+  //   return () => {
+  //     if (headerRef.current) {
+  //       resizeObserver.unobserve(headerRef.current)
+  //     }
+  //   }
+  // }, [])
 
   return (
     <div>
-      {/* Header yüksekliği kadar boşluk ekle */}
-      <div style={{ height: headerHeight }}></div>
       <div className="absolute top-0 left-0 z-20 flex flex-col items-center justify-center w-screen h-full overflow-hidden text-xl md:text-3xl bg-primary">
         <ul className="space-y-4 md:space-y-10">
           {filteredNavLinks.map(navLink => {
