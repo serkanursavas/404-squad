@@ -12,7 +12,7 @@ interface TopListsProps {
 
 export default function TopLists({ title, statisticLabel, watermark, playersData }: TopListsProps) {
   return (
-    <div className="relative py-4 overflow-hidden bg-white">
+    <div className="relative py-4 overflow-hidden bg-white ">
       <Watermark watermarkIcon={watermark} />
       <div className="flex items-center justify-between px-4">
         <h2 className="text-xl text-primary">{title}</h2>
