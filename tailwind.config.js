@@ -38,6 +38,12 @@ export default {
         sans: ['"Press Start 2P"', 'sans-serif'],
         retro: ['VT323', 'monospace'], // Retro terminal tarzı
         body: ['"Press Start 2P"', 'sans-serif'] // Ana yazı tipi
+      },
+      overscrollBehavior: {
+        none: 'none'
+      },
+      touchAction: {
+        none: 'none'
       }
       // keyframes: {
       //   pixelShadow: {
