@@ -20,7 +20,7 @@ export default function Banner({ match }: BannerProps) {
 
   const { date, time } = splitDateTime(match.dateTime)
 
-  const { weather, loading } = useWeather(date)
+  const { weather, loading } = useWeather({ matchDate: date, nextMatchWeather: match.weather, matchId: match.id })
 
   return (
     <div className={`relative px-4 py-8 overflow-hidden text-sm ${match.played ? 'bg-neutral-dark' : 'bg-primary'} shadow-pixel `}>
@@ -60,7 +60,7 @@ export default function Banner({ match }: BannerProps) {
         {!match.played && weather && (
           <div className="flex items-center text-white">
             <img
-              src={weather.icon}
+              // src={weather.icon}
               alt={weather.description}
               className="w-12 h-12"
             />
