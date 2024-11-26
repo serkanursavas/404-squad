@@ -115,7 +115,7 @@ export default function MatchDetails() {
             <span className="mr-1">{getFormattedDayAndMonth(match.dateTime)}</span>
           </div>
         </div>
-        <div className="flex items-center justify-center w-full px-2 mx-auto bg-opacity-70 bg-third">
+        <div className="flex items-center justify-center w-full px-2 shadow-lg bg-opacity-70 bg-third">
           <Icons
             src={getWeatherIcon(match.weather)}
             className={`${match.weather === 'clear sky' ? 'w-6 py-1' : 'w-8'}`}

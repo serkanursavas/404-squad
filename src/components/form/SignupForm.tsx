@@ -27,7 +27,16 @@ export default function SignupForm({ handleSubmit }: SignupFormProps) {
       validateOnBlur={true}
       validateOnChange={true}
       onSubmit={values => {
-        handleSubmit(values)
+        // Tüm string değerleri trimle
+        const trimmedValues = Object.keys(values).reduce((acc, key) => {
+          acc[key as keyof SignupFormValues] =
+            typeof values[key as keyof SignupFormValues] === 'string'
+              ? (values[key as keyof SignupFormValues] as string).trim()
+              : values[key as keyof SignupFormValues]
+          return acc
+        }, {} as SignupFormValues)
+
+        handleSubmit(trimmedValues)
       }}
     >
       {({ errors, touched, setFieldValue, isSubmitting }) => (
