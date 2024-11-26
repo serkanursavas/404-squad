@@ -9,6 +9,8 @@ import { Match } from '../../services/matchService'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../store'
 
+import { getWeatherIcon, normalizeWeatherString } from '../../utils/weatherUtils'
+
 type BannerProps = {
   match: Match
 }
@@ -60,11 +62,11 @@ export default function Banner({ match }: BannerProps) {
         {!match.played && weather && (
           <div className="flex items-center text-white">
             <img
-              // src={weather.icon}
+              src={getWeatherIcon(weather.description)}
               alt={weather.description}
               className="w-12 h-12"
             />
-            <span>{weather.description}</span>
+            <span className="ml-2">{normalizeWeatherString(weather.description)}</span>
           </div>
         )}
 
