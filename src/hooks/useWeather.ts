@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
 
+import matchService from '../services/matchService'
+
 interface Weather {
   description: string
-  temperature: number
-  icon: string
 }
 
-export default function useWeather(matchDate: string) {
+export default function useWeather({ matchDate, nextMatchWeather, matchId }: { matchDate: string; nextMatchWeather: string; matchId: number }) {
   const [weather, setWeather] = useState<Weather | null>(null)
   const [loading, setLoading] = useState<Boolean | null>(null)
   const [error, setError] = useState<String | null>(null)
@@ -29,14 +29,21 @@ export default function useWeather(matchDate: string) {
 
         const weatherData = data.list.find((item: any) => {
           const [date, time] = item.dt_txt.split(' ')
-          return date === matchDate && time === '12:00:00'
+          return date === matchDate && time === '18:00:00'
         })
 
         setWeather({
-          description: weatherData.weather[0].description,
-          temperature: weatherData.main.temp,
-          icon: `http://openweathermap.org/img/wn/${weatherData.weather[0].icon}.png`
+          description: weatherData.weather[0].description
         })
+
+        // Maç zamanı kontrolü
+        const matchDateTime = new Date(`${matchDate}T18:00:00`).getTime()
+        const currentTime = Date.now()
+        const timeDifferenceInHours = (matchDateTime - currentTime) / (1000 * 60 * 60)
+
+        if (timeDifferenceInHours <= 3) {
+          matchService.updateWeather(matchId, weatherData.weather[0].description)
+        }
       } catch (error: any) {
         setError(error.message)
       } finally {
@@ -44,7 +51,9 @@ export default function useWeather(matchDate: string) {
       }
     }
 
-    fetchWeather()
+    if (nextMatchWeather === null || nextMatchWeather === '' || nextMatchWeather.trim() === '') {
+      fetchWeather()
+    }
   }, [matchDate])
 
   return { weather, loading, error }

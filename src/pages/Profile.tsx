@@ -31,6 +31,7 @@ export default function Profile() {
   })
 
   useEffect(() => {
+    window.scrollTo(0, 0)
     if (playerFromRedux) {
       setPlayer(playerFromRedux)
     } else if (playerFromAPI) {

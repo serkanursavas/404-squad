@@ -9,8 +9,43 @@ import SquadList from '../components/match/match-detail/SquadList'
 import { getFormattedDayAndMonth } from '../utils/Date/dateUtils'
 import { useEffect, useState } from 'react'
 import useMatches from '../hooks/useMatches'
+import sunnySvg from '../assets/icons/sun.png'
 import rainSvg from '../assets/icons/rain.svg'
+import cloudsSvg from '../assets/icons/clouds.png'
+import brokenCloudsSvg from '../assets/icons/broken_clouds.png'
+import scatteredCloudsSvg from '../assets/icons/scattered_clodus.png'
+import showerRainSvg from '../assets/icons/shower_rain.png'
+import thunderstormSvg from '../assets/icons/thunderstorm.png'
+
 import PixelSpinner from '../components/ui/PixelSpinner'
+
+function getWeatherIcon(weather: string): string {
+  const weatherIcons: { [key: string]: string } = {
+    'clear sky': sunnySvg,
+    rain: rainSvg,
+    'few clouds': cloudsSvg,
+    'broken clouds': brokenCloudsSvg,
+    'scattered clouds': scatteredCloudsSvg,
+    'shower rain': showerRainSvg,
+    thunderstorm: thunderstormSvg
+  }
+
+  return weatherIcons[weather] || cloudsSvg // Default ikon
+}
+
+function normalizeWeatherString(weather: string): string {
+  const weatherMap: { [key: string]: string } = {
+    'clear sky': 'Sunny',
+    rain: 'Rainy',
+    'few clouds': 'Partly Cloudy',
+    'broken clouds': 'Mostly Cloudy',
+    'scattered clouds': 'Scattered Clouds',
+    'shower rain': 'Light Showers',
+    thunderstorm: 'Thunderstorms'
+  }
+
+  return weatherMap[weather] || weather // Default: Orijinal değeri döner
+}
 
 export default function MatchDetails() {
   const { id } = useParams<{ id: string }>()
@@ -80,12 +115,12 @@ export default function MatchDetails() {
             <span className="mr-1">{getFormattedDayAndMonth(match.dateTime)}</span>
           </div>
         </div>
-        <div className="flex items-center justify-start">
+        <div className="flex items-center justify-center w-full px-2 shadow-lg bg-opacity-70 bg-third">
           <Icons
-            src={rainSvg}
-            className="w-6"
+            src={getWeatherIcon(match.weather)}
+            className={`${match.weather === 'clear sky' ? 'w-6 py-1' : 'w-8'}`}
           />
-          <span className="ml-1 text-third">Rainy</span>
+          <span className="ml-2 tracking-widest text-white capitalize">{normalizeWeatherString(match.weather)}</span>
         </div>
       </motion.div>
 

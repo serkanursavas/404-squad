@@ -25,7 +25,7 @@ export default function SquadListDisplay({ squad, isVoted, currentPlayerId }: Sq
               {roster.playerName.split(' ')[0][0]}.{roster.playerName.split(' ').pop()}
             </span>
 
-            <span>{isVoted && roster.rating.toFixed(1)}</span>
+            <span className={`${currentPlayerId === roster.playerId && 'text-accent'}`}>{isVoted && roster.rating.toFixed(1)}</span>
           </div>
         )
       })}
