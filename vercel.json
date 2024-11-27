@@ -1,9 +1,12 @@
 {
-  "rewrites": [{ "source": "/(.*)", "destination": "/" }],
   "routes": [
     {
       "src": "/service-worker.js",
       "status": 410
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/"
     }
   ]
 }
