@@ -61,7 +61,7 @@ export default function MatchDetails() {
 
   return (
     <motion.div
-      className="pt-6 border-t border-neutral-dark"
+      // className="pt-6 border-t border-neutral-dark"
       initial="hidden"
       animate="visible"
       variants={containerVariants}
