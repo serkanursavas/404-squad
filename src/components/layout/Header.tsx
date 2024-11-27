@@ -36,13 +36,13 @@ export default function Header({ toggleMobileMenu, isOpen }: Props) {
     }
   }, [])
 
-  const headerBgClass = isOpen ? 'bg-primary' : 'bg-neutral'
+  const headerBgClass = isOpen ? 'bg-primary' : 'bg-neutral border-b shadow-md border-secondary'
 
   return (
     <>
       <div
         ref={headerRef}
-        className={`fixed z-30 flex items-center justify-between w-full px-8 py-4 ${headerBgClass}`}
+        className={`fixed mb-6 z-30  flex items-center justify-between w-full px-8 py-4 ${headerBgClass}`}
       >
         <img
           src={notiIcon}
@@ -68,7 +68,10 @@ export default function Header({ toggleMobileMenu, isOpen }: Props) {
       </div>
 
       {/* Header yüksekliği kadar boşluk ekle */}
-      <div style={{ height: headerHeight }}></div>
+      <div
+        className="mt-6"
+        style={{ height: headerHeight }}
+      ></div>
     </>
   )
 }
