@@ -4,11 +4,12 @@ import dateIcon from '../../assets/icons/calendar.svg'
 import clockIcon from '../../assets/icons/clock.svg'
 import locationIcon from '../../assets/icons/bookmarks.svg'
 import { getFormattedDayAndMonth } from '../../utils/Date/dateUtils'
+import { GameLocation } from '../../services/matchService'
 
 interface MatchInfoProps {
   date: string
   time: string
-  location: string
+  location: GameLocation
 }
 
 export default function MatchInfo({ date, time, location }: MatchInfoProps) {
@@ -26,7 +27,7 @@ export default function MatchInfo({ date, time, location }: MatchInfoProps) {
       />
       <InfoItem
         icon={locationIcon}
-        text={location}
+        gameLocation={location}
       />
     </div>
   )
