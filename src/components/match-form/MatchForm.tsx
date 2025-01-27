@@ -4,6 +4,10 @@ import { MatchFormData, SelectOption } from '../../types/FormTypes'
 import Input from '../ui/Input'
 import SelectInput from '../form/SelectInput'
 import Button from '../ui/Button'
+import { useEffect, useState } from 'react'
+import { GameLocation } from '../../services/matchService'
+import axiosInstance from '../../services/axiosInstance'
+import { CustomError } from '../../hooks/useAuth'
 
 interface MatchFormProps {
   initialValues: MatchFormData
@@ -13,6 +17,24 @@ interface MatchFormProps {
 }
 
 export default function MatchForm({ initialValues, handleSubmit, players, handleDeleteMatch }: MatchFormProps) {
+  const [gameLocations, setGameLocations] = useState<GameLocation[]>([])
+
+  useEffect(() => {
+    const fetchGameLocations = async () => {
+      try {
+        const response = await axiosInstance.get<GameLocation[]>('/games/getGameLocations')
+        setGameLocations(response.data)
+      } catch (error: any) {
+        const customError = new Error(error.response?.data?.message || error.message || 'An unknown error occurred') as CustomError
+        customError.status = error.response?.status || 500
+        customError.details = error.response?.data?.details || 'No additional details available'
+        throw customError
+      }
+    }
+
+    fetchGameLocations()
+  }, [])
+
   return (
     <Formik
       key={JSON.stringify(initialValues)}
@@ -30,12 +52,13 @@ export default function MatchForm({ initialValues, handleSubmit, players, handle
 
         return (
           <Form className="flex flex-col justify-center p-5 space-y-8">
-            <Input
+            <SelectInput
               label="Match Place"
               name="location"
-              type="text"
-              min={1}
-              error={touched.location && errors.location ? errors.location : false}
+              options={gameLocations.map(location => ({ value: location.id.toString(), label: location.location }))}
+              placeholder="Match Place"
+              setFieldValue={(field: string, value: any) => setFieldValue(field, value)}
+              error={touched.location && typeof errors.location === 'string' ? errors.location : false}
             />
             <Input
               label="Match Date"

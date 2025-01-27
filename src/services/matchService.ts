@@ -12,6 +12,15 @@ export interface Match {
   voted: boolean
   goals: Goal[]
   rosters: Roster[]
+  gameLocation: GameLocation
+}
+
+export interface GameLocation {
+  id: number
+  location: string
+  address: string
+  latitude: number
+  longitude: number
 }
 
 export interface Goal {

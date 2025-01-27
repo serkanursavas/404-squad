@@ -53,7 +53,7 @@ export default function Banner({ match }: BannerProps) {
           <MatchInfo
             date={date}
             time={time}
-            location={match.location}
+            location={match.gameLocation}
           />
         )}
 

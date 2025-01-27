@@ -12,6 +12,7 @@ import useMatches from '../hooks/useMatches'
 import PixelSpinner from '../components/ui/PixelSpinner'
 
 import { getWeatherIcon, normalizeWeatherString } from '../utils/weatherUtils'
+import GameLocationInfo from '../components/match/GameLocationInfo'
 
 export default function MatchDetails() {
   const { id } = useParams<{ id: string }>()
@@ -23,6 +24,8 @@ export default function MatchDetails() {
   const match = useMatchDetails(Number(id))
 
   useEffect(() => {
+    console.log('match', match)
+
     if (match && match.rosters) {
       setLoading(false)
     }
@@ -74,7 +77,11 @@ export default function MatchDetails() {
         <div className="flex items-center justify-between w-full">
           <div className="flex items-center text-purple-400">
             <Icons src={locationIcon} />
-            <span className="ml-1">{match.location}</span>
+            <GameLocationInfo
+              latitude={match.gameLocation.latitude}
+              longitude={match.gameLocation.longitude}
+              location={match.gameLocation.location}
+            />
           </div>
 
           <div className="flex items-center text-right">
