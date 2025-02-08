@@ -21,11 +21,15 @@ export default function ManageMatches() {
           route={route}
           classname={`${nextMatch.played ? 'bg-secondary ' : 'bg-third text-white'}`}
         />
-      ) : (
+      ) : nextMatch?.voted ? (
         <div className="flex items-center justify-center mt-40">
           <Link to={'/admin/matches/create'}>
             <Button label="Create a Match" />
           </Link>
+        </div>
+      ) : (
+        <div className="flex items-center justify-center mt-40 text-lg text-center text-gray-600">
+          There is an unvoted match. Please wait for voting to complete.
         </div>
       )}
     </div>
