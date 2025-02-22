@@ -14,9 +14,7 @@ function cleanupServiceWorkers() {
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.getRegistrations().then(registrations => {
       registrations.forEach(registration => {
-        registration.unregister().then(() => {
-          console.log('Service Worker unregistered:', registration)
-        })
+        registration.unregister().then(() => {})
       })
     })
   }

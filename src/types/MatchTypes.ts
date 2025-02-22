@@ -47,4 +47,7 @@ export interface Roster {
   rating: number
   playerId: number
   playerName: string
+  persona1: number
+  persona2: number
+  persona3: number
 }
