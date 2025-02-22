@@ -67,7 +67,7 @@ export default function SquadListDisplay({ squad, isVoted, currentPlayerId, canV
               </span>
               <span className={`${currentPlayerId === roster.playerId && 'text-accent'} flex items-center justify-center space-x-2`}>
                 <span>{isVoted && roster.rating.toFixed(1)} </span>
-                {hasVoted && (
+                {isVoted && (
                   <Trophy
                     className="w-5 h-5 animate-pulse"
                     style={{ color: '#FFA500' }}
@@ -76,7 +76,7 @@ export default function SquadListDisplay({ squad, isVoted, currentPlayerId, canV
               </span>
             </div>
 
-            {hasVoted && roster.persona1 && (
+            {isVoted && roster.persona1 && (
               <motion.div
                 initial={{ height: 0, opacity: 0 }} // Başlangıç animasyonu (kapalı)
                 animate={isExpanded ? { height: 'auto', opacity: 1 } : { height: 0, opacity: 0 }} // Açık/Kapalı animasyonu
