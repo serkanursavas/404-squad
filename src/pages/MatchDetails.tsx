@@ -117,7 +117,7 @@ export default function MatchDetails() {
       )}
 
       {/* persona infolari ile ilgili bir uyari mesaji ve persona detaylarina yonlendiren bir buton ekleyebilirsin */}
-      {!hasVoted && !match.voted && (
+      {!hasVoted && match.played && !match.voted && (
         <motion.div
           className="flex items-center justify-center px-3 py-2 mt-4 space-y-2 text-xs text-red-500 bg-gray-900 border-2 border-red-500 shadow-pixel"
           variants={itemVariants}
