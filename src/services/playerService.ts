@@ -11,6 +11,15 @@ export interface Player {
   position: string
   active: boolean
   rating: number
+  personas: PlayerPersona[] // Persona dizisi
+}
+
+export interface PlayerPersona {
+  personaId: number
+  personaName: string
+  personaDescription: string
+  count: number
+  category: string
 }
 
 export interface UpdatePlayerData {

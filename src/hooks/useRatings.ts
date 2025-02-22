@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import useMatches from './useMatches'
 import { setVoteStatus } from '../store/authSlice'
 import { useDispatch } from 'react-redux'
+import Swal from 'sweetalert2'
 
 const useRatings = () => {
   const navigate = useNavigate()

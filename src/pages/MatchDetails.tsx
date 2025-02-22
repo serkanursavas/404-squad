@@ -13,6 +13,10 @@ import PixelSpinner from '../components/ui/PixelSpinner'
 
 import { getWeatherIcon, normalizeWeatherString } from '../utils/weatherUtils'
 import GameLocationInfo from '../components/match/GameLocationInfo'
+import { Crown, Medal, Trophy, FileText } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { RootState } from '../store'
+import { useSelector } from 'react-redux'
 
 export default function MatchDetails() {
   const { id } = useParams<{ id: string }>()
@@ -23,9 +27,9 @@ export default function MatchDetails() {
   // Maç detaylarını alıyoruz
   const match = useMatchDetails(Number(id))
 
-  useEffect(() => {
-    console.log('match', match)
+  const { hasVoted } = useSelector((state: RootState) => state.auth)
 
+  useEffect(() => {
     if (match && match.rosters) {
       setLoading(false)
     }
@@ -44,6 +48,7 @@ export default function MatchDetails() {
   }
 
   const homeTeamSquad = match.rosters.filter(player => player.teamColor === 'BLACK')
+
   const awayTeamSquad = match.rosters.filter(player => player.teamColor === 'WHITE')
 
   // Ana container ve içerikler için animasyon varyantları
@@ -98,7 +103,6 @@ export default function MatchDetails() {
           </div>
         )}
       </motion.div>
-
       {/* Scoreboard */}
       {match?.played && (
         <motion.div variants={itemVariants}>
@@ -109,6 +113,36 @@ export default function MatchDetails() {
             played={match.played}
             twist={match.id % 2 === 0}
           />
+        </motion.div>
+      )}
+
+      {/* persona infolari ile ilgili bir uyari mesaji ve persona detaylarina yonlendiren bir buton ekleyebilirsin */}
+      {!hasVoted && (
+        <motion.div
+          className="flex items-center justify-center px-3 py-2 mt-4 space-y-2 text-xs text-red-500 bg-gray-900 border-2 border-red-500 shadow-pixel"
+          variants={itemVariants}
+        >
+          <div className="flex flex-col items-center justify-center w-full gap-4 px-2">
+            {/* İkonlar */}
+            <div className="flex items-center justify-center space-x-2 text-yellow-400">
+              <Trophy className="w-5 h-5" />
+              <Crown className="w-5 h-5" />
+              <Medal className="w-5 h-5" />
+            </div>
+
+            <div className="flex items-center justify-center w-full">
+              {/* Uyarı Mesajı */}
+              <span className="text-xs leading-5 text-red-400">Personaları kullanmadan önce talimatları okuyun!</span>
+
+              {/* Buton */}
+              <Link
+                className="flex items-center justify-center transition animate-pulse"
+                to={'/persona-info'}
+              >
+                <FileText className="w-12 h-12 text-yellow-500 " />
+              </Link>
+            </div>
+          </div>
         </motion.div>
       )}
 

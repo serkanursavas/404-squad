@@ -21,6 +21,7 @@ import ProtectedRoute from '../components/ProtectedRoute'
 import AdminRoute from '../components/AdminRoute'
 import PublicRoute from '../components/PublicRoute'
 import AccountSettings from '../pages/AccountSettings'
+import PersonaInfo from '../pages/PersonaInfo'
 
 const routes = createBrowserRouter([
   {
@@ -51,6 +52,10 @@ const routes = createBrowserRouter([
       {
         path: 'players',
         element: <AllPlayers />
+      },
+      {
+        path: 'persona-info',
+        element: <PersonaInfo />
       },
       {
         path: 'settings',
