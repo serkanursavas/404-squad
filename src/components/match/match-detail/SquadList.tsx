@@ -22,6 +22,8 @@ export default function SquadList({ teamLogo, squad, played, isVotingClosed }: S
 
   const canVote = played && inTeam && !hasVoted && !isVotingClosed
 
+  const canPersonaVote = played && !hasVoted && !isVotingClosed
+
   return (
     <div>
       <div className="flex justify-between mb-3 text-neutral-dark border-b border-black text-[10px]">
@@ -47,6 +49,7 @@ export default function SquadList({ teamLogo, squad, played, isVotingClosed }: S
             squad={squad}
             isVoted={isVotingClosed}
             currentPlayerId={currentPlayerId}
+            canVote={canPersonaVote}
           />
         )}
       </div>

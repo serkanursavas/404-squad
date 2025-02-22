@@ -13,6 +13,7 @@ interface SquadListDisplayProps {
   squad: Roster[]
   isVoted: boolean
   currentPlayerId: number
+  canVote: boolean
 }
 
 const categoryColors: Record<string, string> = {
@@ -25,7 +26,7 @@ const categoryColors: Record<string, string> = {
   teknik: '#fef08a' // Daha soft sarı
 }
 
-export default function SquadListDisplay({ squad, isVoted, currentPlayerId }: SquadListDisplayProps) {
+export default function SquadListDisplay({ squad, isVoted, currentPlayerId, canVote }: SquadListDisplayProps) {
   const navigate = useNavigate()
 
   const { persona } = usePersona()
@@ -117,7 +118,7 @@ export default function SquadListDisplay({ squad, isVoted, currentPlayerId }: Sq
               </motion.div>
             )}
 
-            {!hasVoted && (
+            {canVote && (
               <div className="flex flex-col">
                 <PersonaSelect
                   name={`ratings.${roster.id}.persona`}
