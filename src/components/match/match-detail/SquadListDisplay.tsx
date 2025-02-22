@@ -31,6 +31,12 @@ export default function SquadListDisplay({ squad, isVoted, currentPlayerId, canV
 
   const { persona } = usePersona()
 
+  // Persona dizisini obje haline getiriyoruz
+  const personaMap = persona?.reduce((acc, p) => {
+    acc[p.id] = p // ID ile doğrudan erişim sağlıyoruz
+    return acc
+  }, {} as Record<number, any>) // ID'leri number olarak tanımladık
+
   const { hasVoted } = useSelector((state: RootState) => state.auth)
 
   // PersonasContext'ten state ve setter fonksiyonuna erişim
@@ -84,34 +90,34 @@ export default function SquadListDisplay({ squad, isVoted, currentPlayerId, canV
                 className="overflow-hidden"
               >
                 <div className="flex text-[10px] flex-wrap items-center justify-center gap-3 px-2 py-1">
-                  {persona?.[roster.persona1] && (
+                  {personaMap?.[roster.persona1] && (
                     <span
                       style={{
-                        backgroundColor: categoryColors[persona[roster.persona1]?.category] || '#ddd'
+                        backgroundColor: categoryColors[personaMap[roster.persona1]?.category] || '#ddd'
                       }}
                       className="px-3 py-1 text-black shadow-pixel"
                     >
-                      {persona[roster.persona1]?.name || 'Bilinmeyen'}
+                      {personaMap[roster.persona1]?.name || 'Bilinmeyen'}
                     </span>
                   )}
-                  {persona?.[roster.persona2] && (
+                  {personaMap?.[roster.persona2] && (
                     <span
                       style={{
-                        backgroundColor: categoryColors[persona[roster.persona2]?.category] || '#ddd'
+                        backgroundColor: categoryColors[personaMap[roster.persona2]?.category] || '#ddd'
                       }}
                       className="px-3 py-1 text-black shadow-pixel"
                     >
-                      {persona[roster.persona2]?.name || 'Bilinmeyen'}
+                      {personaMap[roster.persona2]?.name || 'Bilinmeyen'}
                     </span>
                   )}
-                  {persona?.[roster.persona3] && (
+                  {personaMap?.[roster.persona3] && (
                     <span
                       style={{
-                        backgroundColor: categoryColors[persona[roster.persona3]?.category] || '#ddd'
+                        backgroundColor: categoryColors[personaMap[roster.persona3]?.category] || '#ddd'
                       }}
                       className="px-3 py-1 text-black shadow-pixel"
                     >
-                      {persona[roster.persona3]?.name || 'Bilinmeyen'}
+                      {personaMap[roster.persona3]?.name || 'Bilinmeyen'}
                     </span>
                   )}
                 </div>
