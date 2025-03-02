@@ -45,7 +45,7 @@ export default function PlayerCard({ player, index }: PlayersListProps) {
           {player.rating !== 0 ? (
             <>
               <div>{player.rating.toString().split('.')[0]}</div>
-              <div className="text-base pt-1 tracking-[-0.3em]">.{Math.round(Number(player.rating.toFixed(2).split('.')[1]) / 10)}</div>
+              <div className="text-base pt-1 tracking-[-0.3em]">.{player.rating.toFixed(2).split('.')[1][0]}</div>
             </>
           ) : (
             '-'
