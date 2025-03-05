@@ -13,7 +13,7 @@ export default function PlayerList({ players }: PlayerListProp) {
       {players.map(player => {
         const { rating } = player
 
-        const formattedRating = rating !== undefined && rating !== null ? Math.round(rating * 10) / 10 : 0
+        const formattedRating = rating !== undefined && rating !== null ? Math.floor(rating * 10) / 10 : 0
 
         return (
           <PlayerListItem
