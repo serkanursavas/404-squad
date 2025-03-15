@@ -25,7 +25,7 @@ export default function Banner({ match }: BannerProps) {
   const { weather, loading } = useWeather({ matchDate: date, nextMatchWeather: match.weather, matchId: match.id })
 
   return (
-    <div className={`relative px-4 py-8 overflow-hidden text-sm ${match.played ? 'bg-neutral-dark' : 'bg-primary'} shadow-pixel `}>
+    <div className={`relative px-4 py-8 overflow-hidden text-xs ${match.played ? 'bg-neutral-dark' : 'bg-primary'} shadow-pixel `}>
       <span className="absolute top-0 left-0 w-3/5 h-full bg-white rounded-tr-full bg-opacity-30 "></span>
       <div className="relative z-10 space-y-6">
         <h2 className={`mb-4 text-white text-center ${match.played ? 'text-xl' : 'text-3xl'}`}>{match.played ? 'Last Match' : 'NEXT MATCH'}</h2>

@@ -10,7 +10,7 @@ interface InfoItemProps {
 
 export default function InfoItem({ icon, text, gameLocation }: InfoItemProps) {
   return (
-    <div className="flex items-start space-x-1 text-lg">
+    <div className="flex items-start space-x-1 text">
       <Icons src={icon} />
       {text && <span>{text}</span>}
       {gameLocation && (
