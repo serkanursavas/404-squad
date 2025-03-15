@@ -42,7 +42,7 @@ export default function TopScorerList({ title, statisticLabel, watermark, player
               onClick={() => navigate(`/profile/${player.playerId}`)}
               className="mr-4 border-b cursor-pointer border-l-neutral-dark last:border-b-0"
             >
-              <div className={`flex justify-between py-2 pl-4 mt-2 text-sm `}>
+              <div className={`flex justify-between py-2 pl-4 mt-2 text-xs `}>
                 <span className="flex items-center space-x-2">
                   <Icons src={userIcon} />
                   <span className="font-thin">{player.name.split(' ')[0][0] + '.' + player.surname}</span>
