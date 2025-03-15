@@ -1,4 +1,5 @@
 import { CustomError } from '../hooks/useAuth'
+import { FormTrend, LegendaryDuos, RivalDuos } from '../types/TopListTypes'
 import axiosInstance from './axiosInstance'
 import { TopPlayer } from './goalService'
 
@@ -12,6 +13,7 @@ export interface Player {
   active: boolean
   rating: number
   personas: PlayerPersona[] // Persona dizisi
+  last5GameRating: Number[]
 }
 
 export interface PlayerPersona {
@@ -38,6 +40,14 @@ export interface MvpInfo {
   photo: string
   position: string
   rating: number
+}
+
+export interface TopRated {
+  playerId: number
+  name: string
+  surname: string
+  rating?: number // Optional, sadece en iyi golcü listesi için kullanılır
+  gameCount?: number // Optional, sadece en iyi golcü listesi için kullanılır
 }
 
 const getAllPlayers = async (): Promise<any> => {
@@ -92,6 +102,51 @@ const getTopRatedPlayers = async (): Promise<TopPlayer[]> => {
   }
 }
 
+const getTopFormPlayers = async (): Promise<FormTrend[]> => {
+  try {
+    const response = await axiosInstance.get('/players/getTopFormPlayers')
+    console.log(response.data)
+
+    return response.data
+  } catch (error: any) {
+    const customError = new Error(error.response?.data?.message || error.message || 'An unknown error occurred') as CustomError
+    customError.status = error.response?.status || 500
+    customError.details = error.response?.data?.details || 'No additional details available'
+
+    throw customError
+  }
+}
+
+const getLegendaryDuos = async (): Promise<LegendaryDuos[]> => {
+  try {
+    const response = await axiosInstance.get('/players/getLegendaryDuos')
+    console.log(response.data)
+
+    return response.data
+  } catch (error: any) {
+    const customError = new Error(error.response?.data?.message || error.message || 'An unknown error occurred') as CustomError
+    customError.status = error.response?.status || 500
+    customError.details = error.response?.data?.details || 'No additional details available'
+
+    throw customError
+  }
+}
+
+const getRivalDuos = async (): Promise<RivalDuos[]> => {
+  try {
+    const response = await axiosInstance.get('/players/getRivalDuos')
+    console.log(response.data)
+
+    return response.data
+  } catch (error: any) {
+    const customError = new Error(error.response?.data?.message || error.message || 'An unknown error occurred') as CustomError
+    customError.status = error.response?.status || 500
+    customError.details = error.response?.data?.details || 'No additional details available'
+
+    throw customError
+  }
+}
+
 const getMvp = async (): Promise<MvpInfo> => {
   try {
     const response = await axiosInstance.get('/games/getMvp')
@@ -105,4 +160,4 @@ const getMvp = async (): Promise<MvpInfo> => {
   }
 }
 
-export default { getAllPlayers, updatePlayer, getPlayerById, getTopRatedPlayers, getMvp }
+export default { getAllPlayers, updatePlayer, getPlayerById, getTopRatedPlayers, getMvp, getTopFormPlayers, getLegendaryDuos, getRivalDuos }

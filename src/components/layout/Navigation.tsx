@@ -24,8 +24,9 @@ export default function Navigation({ toggleMobileMenu }: Props) {
     { to: '/matches', label: 'Matches', icon: matchesIcon },
     { to: `/profile/${user?.id}`, label: 'Profile', icon: humanIcon },
     { to: '/players', label: 'Players', icon: playersIcon },
-    { to: '/admin', label: 'Admin', icon: adminIcon },
+    { to: '/highlights', label: 'Hall Of Fame', icon: profileIcon },
     { to: '/persona-info', label: 'Persona Info', icon: profileIcon },
+    { to: '/admin', label: 'Admin', icon: adminIcon },
     { to: '/settings', label: 'Settings', icon: settingsIcon }
   ]
 
