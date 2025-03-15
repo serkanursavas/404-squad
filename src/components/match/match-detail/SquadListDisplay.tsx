@@ -6,8 +6,8 @@ import { RootState } from '../../../store'
 import { useSelector } from 'react-redux'
 import PersonaSelect from '../../ui/PersonaSelect'
 import { useState } from 'react'
-import { motion } from 'framer-motion' // Framer Motion import
 import { Trophy } from 'lucide-react' // Lucide ikonları örnek olarak eklendi
+import { motion } from 'framer-motion'
 
 interface SquadListDisplayProps {
   squad: Roster[]
@@ -50,6 +50,22 @@ export default function SquadListDisplay({ squad, isVoted, currentPlayerId, canV
     }))
   }
 
+  const groupedOptions = persona
+    ?.reduce((acc, p) => {
+      let group = acc.find(g => g.category === p.category)
+      if (!group) {
+        group = { category: p.category, items: [] }
+        acc.push(group)
+      }
+      group.items.push({ value: p.id, label: p.name, category: p.category })
+      return acc
+    }, [] as { category: string; items: { value: number; label: string; category: string }[] }[])
+    .map(group => ({
+      ...group,
+      items: group.items.sort((a, b) => a.label.localeCompare(b.label)) // Alfabetik sıralama
+    }))
+    .flatMap(g => g.items) // Sonuç olarak düz bir liste elde ediyoruz
+
   return (
     <div className="relative">
       {squad?.map(roster => {
@@ -84,42 +100,28 @@ export default function SquadListDisplay({ squad, isVoted, currentPlayerId, canV
 
             {isVoted && roster.persona1 && (
               <motion.div
-                initial={{ height: 0, opacity: 0 }} // Başlangıç animasyonu (kapalı)
-                animate={isExpanded ? { height: 'auto', opacity: 1 } : { height: 0, opacity: 0 }} // Açık/Kapalı animasyonu
-                transition={{ duration: 0.3, ease: 'easeInOut' }} // Geçiş süresi ve efekti
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: isExpanded ? 'auto' : 0, opacity: isExpanded ? 1 : 0 }}
+                transition={{ duration: 0.3, ease: 'easeInOut' }}
                 className="overflow-hidden"
               >
                 <div className="flex text-[10px] flex-wrap items-center justify-center gap-3 px-2 py-1">
-                  {personaMap?.[roster.persona1] && (
-                    <span
-                      style={{
-                        backgroundColor: categoryColors[personaMap[roster.persona1]?.category] || '#ddd'
-                      }}
-                      className="px-3 py-1 text-black shadow-pixel"
-                    >
-                      {personaMap[roster.persona1]?.name || 'Bilinmeyen'}
-                    </span>
-                  )}
-                  {personaMap?.[roster.persona2] && (
-                    <span
-                      style={{
-                        backgroundColor: categoryColors[personaMap[roster.persona2]?.category] || '#ddd'
-                      }}
-                      className="px-3 py-1 text-black shadow-pixel"
-                    >
-                      {personaMap[roster.persona2]?.name || 'Bilinmeyen'}
-                    </span>
-                  )}
-                  {personaMap?.[roster.persona3] && (
-                    <span
-                      style={{
-                        backgroundColor: categoryColors[personaMap[roster.persona3]?.category] || '#ddd'
-                      }}
-                      className="px-3 py-1 text-black shadow-pixel"
-                    >
-                      {personaMap[roster.persona3]?.name || 'Bilinmeyen'}
-                    </span>
-                  )}
+                  {[roster.persona1, roster.persona2, roster.persona3].map(personaId => {
+                    if (!personaMap?.[personaId]) return null
+                    const persona = personaMap[personaId]
+
+                    return (
+                      <div className="relative">
+                        {/* Persona İsmi */}
+                        <span
+                          style={{ backgroundColor: categoryColors[persona.category] || '#ddd' }}
+                          className="px-3 py-1 text-black cursor-pointer shadow-pixel"
+                        >
+                          {persona.name || 'Bilinmeyen'}
+                        </span>
+                      </div>
+                    )
+                  })}
                 </div>
               </motion.div>
             )}
@@ -128,18 +130,7 @@ export default function SquadListDisplay({ squad, isVoted, currentPlayerId, canV
               <div className="flex flex-col">
                 <PersonaSelect
                   name={`ratings.${roster.id}.persona`}
-                  options={
-                    [
-                      {
-                        label: 'Personas',
-                        options: persona?.map(persona => ({
-                          value: persona.id,
-                          label: persona.name,
-                          category: persona.category
-                        }))
-                      }
-                    ] as any
-                  }
+                  options={groupedOptions as any}
                   isMulti
                   value={selectedPersonas[roster.id] || []}
                   onChange={selectedOptions => handlePersonaChange(roster.id, selectedOptions)}
