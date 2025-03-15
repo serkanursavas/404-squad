@@ -17,6 +17,18 @@ export interface TopPlayer {
   surname: string
   rating?: number // Optional, sadece en iyi rating listesi için kullanılır
   goalCount?: number // Optional, sadece en iyi golcü listesi için kullanılır
+  gameCount?: number // Optional, sadece en iyi golcü listesi için kullanılır
+  formScore?: number // Optional, sadece en iyi form listesi için kullanılır
+  last5AvgRating?: number // Optional, sadece en iyi form listesi için kullanılır
+  avgRatingChange?: number // Optional, sadece en iyi form listesi için kullanılır
+}
+
+export interface TopScorer {
+  playerId: number
+  name: string
+  surname: string
+  goalCount?: number // Optional, sadece en iyi golcü listesi için kullanılır
+  gameCount?: number // Optional, sadece en iyi golcü listesi için kullanılır
 }
 
 const addGoals = async (goalsData: GoalsUpdate): Promise<any> => {

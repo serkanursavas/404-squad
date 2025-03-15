@@ -22,6 +22,7 @@ import AdminRoute from '../components/AdminRoute'
 import PublicRoute from '../components/PublicRoute'
 import AccountSettings from '../pages/AccountSettings'
 import PersonaInfo from '../pages/PersonaInfo'
+import Highlights from '../pages/Highlights'
 
 const routes = createBrowserRouter([
   {
@@ -52,6 +53,10 @@ const routes = createBrowserRouter([
       {
         path: 'players',
         element: <AllPlayers />
+      },
+      {
+        path: 'highlights',
+        element: <Highlights />
       },
       {
         path: 'persona-info',

@@ -11,6 +11,7 @@ import { RootState } from '../store'
 import unknownPicture from '../assets/images/unknown-player.png'
 import PixelSpinner from '../components/ui/PixelSpinner'
 import { Crown, Trophy, Medal } from 'lucide-react' // Lucide ikonları örnek olarak eklendi
+import PlayerRatingChart from '../components/profile/PlayerRatingLineChart'
 
 export default function Profile() {
   const { id } = useParams()
@@ -30,6 +31,8 @@ export default function Profile() {
   })
 
   useEffect(() => {
+    console.log('Player from Redux:', playerFromRedux)
+
     window.scrollTo(0, 0)
     if (playerFromRedux) {
       setPlayer(playerFromRedux)
@@ -95,17 +98,17 @@ export default function Profile() {
 
   return (
     <motion.div
-      className="relative flex flex-col items-center justify-center space-y-6"
+      className="relative flex flex-col items-center justify-center space-y-6 "
       initial="hidden"
       animate="visible"
       variants={containerVariants}
     >
       {/* Resim Bölümü */}
       <motion.div
-        className={`relative flex flex-col items-center w-full px-12 pt-16 ${!player?.active ? 'grayscale ' : ''}`}
+        className={`relative flex flex-col items-center w-full px-12 pt-8 ${!player?.active ? 'grayscale ' : ''}`}
         variants={itemVariants}
       >
-        <div className="absolute w-screen h-full -mt-20 bg-gradient-to-t from-primary to-neutral opacity-80"></div>
+        <div className="absolute w-screen h-full -mt-12 bg-gradient-to-t from-primary to-neutral opacity-80"></div>
         <motion.img
           src={unknownPicture}
           className={`z-10 w-56 ${!player?.active ? '' : ''}`}
@@ -123,6 +126,8 @@ export default function Profile() {
           {player?.name} {player?.surname}
         </motion.div>
       </motion.div>
+
+      <PlayerRatingChart ratings={player?.last5GameRating?.map(rating => Number(rating)).reverse() || []} />
 
       {/* Persona Rozetleri */}
       <div className="flex flex-col items-center justify-center w-full gap-3 p-4">

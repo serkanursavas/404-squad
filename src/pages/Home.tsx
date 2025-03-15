@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion'
 import Banner from '../components/match/Banner'
-import TopLists from '../components/player-lists/TopLists'
 import ballIcon from '../assets/icons/ball.png'
 import ratingIcon from '../assets/icons/coin.svg'
 import MvpCard from '../components/player-lists/MvpCard'
@@ -10,12 +9,14 @@ import { RootState } from '../store'
 import useTopLists from '../hooks/useTopLists'
 import usePlayer from '../hooks/usePlayers'
 import PixelSpinner from '../components/ui/PixelSpinner'
+import TopScorerList from '../components/player-lists/TopScorerList'
+import FormTrendList from '../components/player-lists/FormTrendList'
 
 export default function Home() {
   useMatches(false, true)
   const reduxNextMatch = useSelector((state: RootState) => state.matches.nextMatch)
 
-  const { topScorers, topRatedPlayers } = useTopLists()
+  const { topScorers, topRatedPlayers, topFormPlayers } = useTopLists()
   const { mvpData } = usePlayer()
 
   if (!reduxNextMatch || !topScorers || !topRatedPlayers || !mvpData) {
@@ -62,7 +63,7 @@ export default function Home() {
 
       {topScorers && topScorers.length > 0 && (
         <motion.div variants={itemVariants}>
-          <TopLists
+          <TopScorerList
             title="Top Scorer"
             statisticLabel="Goal"
             watermark={ballIcon}
@@ -71,13 +72,13 @@ export default function Home() {
         </motion.div>
       )}
 
-      {topRatedPlayers && topRatedPlayers.length > 0 && (
+      {topFormPlayers && topFormPlayers.length > 0 && (
         <motion.div variants={itemVariants}>
-          <TopLists
-            title="Top Rating"
+          <FormTrendList
+            title="Form Trend"
             statisticLabel="Form"
             watermark={ratingIcon}
-            playersData={topRatedPlayers}
+            playersData={topFormPlayers}
           />
         </motion.div>
       )}
