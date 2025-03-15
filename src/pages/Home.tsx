@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import Banner from '../components/match/Banner'
 import ballIcon from '../assets/icons/ball.png'
-import ratingIcon from '../assets/icons/coin.svg'
+import trendIcon from '../assets/icons/trend.svg'
 import MvpCard from '../components/player-lists/MvpCard'
 import useMatches from '../hooks/useMatches'
 import { useSelector } from 'react-redux'
@@ -77,7 +77,7 @@ export default function Home() {
           <FormTrendList
             title="Form Trend"
             statisticLabel="Form"
-            watermark={ratingIcon}
+            watermark={trendIcon}
             playersData={topFormPlayers}
           />
         </motion.div>

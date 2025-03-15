@@ -2,6 +2,9 @@ import { motion } from 'framer-motion'
 import LegendaryDuosList from '../components/player-lists/LegendaryDuosList'
 import useTopLists from '../hooks/useTopLists'
 import ballIcon from '../assets/icons/ball.png'
+import ratingIcon from '../assets/icons/coin.svg'
+import linkIcon from '../assets/icons/link.svg'
+import swordsIcon from '../assets/icons/swords.svg'
 import TopScorerDetailList from '../components/player-lists/TopScorerDetailList'
 import TopRatingDetailList from '../components/player-lists/TopRatingDetailList'
 import RivalDuosList from '../components/player-lists/RivalDuosList'
@@ -41,7 +44,7 @@ export default function Highlights() {
           <TopRatingDetailList
             title="Top Rating"
             statisticLabel="Rating"
-            watermark={ballIcon}
+            watermark={ratingIcon}
             playersData={topRatedPlayers}
           />
         </motion.div>
@@ -64,7 +67,7 @@ export default function Highlights() {
           <LegendaryDuosList
             title="Legendary Duos"
             statisticLabel="Games Together"
-            watermark={ballIcon}
+            watermark={linkIcon}
             playersData={legendaryDuos}
           />
         </motion.div>
@@ -75,7 +78,7 @@ export default function Highlights() {
           <RivalDuosList
             title="Rival Duos"
             statisticLabel="Games Against"
-            watermark={ballIcon}
+            watermark={swordsIcon}
             playersData={rivalDuos}
           />
         </motion.div>

@@ -15,7 +15,10 @@ interface TopRatingDetailListProps {
 export default function TopRatingDetailList({ title, statisticLabel, watermark, playersData }: TopRatingDetailListProps) {
   return (
     <div className="relative py-4 overflow-hidden bg-white ">
-      <Watermark watermarkIcon={watermark} />
+      <Watermark
+        watermarkIcon={watermark}
+        watermarksCount={10}
+      />
       <div className="flex items-center justify-between px-4">
         <h2 className="text-xl text-primary">{title}</h2>
       </div>

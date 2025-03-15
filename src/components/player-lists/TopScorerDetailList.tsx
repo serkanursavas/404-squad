@@ -15,7 +15,11 @@ interface TopScorerDetailListProps {
 export default function TopScorerDetailList({ title, statisticLabel, watermark, playersData }: TopScorerDetailListProps) {
   return (
     <div className="relative py-4 overflow-hidden bg-white ">
-      <Watermark watermarkIcon={watermark} />
+      <Watermark
+        watermarkIcon={watermark}
+        watermarksCount={10}
+        rotate
+      />
       <div className="flex items-center justify-between px-4">
         <h2 className="text-xl text-primary">{title}</h2>
       </div>
