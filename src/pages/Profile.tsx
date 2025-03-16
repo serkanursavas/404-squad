@@ -11,7 +11,6 @@ import { RootState } from '../store'
 import unknownPicture from '../assets/images/unknown-player.png'
 import PixelSpinner from '../components/ui/PixelSpinner'
 import { Crown, Trophy, Medal } from 'lucide-react' // Lucide ikonları örnek olarak eklendi
-import PlayerRatingChart from '../components/profile/PlayerRatingLineChart'
 
 export default function Profile() {
   const { id } = useParams()
@@ -82,7 +81,7 @@ export default function Profile() {
   const iconColors = ['#E63946', '#FFA500', '#1D3557', '#2A9D8F']
 
   // const [openIndex, setOpenIndex] = useState<number | null>(null) // Açılan persona'yı takip eden state
-  const containerRef = useRef<HTMLDivElement>(null) // Div'in referansını alıyoruz
+  // const containerRef = useRef<HTMLDivElement>(null) // Div'in referansını alıyoruz
 
   // Sayfanın herhangi bir yerine tıklanınca açıklamayı kapat
   // useEffect(() => {
@@ -145,11 +144,11 @@ export default function Profile() {
         </motion.div>
       </motion.div>
 
-      <PlayerRatingChart ratings={player?.last5GameRating?.map(rating => Number(rating)).reverse() || []} />
+      {/* <PlayerRatingChart ratings={player?.last5GameRating?.map(rating => Number(rating)).reverse() || []} /> */}
 
       {/* Persona Rozetleri */}
       <div
-        ref={containerRef}
+        // ref={containerRef}
         className="flex flex-col items-center justify-center w-full gap-3 p-4"
       >
         {player?.personas?.slice(0, 3).map((persona, index) => {
