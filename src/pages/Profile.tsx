@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import playerRaiting from '../assets/icons/starAlt.svg'
 import playerPosition from '../assets/icons/position.svg'
 import PlayerInfoItem from '../components/profile/PlayerInfoItem'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import playerService, { Player } from '../services/playerService'
 import { useQuery } from '@tanstack/react-query'
 import { useSelector } from 'react-redux'
@@ -80,22 +80,22 @@ export default function Profile() {
   // Her arka plan rengine uygun ikon renkleri
   const iconColors = ['#E63946', '#FFA500', '#1D3557', '#2A9D8F']
 
-  // const [openIndex, setOpenIndex] = useState<number | null>(null) // Açılan persona'yı takip eden state
-  // const containerRef = useRef<HTMLDivElement>(null) // Div'in referansını alıyoruz
+  const [openIndex, setOpenIndex] = useState<number | null>(null) // Açılan persona'yı takip eden state
+  const containerRef = useRef<HTMLDivElement>(null) // Div'in referansını alıyoruz
 
   // Sayfanın herhangi bir yerine tıklanınca açıklamayı kapat
-  // useEffect(() => {
-  //   function handleClickOutside(event: MouseEvent) {
-  //     if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
-  //       setOpenIndex(null) // Dışarı tıklanınca kapat
-  //     }
-  //   }
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+        setOpenIndex(null) // Dışarı tıklanınca kapat
+      }
+    }
 
-  //   document.addEventListener('mousedown', handleClickOutside) // Tıklama olayını dinle
-  //   return () => {
-  //     document.removeEventListener('mousedown', handleClickOutside) // Temizle
-  //   }
-  // }, [])
+    document.addEventListener('mousedown', handleClickOutside) // Tıklama olayını dinle
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside) // Temizle
+    }
+  }, [])
 
   // İkonlar dinamik renklerle tanımlandı
   const icons = [
@@ -148,13 +148,13 @@ export default function Profile() {
 
       {/* Persona Rozetleri */}
       <div
-        // ref={containerRef}
+        ref={containerRef}
         className="flex flex-col items-center justify-center w-full gap-3 p-4"
       >
         {player?.personas?.slice(0, 3).map((persona, index) => {
           const scaleValue = 1 - index * 0.05 // Her index için %5 küçültme
           const delay = index * 0.2 // Her element için gecikme süresi
-          // const isOpen = openIndex === index // Sadece tıklanan persona'nın açıklaması açılacak
+          const isOpen = openIndex === index // Sadece tıklanan persona'nın açıklaması açılacak
 
           return (
             <div
@@ -183,7 +183,7 @@ export default function Profile() {
               </motion.div>
 
               {/* Tooltip Açıklama (Sadece tıklanan persona için açılacak) */}
-              {/* {isOpen && (
+              {isOpen && (
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -193,7 +193,7 @@ export default function Profile() {
                 >
                   <p>{persona.personaDescription || 'Açıklama bulunmuyor.'}</p>
                 </motion.div>
-              )} */}
+              )}
             </div>
           )
         })}
