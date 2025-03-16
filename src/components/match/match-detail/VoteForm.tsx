@@ -59,6 +59,22 @@ export default function VoteForm({ squad, currentPlayerId }: VoteFormProps) {
     }))
   }
 
+  const groupedOptions = persona
+    ?.reduce((acc, p) => {
+      let group = acc.find(g => g.category === p.category)
+      if (!group) {
+        group = { category: p.category, items: [] }
+        acc.push(group)
+      }
+      group.items.push({ value: p.id, label: p.name, category: p.category })
+      return acc
+    }, [] as { category: string; items: { value: number; label: string; category: string }[] }[])
+    .map(group => ({
+      ...group,
+      items: group.items.sort((a, b) => a.label.localeCompare(b.label)) // Alfabetik sıralama
+    }))
+    .flatMap(g => g.items) // Sonuç olarak düz bir liste elde ediyoruz
+
   return (
     <Formik
       initialValues={{
@@ -144,18 +160,7 @@ export default function VoteForm({ squad, currentPlayerId }: VoteFormProps) {
               {currentPlayerId !== roster.playerId && (
                 <PersonaSelect
                   name={`ratings.${roster.id}.persona`}
-                  options={
-                    [
-                      {
-                        label: 'Personas',
-                        options: persona?.map(persona => ({
-                          value: persona.id,
-                          label: persona.name,
-                          category: persona.category
-                        }))
-                      }
-                    ] as any
-                  }
+                  options={groupedOptions as any}
                   isMulti
                   value={selectedPersonas[roster.id] || []}
                   onChange={selectedOptions => handlePersonaChange(roster.id, selectedOptions)}

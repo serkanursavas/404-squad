@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import playerRaiting from '../assets/icons/starAlt.svg'
 import playerPosition from '../assets/icons/position.svg'
 import PlayerInfoItem from '../components/profile/PlayerInfoItem'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import playerService, { Player } from '../services/playerService'
 import { useQuery } from '@tanstack/react-query'
 import { useSelector } from 'react-redux'
@@ -81,6 +81,23 @@ export default function Profile() {
   // Her arka plan rengine uygun ikon renkleri
   const iconColors = ['#E63946', '#FFA500', '#1D3557', '#2A9D8F']
 
+  const [openIndex, setOpenIndex] = useState<number | null>(null) // Açılan persona'yı takip eden state
+  const containerRef = useRef<HTMLDivElement>(null) // Div'in referansını alıyoruz
+
+  // Sayfanın herhangi bir yerine tıklanınca açıklamayı kapat
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+        setOpenIndex(null) // Dışarı tıklanınca kapat
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside) // Tıklama olayını dinle
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside) // Temizle
+    }
+  }, [])
+
   // İkonlar dinamik renklerle tanımlandı
   const icons = [
     <Crown
@@ -131,31 +148,54 @@ export default function Profile() {
       <PlayerRatingChart ratings={player?.last5GameRating?.map(rating => Number(rating)).reverse() || []} />
 
       {/* Persona Rozetleri */}
-      <div className="flex flex-col items-center justify-center w-full gap-3 p-4">
+      <div
+        ref={containerRef}
+        className="flex flex-col items-center justify-center w-full gap-3 p-4"
+      >
         {player?.personas?.slice(0, 3).map((persona, index) => {
           const scaleValue = 1 - index * 0.05 // Her index için %5 küçültme
           const delay = index * 0.2 // Her element için gecikme süresi
+          const isOpen = openIndex === index // Sadece tıklanan persona'nın açıklaması açılacak
 
           return (
-            <motion.div
+            <div
               key={index}
-              className="flex flex-row items-center justify-start w-full h-10 px-4 text-center border-2 border-indigo-400 shadow-pixel"
-              initial={{ opacity: 0, scale: 0.5 }}
-              animate={{ opacity: 1, scale: scaleValue }}
-              transition={{
-                duration: 0.6,
-                delay: delay, // Her element için farklı bir başlangıç gecikmesi
-                type: 'spring'
-              }}
-              style={{
-                backgroundColor: categoryColors[persona.category] || '#ffffff'
-              }}
+              className="relative w-full"
             >
-              {/* Sıra simgesi */}
-              <div className="flex items-center justify-center w-6 h-6 mr-3 ">{icons[index]}</div>
-              {/* Persona ismi */}
-              <span className="text-xs font-bold text-black">{persona.personaName}</span>
-            </motion.div>
+              {/* Persona Rozeti */}
+              <motion.div
+                className="flex flex-row items-center justify-start w-full h-10 px-4 text-center border-2 border-indigo-400 cursor-pointer shadow-pixel"
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{ opacity: 1, scale: scaleValue }}
+                transition={{
+                  duration: 0.6,
+                  delay: delay,
+                  type: 'spring'
+                }}
+                style={{
+                  backgroundColor: categoryColors[persona.category] || '#ffffff'
+                }}
+                onClick={() => setOpenIndex(isOpen ? null : index)} // Aç/Kapat işlemi
+              >
+                {/* Sıra simgesi */}
+                <div className="flex items-center justify-center w-6 h-6 mr-3">{icons[index]}</div>
+                {/* Persona ismi */}
+                <span className="text-xs font-bold text-black">{persona.personaName}</span>
+              </motion.div>
+
+              {/* Tooltip Açıklama (Sadece tıklanan persona için açılacak) */}
+              {isOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.3 }}
+                  className="absolute left-0 z-40 w-64 p-2 mt-2 text-xs text-white bg-[#4B5563] border border-gray-500 rounded shadow-lg"
+                >
+                  <p>{persona.personaDescription || 'Açıklama bulunmuyor.'}</p>
+                </motion.div>
+              )}
+            </div>
           )
         })}
       </div>
