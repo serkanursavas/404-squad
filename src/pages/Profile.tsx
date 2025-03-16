@@ -15,6 +15,7 @@ import PlayerRatingChart from '../components/profile/PlayerRatingLineChart'
 
 export default function Profile() {
   const { id } = useParams()
+
   const [player, setPlayer] = useState<Player | null>(null)
   const { players } = useSelector((state: RootState) => state.players)
 
