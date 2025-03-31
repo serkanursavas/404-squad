@@ -105,7 +105,6 @@ const getTopRatedPlayers = async (): Promise<TopPlayer[]> => {
 const getTopFormPlayers = async (): Promise<FormTrend[]> => {
   try {
     const response = await axiosInstance.get('/players/getTopFormPlayers')
-    console.log(response.data)
 
     return response.data
   } catch (error: any) {
@@ -120,7 +119,6 @@ const getTopFormPlayers = async (): Promise<FormTrend[]> => {
 const getLegendaryDuos = async (): Promise<LegendaryDuos[]> => {
   try {
     const response = await axiosInstance.get('/players/getLegendaryDuos')
-    console.log(response.data)
 
     return response.data
   } catch (error: any) {
@@ -135,7 +133,6 @@ const getLegendaryDuos = async (): Promise<LegendaryDuos[]> => {
 const getRivalDuos = async (): Promise<RivalDuos[]> => {
   try {
     const response = await axiosInstance.get('/players/getRivalDuos')
-    console.log(response.data)
 
     return response.data
   } catch (error: any) {

@@ -41,6 +41,8 @@ export function useMatchFormLogic() {
     if (isEditMode) {
       const updatedMatchData = createUpdatedMatchRequest(values, rosters)
 
+      console.log(updatedMatchData)
+
       updateMatch({ id: Number(updatedMatchData.id), updateMatchData: updatedMatchData })
     } else {
       const convertedMatchData = convertFormDataToMatchRequest(values)

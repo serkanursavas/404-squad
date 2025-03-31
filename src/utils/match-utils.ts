@@ -92,11 +92,12 @@ export function activePlayersToSelectOptions(players: Player[]): SelectOption[] 
 }
 
 export const createUpdatedMatchRequest = (values: MatchFormData, rosters: Roster[]): UpdateMatchRequest => {
-  const whiteTeamSize = values.whiteTeam.length
+  const whiteRosters = rosters.filter(r => r.teamColor === 'WHITE')
+  const blackRosters = rosters.filter(r => r.teamColor === 'BLACK')
 
   const updatedRosters = [
     ...values.whiteTeam.map((playerId, index) => {
-      const originalRoster = rosters.find((r, i) => r.teamColor === 'WHITE' && i === index)
+      const originalRoster = whiteRosters[index]
 
       return {
         playerId: Number(playerId),
@@ -105,7 +106,7 @@ export const createUpdatedMatchRequest = (values: MatchFormData, rosters: Roster
       }
     }),
     ...values.blackTeam.map((playerId, index) => {
-      const originalRoster = rosters.find((r, i) => r.teamColor === 'BLACK' && i === index + whiteTeamSize)
+      const originalRoster = blackRosters[index]
 
       return {
         playerId: Number(playerId),
