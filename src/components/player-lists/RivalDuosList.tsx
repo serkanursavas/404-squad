@@ -29,7 +29,10 @@ export default function RivalDuosList({ title, statisticLabel, watermark, player
       <>
         {playersData.slice(0, 5).map(player => {
           return (
-            <div className="mr-4 border-b cursor-pointer border-l-neutral-dark last:border-b-0">
+            <div
+              key={player.player1Id}
+              className="mr-4 border-b cursor-pointer border-l-neutral-dark last:border-b-0"
+            >
               <div className={`flex justify-between py-2 mt-2 text-xs space-x-4 `}>
                 <div className="grid justify-center w-3/4 grid-cols-7">
                   <span
@@ -43,9 +46,9 @@ export default function RivalDuosList({ title, statisticLabel, watermark, player
                   </div>
                   <span
                     onClick={() => navigate(`/profile/${player.player2Id}`)}
-                    className="flex items-center justify-center col-span-3 "
+                    className="flex items-center justify-center col-span-3"
                   >
-                    <span className="font-thin">{player.player2Name}</span>
+                    <span className="font-thin text-center">{player.player2Name}</span>
                   </span>
                 </div>
                 <div className="flex items-center space-x-2 ">

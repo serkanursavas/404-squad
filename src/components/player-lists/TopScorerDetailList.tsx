@@ -34,7 +34,10 @@ export default function TopScorerDetailList({ title, statisticLabel, watermark, 
       <>
         {playersData.slice(0, 10).map(player => {
           return (
-            <div className="mr-4 border-b cursor-pointer border-l-neutral-dark last:border-b-0">
+            <div
+              key={player.playerId}
+              className="mr-4 border-b cursor-pointer border-l-neutral-dark last:border-b-0"
+            >
               <div className={`flex justify-between py-2 pl-4 mt-2 text-xs `}>
                 <span className="flex items-center space-x-2">
                   <Icons src={userIcon} />

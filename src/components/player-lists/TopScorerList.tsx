@@ -39,6 +39,7 @@ export default function TopScorerList({ title, statisticLabel, watermark, player
         {playersData.slice(0, 5).map(player => {
           return (
             <div
+              key={player.playerId}
               onClick={() => navigate(`/profile/${player.playerId}`)}
               className="mr-4 border-b cursor-pointer border-l-neutral-dark last:border-b-0"
             >
