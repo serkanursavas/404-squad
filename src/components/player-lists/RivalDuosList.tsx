@@ -37,7 +37,7 @@ export default function RivalDuosList({ title, statisticLabel, watermark, player
                 <div className="grid justify-center w-3/4 grid-cols-7">
                   <span
                     onClick={() => navigate(`/profile/${player.player1Id}`)}
-                    className="flex items-center justify-center col-span-3 "
+                    className="flex items-center justify-center col-span-3 text-center "
                   >
                     <span className="font-thin">{player.player1Name}</span>
                   </span>

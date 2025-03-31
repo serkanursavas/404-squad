@@ -3,6 +3,7 @@ import Watermark from '../ui/Watermark'
 import userIcon from '../../assets/icons/user.svg'
 import Icons from '../ui/Icons'
 import { TopRated } from '../../services/playerService'
+import { useNavigate } from 'react-router-dom'
 
 interface TopRatingDetailListProps {
   title: string
@@ -13,6 +14,8 @@ interface TopRatingDetailListProps {
 }
 
 export default function TopRatingDetailList({ title, statisticLabel, watermark, playersData }: TopRatingDetailListProps) {
+  const navigate = useNavigate()
+
   return (
     <div className="relative py-4 overflow-hidden bg-white ">
       <Watermark
@@ -36,10 +39,13 @@ export default function TopRatingDetailList({ title, statisticLabel, watermark, 
           return (
             <div
               key={player.playerId}
-              className="mr-4 border-b cursor-pointer border-l-neutral-dark last:border-b-0"
+              className="mr-4 border-b cursor-pointer border-l-neutral-dark last:border-b-0 "
             >
               <div className={`flex justify-between py-2 pl-4 mt-2 text-xs `}>
-                <span className="flex items-center space-x-2">
+                <span
+                  className="flex items-center space-x-2 "
+                  onClick={() => navigate(`/profile/${player.playerId}`)}
+                >
                   <Icons src={userIcon} />
                   <span className="font-thin">{player.name.split(' ')[0][0] + '.' + player.surname}</span>
                 </span>
