@@ -17,6 +17,7 @@ import { Crown, Medal, Trophy, FileText } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { RootState } from '../store'
 import { useSelector } from 'react-redux'
+import useAuth from '../hooks/useAuth'
 
 export default function MatchDetails() {
   const { id } = useParams<{ id: string }>()
@@ -28,6 +29,10 @@ export default function MatchDetails() {
   const match = useMatchDetails(Number(id))
 
   const { hasVoted } = useSelector((state: RootState) => state.auth)
+  const { user } = useAuth()
+
+  const inMatch: boolean = !!match?.rosters?.some(player => player.playerId === user?.id)
+  const canPersonaVote = match?.played && !hasVoted && !match?.voted && inMatch
 
   useEffect(() => {
     if (match && match.rosters) {
@@ -117,7 +122,7 @@ export default function MatchDetails() {
       )}
 
       {/* persona infolari ile ilgili bir uyari mesaji ve persona detaylarina yonlendiren bir buton ekleyebilirsin */}
-      {!hasVoted && match.played && !match.voted && (
+      {canPersonaVote && (
         <motion.div
           className="flex items-center justify-center px-3 py-2 mt-4 space-y-2 text-xs text-red-500 bg-gray-900 border-2 border-red-500 shadow-pixel"
           variants={itemVariants}
@@ -156,12 +161,14 @@ export default function MatchDetails() {
           squad={homeTeamSquad}
           played={match.played}
           isVotingClosed={match.voted}
+          canPersonaVote={canPersonaVote ?? false}
         />
         <SquadList
           teamLogo={awayTeamLogo}
           squad={awayTeamSquad}
           played={match.played}
           isVotingClosed={match.voted}
+          canPersonaVote={canPersonaVote ?? false}
         />
       </motion.div>
     </motion.div>
