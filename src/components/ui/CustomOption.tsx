@@ -17,7 +17,7 @@ const CustomOption = (props: any) => {
           <Tooltip
             content={data.description}
             position="left"
-            width="64"
+            width="56"
           >
             <button
               type="button"

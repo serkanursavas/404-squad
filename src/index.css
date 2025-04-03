@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  @media (max-width: 374px) {
+    .text-xs-se {
+      @apply text-sm;
+    }
+
+    .space-y-se {
+      @apply space-y-1;
+    }
+  }
+}
+
 body {
   @apply font-sans;
 }

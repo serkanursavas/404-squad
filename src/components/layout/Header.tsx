@@ -5,11 +5,10 @@ import { Link } from 'react-router-dom'
 import { useRef, useState, useEffect } from 'react'
 
 interface Props {
-  toggleMobileMenu: () => void
   isOpen: boolean
 }
 
-export default function Header({ toggleMobileMenu, isOpen }: Props) {
+export default function Header({ isOpen }: Props) {
   const headerRef = useRef<HTMLDivElement>(null)
   const [headerHeight, setHeaderHeight] = useState(0)
 
@@ -42,7 +41,7 @@ export default function Header({ toggleMobileMenu, isOpen }: Props) {
     <>
       <div
         ref={headerRef}
-        className={`fixed mb-6 z-30  flex items-center justify-between w-full px-8 py-4 ${headerBgClass}`}
+        className={`fixed mb-6 flex z-30 items-center justify-between w-full px-8 py-4 ${headerBgClass}`}
       >
         <img
           src={notiIcon}
@@ -59,12 +58,7 @@ export default function Header({ toggleMobileMenu, isOpen }: Props) {
             width={80}
           />
         </Link>
-        <button
-          className="relative z-20"
-          onClick={toggleMobileMenu}
-        >
-          <div id={isOpen ? 'hamburger-close' : 'hamburger-button'}></div>
-        </button>
+        <div></div>
       </div>
 
       {/* Header yüksekliği kadar boşluk ekle */}
