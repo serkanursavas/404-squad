@@ -6,8 +6,9 @@ import { RootState } from '../../../store'
 import { useSelector } from 'react-redux'
 import PersonaSelect from '../../ui/PersonaSelect'
 import { useState } from 'react'
-import { Trophy } from 'lucide-react' // Lucide ikonları örnek olarak eklendi
+import { Trophy, ClipboardCheck } from 'lucide-react' // Lucide ikonları örnek olarak eklendi
 import { motion } from 'framer-motion'
+import Tooltip from '../../../utils/Tooltip'
 
 interface SquadListDisplayProps {
   squad: Roster[]
@@ -57,9 +58,9 @@ export default function SquadListDisplay({ squad, isVoted, currentPlayerId, canV
         group = { category: p.category, items: [] }
         acc.push(group)
       }
-      group.items.push({ value: p.id, label: p.name, category: p.category })
+      group.items.push({ value: p.id, label: p.name, category: p.category, description: p.description })
       return acc
-    }, [] as { category: string; items: { value: number; label: string; category: string }[] }[])
+    }, [] as { category: string; items: { value: number; label: string; category: string; description: string }[] }[])
     .map(group => ({
       ...group,
       items: group.items.sort((a, b) => a.label.localeCompare(b.label)) // Alfabetik sıralama
@@ -74,7 +75,7 @@ export default function SquadListDisplay({ squad, isVoted, currentPlayerId, canV
         return (
           <div
             key={roster.id}
-            className="flex flex-col justify-between p-2 py-3 space-y-1 border-b border-gray-300 cursor-pointer"
+            className={`flex flex-col justify-between p-2 py-3 space-y-1 border-b border-gray-300 cursor-pointer `}
             onClick={() => setIsExpanded(!isExpanded)} // Satıra tıklanınca aç/kapat
           >
             <div className={`flex items-center justify-between px-2 ${!hasVoted && 'py-2'} space-y-1`}>
@@ -96,6 +97,18 @@ export default function SquadListDisplay({ squad, isVoted, currentPlayerId, canV
                   />
                 )}
               </span>
+              {roster.hasVote && !isVoted && (
+                <Tooltip
+                  position="left"
+                  content={'Oy kullanıldı.'}
+                >
+                  <ClipboardCheck
+                    className="w-7 h-7"
+                    style={{ color: '#04764E' }}
+                    strokeWidth={2}
+                  />
+                </Tooltip>
+              )}
             </div>
 
             {isVoted && roster.persona1 && (
@@ -103,22 +116,30 @@ export default function SquadListDisplay({ squad, isVoted, currentPlayerId, canV
                 initial={{ height: 0, opacity: 0 }}
                 animate={{ height: isExpanded ? 'auto' : 0, opacity: isExpanded ? 1 : 0 }}
                 transition={{ duration: 0.3, ease: 'easeInOut' }}
-                className="overflow-hidden"
+                className=""
               >
-                <div className="flex text-[10px] flex-wrap items-center justify-center gap-3 px-2 py-1">
+                <div className="flex text-[10px]  flex-wrap items-center justify-center gap-3 px-2 py-1">
                   {[roster.persona1, roster.persona2, roster.persona3].map(personaId => {
                     if (!personaMap?.[personaId]) return null
                     const persona = personaMap[personaId]
 
                     return (
                       <div className="relative">
-                        {/* Persona İsmi */}
-                        <span
-                          style={{ backgroundColor: categoryColors[persona.category] || '#ddd' }}
-                          className="px-3 py-1 text-black cursor-pointer shadow-pixel"
+                        <Tooltip
+                          position="top"
+                          content={persona.description || 'Açıklama yok'}
                         >
-                          {persona.name || 'Bilinmeyen'}
-                        </span>
+                          {/* Persona İsmi */}
+                          <span
+                            onClick={e => {
+                              e.stopPropagation() // Burada olay yukarı çıkmasın!
+                            }}
+                            style={{ backgroundColor: categoryColors[persona.category] || '#ddd' }}
+                            className="px-3 py-1 text-black cursor-pointer shadow-pixel"
+                          >
+                            {persona.name || 'Bilinmeyen'}
+                          </span>
+                        </Tooltip>
                       </div>
                     )
                   })}

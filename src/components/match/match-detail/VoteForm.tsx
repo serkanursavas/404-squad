@@ -66,9 +66,9 @@ export default function VoteForm({ squad, currentPlayerId }: VoteFormProps) {
         group = { category: p.category, items: [] }
         acc.push(group)
       }
-      group.items.push({ value: p.id, label: p.name, category: p.category })
+      group.items.push({ value: p.id, label: p.name, category: p.category, description: p.description })
       return acc
-    }, [] as { category: string; items: { value: number; label: string; category: string }[] }[])
+    }, [] as { category: string; items: { value: number; label: string; category: string; description: string }[] }[])
     .map(group => ({
       ...group,
       items: group.items.sort((a, b) => a.label.localeCompare(b.label)) // Alfabetik sıralama

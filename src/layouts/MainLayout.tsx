@@ -38,10 +38,16 @@ export default function MainLayout() {
 
   return (
     <div className="flex flex-col min-h-screen bg-neutral">
-      <Header
-        toggleMobileMenu={toggleMobileMenu}
-        isOpen={isOpen}
-      />
+      <Header isOpen={isOpen} />
+
+      {/* Hamburger / Close Button */}
+      <button
+        className="fixed z-50 p-2 rounded-md top-8 right-6 "
+        onClick={toggleMobileMenu}
+      >
+        <div id={isOpen ? 'hamburger-close' : 'hamburger-button'}>{/* buraya ikon gelecek */}</div>
+      </button>
+
       <main className="flex-grow p-2">{isOpen ? <Navigation toggleMobileMenu={toggleMobileMenu} /> : <Outlet />}</main>
       {!isOpen && <Footer />}
     </div>

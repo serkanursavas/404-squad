@@ -47,7 +47,7 @@ export default function Matches() {
 
       <div
         ref={loadMoreRef}
-        className="loading-indicator"
+        className="text-sm font-semibold text-center loading-indicator text-neutral-500"
       >
         {hasNextPage ? 'Loading more matches...' : allMatches.length >= 10 && allMatches.length >= totalCount ? 'No more matches' : ''}
       </div>

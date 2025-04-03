@@ -10,9 +10,10 @@ interface SquadListProps {
   squad: Roster[]
   played: boolean // Maçın oynanıp oynanmadığı
   isVotingClosed: boolean // Maçın oylamaya kalıcı olarak kapalı olup olmadığı
+  canPersonaVote: boolean // Kullanıcının oylama yapıp yapamayacağı
 }
 
-export default function SquadList({ teamLogo, squad, played, isVotingClosed }: SquadListProps) {
+export default function SquadList({ teamLogo, squad, played, isVotingClosed, canPersonaVote }: SquadListProps) {
   const { user } = useAuth()
 
   const currentPlayerId = user?.id ?? 0
@@ -21,8 +22,6 @@ export default function SquadList({ teamLogo, squad, played, isVotingClosed }: S
   const inTeam: boolean = squad?.some(player => player.playerId === currentPlayerId)
 
   const canVote = played && inTeam && !hasVoted && !isVotingClosed
-
-  const canPersonaVote = played && !hasVoted && !isVotingClosed
 
   return (
     <div>

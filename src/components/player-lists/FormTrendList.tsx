@@ -43,6 +43,7 @@ export default function FormTrendList({ title, statisticLabel, watermark, player
 
           return (
             <div
+              key={player.playerId}
               onClick={() => navigate(`/profile/${player.playerId}`)}
               className="mr-4 border-b cursor-pointer border-l-neutral-dark last:border-b-0"
             >

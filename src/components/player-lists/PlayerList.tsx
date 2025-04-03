@@ -15,15 +15,10 @@ export default function PlayerList({ players, seeAll }: PlayerListProp) {
         const { rating } = player
 
         const formattedRating = rating !== undefined && rating !== null ? Number((Math.floor(rating * 10) / 10).toFixed(1)) : 0.0
-        const formattedFormScore =
-          player?.formScore !== undefined && player?.formScore !== null ? Number((Math.floor(player?.formScore * 10) / 10).toFixed(1)) : 0.0
-
         const formattedLast5AvgRating =
           player?.last5AvgRating !== undefined && player?.last5AvgRating !== null
             ? Number((Math.floor(player?.last5AvgRating * 10) / 10).toFixed(1))
             : 0.0
-
-        console.log(formattedFormScore)
 
         return (
           <PlayerListItem

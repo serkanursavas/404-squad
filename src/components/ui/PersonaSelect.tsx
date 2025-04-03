@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import Select, { MultiValue, SingleValue } from 'react-select'
 import { personaSelectCustomStyles } from './SelectStyles'
+import CustomOption from './CustomOption'
 
 // Define types for props
 interface Option {
   value: string | number
   label: string
+  description?: string // 🎯 açıklama buradan gelecek
 }
 
 interface PersonaSelectProps {
@@ -65,12 +67,13 @@ const PersonaSelect: React.FC<PersonaSelectProps> = ({
         placeholder={placeholder}
         styles={personaSelectCustomStyles}
         components={{
+          Option: CustomOption,
           ClearIndicator: customClearIndicator // Çarpı butonunu tamamen kaldırıyoruz
         }}
         menuIsOpen={menuIsOpen} // Menü durumunu kontrol et
         onMenuOpen={handleMenuOpen} // Menü açılma kontrolü
         onMenuClose={handleMenuClose} // Menü kapanma kontrolü
-        isSearchable={!isMaxLimitReached} // Maksimum seçim sınırına ulaşıldığında yazmayı devre dışı bırak
+        isSearchable={false} // Maksimum seçim sınırına ulaşıldığında yazmayı devre dışı bırak
         menuPlacement="auto" // Dinamik olarak yukarı/aşağı açılır
       />
     </div>

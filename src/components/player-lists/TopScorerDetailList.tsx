@@ -3,6 +3,7 @@ import { TopScorer } from '../../services/goalService'
 
 import userIcon from '../../assets/icons/user.svg'
 import Icons from '../ui/Icons'
+import { useNavigate } from 'react-router-dom'
 
 interface TopScorerDetailListProps {
   title: string
@@ -13,6 +14,8 @@ interface TopScorerDetailListProps {
 }
 
 export default function TopScorerDetailList({ title, statisticLabel, watermark, playersData }: TopScorerDetailListProps) {
+  const navigate = useNavigate()
+
   return (
     <div className="relative py-4 overflow-hidden bg-white ">
       <Watermark
@@ -34,9 +37,15 @@ export default function TopScorerDetailList({ title, statisticLabel, watermark, 
       <>
         {playersData.slice(0, 10).map(player => {
           return (
-            <div className="mr-4 border-b cursor-pointer border-l-neutral-dark last:border-b-0">
+            <div
+              key={player.playerId}
+              className="mr-4 border-b cursor-pointer border-l-neutral-dark last:border-b-0"
+            >
               <div className={`flex justify-between py-2 pl-4 mt-2 text-xs `}>
-                <span className="flex items-center space-x-2">
+                <span
+                  className="flex items-center space-x-2"
+                  onClick={() => navigate(`/profile/${player.playerId}`)}
+                >
                   <Icons src={userIcon} />
                   <span className="font-thin">{player.name.split(' ')[0][0] + '.' + player.surname}</span>
                 </span>

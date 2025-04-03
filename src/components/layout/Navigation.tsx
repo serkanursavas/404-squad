@@ -40,8 +40,8 @@ export default function Navigation({ toggleMobileMenu }: Props) {
 
   return (
     <div>
-      <div className="absolute top-0 left-0 z-20 flex flex-col items-center justify-center w-screen h-full overflow-hidden text-xl md:text-3xl bg-primary overscroll-none touch-none">
-        <ul className="space-y-4 md:space-y-10">
+      <div className="absolute top-0 left-0 z-40 flex flex-col items-center justify-center w-screen h-full overflow-hidden text-lg text-xs-se md:text-3xl bg-primary overscroll-none touch-none">
+        <ul className="space-y-4 space-y-se md:space-y-10">
           {filteredNavLinks.map(navLink => {
             return (
               <li key={navLink.to}>
@@ -65,7 +65,7 @@ export default function Navigation({ toggleMobileMenu }: Props) {
           <div>
             <button
               onClick={handleLogout}
-              className="flex w-full items-center border-2 border-black justify-center px-4 py-2 mt-10 text-lg font-semibold tracking-[0.5rem] text-white transition duration-300 bg-red-600 hover:bg-red-700 active:scale-95 shadow-pixel"
+              className="flex w-full text-xs-se items-center border-2 border-black justify-center px-4 py-2 mt-10 text-lg font-semibold tracking-[0.5rem] text-white transition duration-300 bg-red-600 hover:bg-red-700 active:scale-95 shadow-pixel"
             >
               LOGOUT
             </button>

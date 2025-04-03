@@ -38,6 +38,7 @@ export interface Roster {
   persona1: number
   persona2: number
   persona3: number
+  hasVote: boolean
 }
 
 export interface CreateMatchRoster {
