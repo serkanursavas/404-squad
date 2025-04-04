@@ -4,6 +4,7 @@ import { createContext, useContext, useState, ReactNode, Dispatch, SetStateActio
 interface PersonasContextType {
   selectedPersonas: Record<number, any[]> // Oyuncu ID'sine göre seçilen personas
   setSelectedPersonas: Dispatch<SetStateAction<Record<number, any[]>>> // State güncelleme fonksiyonu
+  usedSpecialPersonas: number[] // MVP gibi özel kişiliklerin id veya label'ları
 }
 
 // React Context oluştur
@@ -13,7 +14,12 @@ const PersonasContext = createContext<PersonasContextType | undefined>(undefined
 export const PersonasProvider = ({ children }: { children: ReactNode }) => {
   const [selectedPersonas, setSelectedPersonas] = useState<Record<number, any[]>>({}) // State
 
-  return <PersonasContext.Provider value={{ selectedPersonas, setSelectedPersonas }}>{children}</PersonasContext.Provider>
+  const usedSpecialPersonas: number[] = Object.values(selectedPersonas)
+    .flat()
+    .filter(p => p.category === 'special')
+    .map(p => p.value) // Burada .value number olmalı!
+
+  return <PersonasContext.Provider value={{ selectedPersonas, setSelectedPersonas, usedSpecialPersonas }}>{children}</PersonasContext.Provider>
 }
 
 // Custom Hook: Context'e güvenli erişim sağlamak için

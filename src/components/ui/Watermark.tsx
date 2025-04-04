@@ -5,6 +5,8 @@ interface WatermarkProps {
   watermarksCount?: number
   customOpacity?: boolean
   rotate?: boolean
+  customMinSize?: number
+  customMaxSize?: number
 }
 
 const getRandomPosition = () => ({
@@ -12,17 +14,24 @@ const getRandomPosition = () => ({
   left: Math.random() * 100
 })
 
-const getRandomSize = () => Math.random() * 55 + 35
-
 const getRandomOpacity = () => Math.random()
 
 export default function Watermark({
   watermarkIcon,
   watermarksCount = 5,
   customOpacity = false,
-  rotate = false
+  rotate = false,
+  customMaxSize,
+  customMinSize
 }: WatermarkProps) {
   const [watermarks, setWatermarks] = useState<{ top: number; left: number; size: number; opacity: number }[]>([])
+
+  // const getRandomSize = () => Math.random() * 55 + 35
+  const getRandomSize = () => {
+    const minSize = customMinSize || 35
+    const maxSize = customMaxSize || 55
+    return Math.random() * maxSize + minSize
+  } // 35 ile 90 arasında rastgele boyut
 
   useEffect(() => {
     const newWatermarks = Array.from({ length: watermarksCount }).map(() => ({
