@@ -9,12 +9,15 @@ import { useState } from 'react'
 import { Trophy, ClipboardCheck } from 'lucide-react' // Lucide ikonları örnek olarak eklendi
 import { motion } from 'framer-motion'
 import Tooltip from '../../../utils/Tooltip'
+import Watermark from '../../ui/Watermark'
+import starIcon from '../../../assets/icons/starAlt.svg'
 
 interface SquadListDisplayProps {
   squad: Roster[]
   isVoted: boolean
   currentPlayerId: number
   canVote: boolean
+  mvpId?: number // MVP ID'sini ekledik
 }
 
 const categoryColors: Record<string, string> = {
@@ -27,7 +30,7 @@ const categoryColors: Record<string, string> = {
   teknik: '#fef08a' // Daha soft sarı
 }
 
-export default function SquadListDisplay({ squad, isVoted, currentPlayerId, canVote }: SquadListDisplayProps) {
+export default function SquadListDisplay({ squad, isVoted, currentPlayerId, canVote, mvpId }: SquadListDisplayProps) {
   const navigate = useNavigate()
 
   const { persona } = usePersona()
@@ -41,7 +44,7 @@ export default function SquadListDisplay({ squad, isVoted, currentPlayerId, canV
   const { hasVoted } = useSelector((state: RootState) => state.auth)
 
   // PersonasContext'ten state ve setter fonksiyonuna erişim
-  const { selectedPersonas, setSelectedPersonas } = usePersonas()
+  const { selectedPersonas, setSelectedPersonas, usedSpecialPersonas } = usePersonas()
 
   // Persona seçimlerini setlemek için kullanılan fonksiyon
   const handlePersonaChange = (playerId: number, selectedOptions: any) => {
@@ -50,6 +53,8 @@ export default function SquadListDisplay({ squad, isVoted, currentPlayerId, canV
       [playerId]: selectedOptions ? [...selectedOptions] : [] // Mutable bir array oluştur
     }))
   }
+
+  const categoryOrder = ['special', 'forvet', 'orta_saha', 'defans', 'kaleci', 'teknik', 'takim_dinamigi', 'bireysel'] // istediğin sıralamaya göre ayarla
 
   const groupedOptions = persona
     ?.reduce((acc, p) => {
@@ -66,6 +71,12 @@ export default function SquadListDisplay({ squad, isVoted, currentPlayerId, canV
       items: group.items.sort((a, b) => a.label.localeCompare(b.label)) // Alfabetik sıralama
     }))
     .flatMap(g => g.items) // Sonuç olarak düz bir liste elde ediyoruz
+    .sort((a, b) => {
+      const indexA = categoryOrder.indexOf(a.category)
+      const indexB = categoryOrder.indexOf(b.category)
+      return indexA - indexB
+    })
+    .filter(option => !usedSpecialPersonas.includes(option.value)) // Kullanılan özel personasları filtrele
 
   return (
     <div className="relative">
@@ -75,10 +86,25 @@ export default function SquadListDisplay({ squad, isVoted, currentPlayerId, canV
         return (
           <div
             key={roster.id}
-            className={`flex flex-col justify-between p-2 py-3 space-y-1 border-b border-gray-300 cursor-pointer `}
+            className={`flex flex-col ${
+              mvpId === roster.playerId ? 'mvp-row shadow-custom-dark' : ''
+            } justify-between p-2 py-3 space-y-1 border-b border-gray-300 cursor-pointer `}
             onClick={() => setIsExpanded(!isExpanded)} // Satıra tıklanınca aç/kapat
           >
-            <div className={`flex items-center justify-between px-2 ${!hasVoted && 'py-2'} space-y-1`}>
+            {mvpId === roster.playerId && (
+              <div className="absolute inset-0 z-0 overflow-hidden">
+                <Watermark
+                  watermarkIcon={starIcon}
+                  watermarksCount={8}
+                  customOpacity={true}
+                  customMinSize={20}
+                  customMaxSize={40}
+                  rotate
+                />
+              </div>
+            )}
+
+            <div className={` z-30 flex items-center justify-between px-2 ${!hasVoted && 'py-2'} space-y-1`}>
               <span
                 className={`${currentPlayerId === roster.playerId && 'text-accent'} ${!hasVoted && 'text-sm'}`}
                 onClick={e => {
@@ -86,7 +112,9 @@ export default function SquadListDisplay({ squad, isVoted, currentPlayerId, canV
                   navigate(`/profile/${roster.playerId}`)
                 }}
               >
-                {roster.playerName.split(' ')[0][0]}.{roster.playerName.split(' ').pop()}
+                <span>
+                  {roster.playerName.split(' ')[0][0]}.{roster.playerName.split(' ').pop()}
+                </span>
               </span>
               <span className={`${currentPlayerId === roster.playerId && 'text-accent'} flex items-center justify-center space-x-2`}>
                 <span>{isVoted && roster.rating.toFixed(1)} </span>
@@ -124,7 +152,10 @@ export default function SquadListDisplay({ squad, isVoted, currentPlayerId, canV
                     const persona = personaMap[personaId]
 
                     return (
-                      <div className="relative">
+                      <div
+                        className="relative"
+                        key={personaId}
+                      >
                         <Tooltip
                           position="top"
                           content={persona.description || 'Açıklama yok'}

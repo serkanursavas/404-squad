@@ -29,7 +29,7 @@ const Tooltip: React.FC<TooltipProps> = ({ content, children, position = 'top', 
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: position === 'top' ? -10 : 10 }}
             transition={{ duration: 0.2 }}
-            className={`absolute z-40 p-2 text-xs text-white bg-gray-700 border border-gray-500 rounded shadow-lg 
+            className={`absolute z-30 p-2 text-xs text-white bg-gray-700 border border-gray-500 rounded shadow-lg 
               ${position === 'top' ? 'bottom-full mb-2' : ''}
               ${position === 'bottom' ? 'top-full mt-2' : ''}
               ${position === 'left' ? 'right-full mr-2' : ''}

@@ -37,6 +37,7 @@ export default function MatchDetails() {
   useEffect(() => {
     if (match && match.rosters) {
       setLoading(false)
+      console.log('Match details:', match)
     }
   }, [match])
 
@@ -162,6 +163,7 @@ export default function MatchDetails() {
           played={match.played}
           isVotingClosed={match.voted}
           canPersonaVote={canPersonaVote ?? false}
+          mvpId={match.mvpId}
         />
         <SquadList
           teamLogo={awayTeamLogo}
@@ -169,6 +171,7 @@ export default function MatchDetails() {
           played={match.played}
           isVotingClosed={match.voted}
           canPersonaVote={canPersonaVote ?? false}
+          mvpId={match.mvpId}
         />
       </motion.div>
     </motion.div>

@@ -13,6 +13,7 @@ export interface Match {
   goals: Goal[]
   rosters: Roster[]
   gameLocation: GameLocation
+  mvpId: number
 }
 
 export interface GameLocation {

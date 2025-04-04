@@ -49,7 +49,7 @@ export default function VoteForm({ squad, currentPlayerId }: VoteFormProps) {
   }
 
   // PersonasContext'ten state ve setter fonksiyonuna erişim
-  const { selectedPersonas, setSelectedPersonas } = usePersonas()
+  const { selectedPersonas, setSelectedPersonas, usedSpecialPersonas } = usePersonas()
 
   // Persona seçimlerini setlemek için kullanılan fonksiyon
   const handlePersonaChange = (playerId: number, selectedOptions: any) => {
@@ -58,6 +58,8 @@ export default function VoteForm({ squad, currentPlayerId }: VoteFormProps) {
       [playerId]: selectedOptions ? [...selectedOptions] : [] // Mutable bir array oluştur
     }))
   }
+
+  const categoryOrder = ['special', 'forvet', 'orta_saha', 'defans', 'kaleci', 'teknik', 'takim_dinamigi', 'bireysel'] // istediğin sıralamaya göre ayarla
 
   const groupedOptions = persona
     ?.reduce((acc, p) => {
@@ -74,6 +76,12 @@ export default function VoteForm({ squad, currentPlayerId }: VoteFormProps) {
       items: group.items.sort((a, b) => a.label.localeCompare(b.label)) // Alfabetik sıralama
     }))
     .flatMap(g => g.items) // Sonuç olarak düz bir liste elde ediyoruz
+    .sort((a, b) => {
+      const indexA = categoryOrder.indexOf(a.category)
+      const indexB = categoryOrder.indexOf(b.category)
+      return indexA - indexB
+    })
+    .filter(option => !usedSpecialPersonas.includes(option.value)) // Kullanılan özel personasları filtrele
 
   return (
     <Formik

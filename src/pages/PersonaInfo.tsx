@@ -8,7 +8,8 @@ export default function PersonaInfo() {
     defans: '#818cf8', // Daha dolgun mor
     orta_saha: '#c084fc', // Daha dolgun lavanta
     forvet: '#38bdf8', // Daha dolgun mavi
-    teknik: '#facc15' // Daha dolgun sarı
+    teknik: '#facc15', // Daha dolgun sarı
+    special: 'linear-gradient(to right, #FFF, #FDE68A, #FBBF24)'
   }
 
   const { persona } = usePersona()
@@ -32,45 +33,56 @@ export default function PersonaInfo() {
       </div>
 
       {groupedPersonas &&
-        Object.entries(groupedPersonas).map(([category, entries]) => (
-          <div
-            key={category}
-            className="mb-10"
-          >
-            <h2
-              className="mb-4 text-sm text-center md:text-left"
-              style={{ color: categoryColors[category] || '#6b7280' }}
+        Object.entries(groupedPersonas)
+          .sort(([keyA], [keyB]) => {
+            if (keyA === 'special') return -1
+            if (keyB === 'special') return 1
+            return 0
+          })
+          .map(([category, entries]) => (
+            <div
+              key={category}
+              className="mb-10"
             >
-              {category
-                .replace(/_/g, ' ')
-                .replace(/i/g, 'İ')
-                .replace(/ı/g, 'I')
-                .replace(/ş/g, 'Ş')
-                .replace(/ğ/g, 'Ğ')
-                .replace(/ü/g, 'Ü')
-                .replace(/ö/g, 'Ö')
-                .replace(/ç/g, 'Ç')
-                .toUpperCase()}
-            </h2>
-            {/* Mobil tasarım için kart yapısı */}
-            <div className="grid gap-4 md:hidden ">
-              {entries.map(entry => (
-                <div
-                  key={entry.id}
-                  className="p-3 bg-white border border-gray-300 shadow-lg"
-                >
-                  <p
-                    className="text-xs "
-                    style={{ color: categoryColors[category] || '#6b7280' }}
+              <h2
+                className="mb-4 text-sm text-center md:text-left"
+                style={{ color: categoryColors[category] || '#6b7280' }}
+              >
+                {category
+                  .replace(/_/g, ' ')
+                  .replace(/i/g, 'İ')
+                  .replace(/ı/g, 'I')
+                  .replace(/ş/g, 'Ş')
+                  .replace(/ğ/g, 'Ğ')
+                  .replace(/ü/g, 'Ü')
+                  .replace(/ö/g, 'Ö')
+                  .replace(/ç/g, 'Ç')
+                  .toUpperCase()}
+              </h2>
+              {/* Mobil tasarım için kart yapısı */}
+              <div className="grid gap-4 md:hidden ">
+                {entries.map(entry => (
+                  <div
+                    key={entry.id}
+                    className="p-3 border border-gray-300 shadow-lg"
+                    style={{
+                      background: entry.category === 'special' ? 'linear-gradient(to right, #FFF, #FDE68A, #FBBF24)' : '#fff'
+                    }}
                   >
-                    {entry.name}
-                  </p>
-                  <p className="text-gray-600 text-[9px] mt-2">{entry.description}</p>
-                </div>
-              ))}
+                    <p
+                      className="text-xs "
+                      style={{
+                        color: categoryColors[category] || '#6b7280'
+                      }}
+                    >
+                      {entry.name}
+                    </p>
+                    <p className="text-gray-600 text-[9px] mt-2">{entry.description}</p>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
     </div>
   )
 }

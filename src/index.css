@@ -59,3 +59,19 @@ select {
   appearance: none; /* iOS ve bazı tarayıcılardaki varsayılan stilleri kaldırma */
   -webkit-appearance: none; /* Safari ve diğer WebKit tabanlı tarayıcılar için */
 }
+
+.mvp-row {
+  position: relative;
+}
+
+.mvp-row::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(to right, #fffbe6, #fbbf24, #fffbe6);
+
+  opacity: 0.8;
+}

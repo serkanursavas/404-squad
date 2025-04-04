@@ -23,19 +23,16 @@ export const personaSelectCustomStyles = {
       defans: '#c7d2fe', // Daha soft mor
       orta_saha: '#e9d5ff', // Daha soft lavanta
       forvet: '#bae6fd', // Daha soft mavi
-      teknik: '#fef08a' // Daha soft sarı
+      teknik: '#fef08a', // Daha soft sarı
+      special: 'linear-gradient(to right, #FFF, #FDE68A, #FBBF24)'
     }
 
     const bgColor = categoryColors[state.data.category] || 'black'
 
     return {
       ...provided,
-      backgroundColor: state.isSelected ? '#6366f1' : bgColor,
-      color: state.isSelected ? 'white' : 'black',
-      '&:hover': {
-        backgroundColor: '#6366f1',
-        color: 'white'
-      }
+      background: state.isSelected ? '#6366f1' : bgColor,
+      color: state.isSelected ? 'white' : 'black'
     }
   },
   multiValue: (provided: any, state: any) => {
@@ -46,29 +43,44 @@ export const personaSelectCustomStyles = {
       defans: '#c7d2fe',
       orta_saha: '#e9d5ff',
       forvet: '#bae6fd',
-      teknik: '#fef08a'
+      teknik: '#fef08a',
+      special: 'linear-gradient(to right, #FFF, #FDE68A, #FBBF24)'
     }
     const bgColor = categoryColors[state.data.category] || '#e0e7ff'
+    const isSpecial = state.data.category === 'special'
 
     return {
       ...provided,
-      backgroundColor: bgColor
+      background: bgColor,
+      border: isSpecial ? '1px solid #FBBF24' : 'none',
+      borderRadius: '0'
     }
   },
-  multiValueLabel: (provided: any) => ({
-    ...provided,
-    color: '#000'
-  }),
-  multiValueRemove: (provided: any) => ({
-    ...provided,
-    color: 'red',
-    '&:hover': {
-      backgroundColor: '#6366f1',
-      color: 'white'
+  multiValueLabel: (provided: any, state: any) => {
+    const isSpecial = state.data.category === 'special'
+
+    return {
+      ...provided,
+      color: isSpecial ? '#4b5563' : '#000',
+      fontWeight: isSpecial ? 600 : 'normal',
+      letterSpacing: isSpecial ? '0.3em' : 'normal'
     }
-  }),
+  },
+  multiValueRemove: (provided: any, state: any) => {
+    const isSpecial = state.data.category === 'special'
+
+    return {
+      ...provided,
+      color: isSpecial ? 'white' : 'red',
+      '&:hover': {
+        backgroundColor: isSpecial ? 'linear-gradient(to right, #FFF, #FDE68A, #FBBF24)' : '#6366f1',
+        color: 'white'
+      }
+    }
+  },
+
   menu: (provided: any) => ({
     ...provided,
-    zIndex: 9999 // Menü görünürlük sorunlarını çözmek için
+    zIndex: 30 // Menü görünürlük sorunlarını çözmek için
   })
 }

@@ -12,7 +12,7 @@ export default function Header({ isOpen }: Props) {
 
   return (
     <>
-      <div className={`fixed flex z-30 items-center justify-between w-full px-8 py-4 ${headerBgClass}`}>
+      <div className={`fixed flex z-50 items-center justify-between w-full px-8 py-4 ${headerBgClass}`}>
         <img
           src={notiIcon}
           alt="Notifications"
