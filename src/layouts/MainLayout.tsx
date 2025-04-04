@@ -8,6 +8,7 @@ import { getUserFromToken } from '../services/authService'
 import { loginSuccess } from '../store/authSlice'
 import { RootState } from '../store'
 import useRatings from '../hooks/useRatings'
+import ScrollToTop from '../components/ui/ScrollToTop'
 
 export default function MainLayout() {
   const [isOpen, setIsOpen] = useState(false)
@@ -38,10 +39,11 @@ export default function MainLayout() {
 
   return (
     <div className="flex flex-col min-h-screen bg-neutral">
+      <ScrollToTop />
       <Header isOpen={isOpen} />
 
       {/* Header yüksekliği kadar boşluk */}
-      <div className="h-32" />
+      <div className="h-32 " />
 
       {/* Hamburger / Close Button */}
       <button
