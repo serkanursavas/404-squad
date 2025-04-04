@@ -40,6 +40,9 @@ export default function MainLayout() {
     <div className="flex flex-col min-h-screen bg-neutral">
       <Header isOpen={isOpen} />
 
+      {/* Header yüksekliği kadar boşluk */}
+      <div className="h-32" />
+
       {/* Hamburger / Close Button */}
       <button
         className="fixed z-50 p-2 rounded-md top-8 right-6 "
