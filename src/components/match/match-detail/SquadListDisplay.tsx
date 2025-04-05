@@ -104,7 +104,7 @@ export default function SquadListDisplay({ squad, isVoted, currentPlayerId, canV
               </div>
             )}
 
-            <div className={` z-30 flex items-center justify-between px-2 ${!hasVoted && 'py-2'} space-y-1`}>
+            <div className={` z-20 flex items-center justify-between px-2 ${!hasVoted && 'py-2'} space-y-1`}>
               <span
                 className={`${currentPlayerId === roster.playerId && 'text-accent'} ${!hasVoted && 'text-sm'}`}
                 onClick={e => {
